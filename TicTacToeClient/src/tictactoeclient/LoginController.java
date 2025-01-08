@@ -23,6 +23,8 @@ import javafx.scene.layout.VBox;
  * @author youse
  */
 public class LoginController implements Initializable {
+    
+    Navigator navigator;
 
     @FXML
     private TextField usernameField;
@@ -50,6 +52,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
          // Center the VBox when the window is first loaded
+        navigator = new Navigator();
         centerVBox();
 
         // Add listeners to handle resizing dynamically
@@ -75,6 +78,11 @@ public class LoginController implements Initializable {
 
     @FXML
     private void goregister(ActionEvent event) {
+    }
+
+    @FXML
+    private void localGameBtnAction(ActionEvent event) {
+        navigator.goToPage(event, "FXMLGameScreen.fxml");
     }
     
 }
