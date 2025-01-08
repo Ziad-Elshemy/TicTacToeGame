@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="632.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.LoginController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="438.0" prefWidth="693.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutX="268.0" layoutY="54.0" prefWidth="350" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;">
+      <VBox fx:id="mainVBox" alignment="CENTER" layoutX="291.0" layoutY="32.0" prefHeight="383.0" prefWidth="402.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;">
          <Label style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" text="Welcome to Tic Tac Toe" />
          
          <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
@@ -27,7 +27,8 @@
             <Button fx:id="playPCButton" style="-fx-background-color: #00A878; -fx-text-fill: white; -fx-font-size: 16px; -fx-pref-width: 250; -fx-background-radius: 20;" text="Play vs PC" />
          </VBox>
       </VBox>
-      <ImageView fitHeight="64.0" fitWidth="527.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      
+      <ImageView fx:id="logoImage" fitHeight="64.0" fitWidth="527.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/TicTac.PNG" />
          </image>

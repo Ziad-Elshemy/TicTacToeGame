@@ -13,6 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -33,6 +36,12 @@ public class LoginController implements Initializable {
     private Button localGameButton;
     @FXML
     private Button playPCButton;
+    @FXML
+    private AnchorPane rootPane;
+    @FXML
+    private VBox mainVBox;
+    @FXML
+    private ImageView logoImage;
 
     /**
      * Initializes the controller class.
@@ -40,6 +49,24 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+         // Center the VBox when the window is first loaded
+        centerVBox();
+
+        // Add listeners to handle resizing dynamically
+        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
+        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerVBox());
+    }
+
+    private void centerVBox() {
+        double width = rootPane.getWidth();
+        double height = rootPane.getHeight();
+        double vboxWidth = mainVBox.getWidth();
+        double vboxHeight = mainVBox.getHeight();
+
+        // Center the VBox dynamically
+        AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
+        AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
+    
     }    
 
     @FXML
