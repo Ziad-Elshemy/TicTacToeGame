@@ -14,7 +14,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox alignment="CENTER" style="-fx-background-color: #16697A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.HomeScreenController">
    <children>
       <HBox alignment="CENTER" style="-fx-background-color: #16697A;">
@@ -23,19 +22,19 @@
                <content>
                   <BorderPane style="-fx-background-color: #16697A;">
                      <center>
-                        <AnchorPane prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #16697A;">
+                        <AnchorPane prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
                            <children>
                               <ImageView fitHeight="198.0" fitWidth="605.0" layoutX="48.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="16.0">
                                  <image>
-                                    <Image url="@../images/logo.png" />
+                                    <Image url="@../Images/logo.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="435.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Single Player">
+                              <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="435.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Single Player" textFill="WHITE">
                                  <font>
                                     <Font name="Calibri Bold" size="22.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="511.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Local Two Players">
+                              <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="511.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Local Two Players" textFill="#fffbfb">
                                  <font>
                                     <Font name="Calibri Bold" size="22.0" />
                                  </font>
@@ -81,9 +80,9 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#363636">
+                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffafa">
                                                    <font>
-                                                      <Font name="Arial" size="15.0" />
+                                                      <Font name="Arial Bold" size="15.0" />
                                                    </font>
                                                 </Button>
                                              </children>
@@ -107,9 +106,9 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#363636">
+                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffdfd">
                                                    <font>
-                                                      <Font name="Arial" size="15.0" />
+                                                      <Font name="Arial Bold" size="15.0" />
                                                    </font>
                                                 </Button>
                                              </children>
@@ -133,9 +132,9 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#363636">
+                                                <Button layoutX="177.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Arial" size="15.0" />
+                                                      <Font name="Arial Bold" size="15.0" />
                                                    </font>
                                                 </Button>
                                              </children>
@@ -159,9 +158,9 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Button fx:id="inviteButton" layoutX="177.0" layoutY="15.0" mnemonicParsing="false" onAction="#onInviteButtonClicked" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#363636">
+                                                <Button fx:id="inviteButton" layoutX="177.0" layoutY="15.0" mnemonicParsing="false" onAction="#onInviteButtonClicked" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Arial" size="15.0" />
+                                                      <Font name="Arial Bold" size="15.0" />
                                                    </font>
                                                 </Button>
                                              </children>
@@ -170,12 +169,12 @@
                                     </AnchorPane>
                                     <AnchorPane prefHeight="179.0" prefWidth="304.0">
                                        <children>
-                                          <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="31.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Edit Profile">
+                                          <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="31.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
                                              <font>
                                                 <Font name="Calibri Bold" size="18.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="85.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Logout">
+                                          <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="85.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
                                              <font>
                                                 <Font name="Calibri Bold" size="18.0" />
                                              </font>

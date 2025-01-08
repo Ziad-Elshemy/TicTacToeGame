@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.mycompany.registerscene;
+package tictactoeclient;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
  *
  * @author abdullahraed
  */
-public class RegisterSceneController implements Initializable {
+public class RegisterScreenController implements Initializable {
 
     @FXML
     private Pane normalPane;
@@ -70,8 +71,7 @@ public class RegisterSceneController implements Initializable {
     @FXML
     private void onRegisterClick(ActionEvent event) 
     {
-        sceneSwitch(event);
-        System.out.println("Register Button Clicked");
+      
     }
     
      private void sceneSwitch(ActionEvent e)

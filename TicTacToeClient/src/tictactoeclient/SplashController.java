@@ -68,7 +68,7 @@ public class SplashController implements Initializable {
         timeline.setOnFinished(e -> {
             try {
                 Stage stage = (Stage) progressBar.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
                 Scene mainScene = new Scene(loader.load());
                 stage.setScene(mainScene);
             } catch (Exception ex) {
