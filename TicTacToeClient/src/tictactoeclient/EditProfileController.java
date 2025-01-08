@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 /**
  * FXML Controller class
  *
- * @author TBARAK
+ * @author HANY
  */
 public class EditProfileController implements Initializable {
 
