@@ -81,7 +81,7 @@ public class GameScreenController implements Initializable {
 
     @FXML
     private void exitBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "FXMLDocumentTest.fxml");
+        navigator.goToPage(event, "Login.fxml");
     }
 
     @FXML

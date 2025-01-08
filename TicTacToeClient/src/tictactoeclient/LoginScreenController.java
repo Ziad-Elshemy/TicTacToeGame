@@ -27,6 +27,8 @@ import javafx.stage.Stage;
  * @author youse
  */
 public class LoginScreenController implements Initializable {
+    
+    Navigator navigator;
 
     @FXML
     private TextField usernameField;
@@ -54,7 +56,8 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
          // Center the VBox when the window is first loaded
-        //centerVBox();
+        navigator = new Navigator();
+        centerVBox();
 
         // Add listeners to handle resizing dynamically
 //        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
@@ -75,33 +78,40 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void gologin(ActionEvent event) {
-         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
-            Scene page1Scene = new Scene(loader.load());
-            
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(page1Scene);
-            stage.show();
-        } catch (IOException ex) {
-            
-            System.out.println(ex.toString());
-        }
+        navigator.goToPage(event, "HomeScreen.fxml");
+//         try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+//            Scene page1Scene = new Scene(loader.load());
+//            
+//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+//            stage.setScene(page1Scene);
+//            stage.show();
+//        } catch (IOException ex) {
+//            
+//            System.out.println(ex.toString());
+//        }
     }
 
     @FXML
     private void goregister(ActionEvent event) {
+        navigator.goToPage(event, "RegisterScreen.fxml");
         
-         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScreen.fxml"));
-            Scene page1Scene = new Scene(loader.load());
-            
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(page1Scene);
-            stage.show();
-        } catch (IOException ex) {
-            
-            System.out.println(ex.toString());
-        }
+//         try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScreen.fxml"));
+//            Scene page1Scene = new Scene(loader.load());
+//            
+//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+//            stage.setScene(page1Scene);
+//            stage.show();
+//        } catch (IOException ex) {
+//            
+//            System.out.println(ex.toString());
+//        }
+    }
+
+    @FXML
+    private void localGameBtnAction(ActionEvent event) {
+        navigator.goToPage(event, "FXMLGameScreen.fxml");
     }
     
 }
