@@ -254,6 +254,7 @@ public class FXMLGameScreenController implements Initializable {
             if(boardState.get(i).toString().equals(playerSympol)&&
                boardState.get(i+3).toString().equals(playerSympol)&&
                boardState.get(i+6).toString().equals(playerSympol)){
+                
                 System.out.println("winner by columns");
                 return true;
             }   
