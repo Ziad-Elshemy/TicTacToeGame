@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author youse
  */
-public class LoginController implements Initializable {
+public class LoginScreenController implements Initializable {
     
     Navigator navigator;
 
