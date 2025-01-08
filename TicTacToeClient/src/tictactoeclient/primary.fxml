@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="normalPane" prefHeight="417.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.registerscene.RegisterSceneController">
+   <children>
+      <ImageView fx:id="logoImage" fitHeight="71.0" fitWidth="307.0" layoutX="97.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Group%2036.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="innerPane" layoutX="67.0" layoutY="120.0" prefHeight="257.0" prefWidth="363.0" style="-fx-border-color: #;">
+         <children>
+            <TextField fx:id="usernameTextField" layoutX="144.0" layoutY="71.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
+            <Label fx:id="usernameLabel" layoutX="12.0" layoutY="71.0" style="-fx-font: Fredoke One;" text="Username" textFill="#afdfe8">
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="emailLabel" layoutX="14.0" layoutY="118.0" text="e-mail" textFill="#afdfe8">
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailTextField" layoutX="144.0" layoutY="118.0" style="-fx-background-radius: 20;" />
+            <Label fx:id="passwordLabel" layoutX="13.0" layoutY="163.0" text="Password" textFill="#afdfe8">
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="passwordTextField" layoutX="144.0" layoutY="163.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="registerButton" layoutX="175.0" layoutY="199.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="114.0" layoutY="7.0" style="-fx-alignment: center;" text="Register">
+               <font>
+                  <Font name="Arial Bold Italic" size="36.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.32304038004750596">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4960099852676379">
+                           <color>
+                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>
