@@ -5,17 +5,21 @@
  */
 package tictactoeclient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -56,8 +60,8 @@ public class LoginController implements Initializable {
         centerVBox();
 
         // Add listeners to handle resizing dynamically
-        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
-        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerVBox());
+//        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
+//        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerVBox());
     }
 
     private void centerVBox() {
@@ -74,10 +78,33 @@ public class LoginController implements Initializable {
 
     @FXML
     private void gologin(ActionEvent event) {
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+            Scene page1Scene = new Scene(loader.load());
+            
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(page1Scene);
+            stage.show();
+        } catch (IOException ex) {
+            
+            System.out.println(ex.toString());
+        }
     }
 
     @FXML
     private void goregister(ActionEvent event) {
+        
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScreen.fxml"));
+            Scene page1Scene = new Scene(loader.load());
+            
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(page1Scene);
+            stage.show();
+        } catch (IOException ex) {
+            
+            System.out.println(ex.toString());
+        }
     }
 
     @FXML

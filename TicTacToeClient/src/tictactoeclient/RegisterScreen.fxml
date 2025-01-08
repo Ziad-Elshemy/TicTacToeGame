@@ -11,14 +11,14 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="normalPane" prefHeight="417.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.registerscene.RegisterSceneController">
+<Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.registerscene.RegisterSceneController">
    <children>
-      <ImageView fx:id="logoImage" fitHeight="71.0" fitWidth="307.0" layoutX="97.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImage" fitHeight="105.0" fitWidth="440.0" layoutX="190.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Group%2036.png" />
+            <Image url="@../images/logo.png" />
          </image>
       </ImageView>
-      <Pane fx:id="innerPane" layoutX="67.0" layoutY="120.0" prefHeight="257.0" prefWidth="363.0" style="-fx-border-color: #;">
+      <Pane fx:id="innerPane" layoutX="192.0" layoutY="200.0" prefHeight="257.0" prefWidth="363.0" style="-fx-border-color: #;">
          <children>
             <TextField fx:id="usernameTextField" layoutX="144.0" layoutY="71.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
             <Label fx:id="usernameLabel" layoutX="12.0" layoutY="71.0" style="-fx-font: Fredoke One;" text="Username" textFill="#afdfe8">
@@ -52,22 +52,22 @@
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="0.006711409395973154">
                            <color>
-                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="0.4960099852676379">
                            <color>
-                              <Color red="1.0" green="0.6509804129600525" blue="0.16862745583057404" />
+                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
+                              <Color blue="1.0" green="1.0" red="1.0" />
                            </color>
                         </Stop>
                      </stops>

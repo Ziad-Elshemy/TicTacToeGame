@@ -28,9 +28,9 @@
          </VBox>
       </VBox>
       
-      <ImageView fx:id="logoImage" fitHeight="64.0" fitWidth="527.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImage" fitHeight="64.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/TicTac.PNG" />
+            <Image url="@../images/logo.png" />
          </image>
       </ImageView>
    </children>
