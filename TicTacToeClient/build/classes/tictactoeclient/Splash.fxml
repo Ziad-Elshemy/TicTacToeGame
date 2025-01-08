@@ -16,7 +16,7 @@
          </font></Label>
       <ImageView fitHeight="143.0" fitWidth="606.0" layoutX="126.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="497.0" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="105.640625" AnchorPane.topAnchor="64.0">
          <image>
-            <Image url="@../images/logo.png" />
+            <Image url="@../Images/TicTac.PNG" />
          </image>
       </ImageView>
       <Label layoutX="112.0" layoutY="299.0" prefHeight="70.0" prefWidth="578.0" text="The timeless game, reimagined for your desktop!" textFill="#82c0cc">

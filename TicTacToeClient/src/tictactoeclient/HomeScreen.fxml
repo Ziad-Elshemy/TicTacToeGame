@@ -26,7 +26,7 @@
                            <children>
                               <ImageView fitHeight="198.0" fitWidth="605.0" layoutX="48.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="16.0">
                                  <image>
-                                    <Image url="@../images/logo.png" />
+                                    <Image url="@../Images/logo.png" />
                                  </image>
                               </ImageView>
                               <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="435.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Single Player" textFill="WHITE">
