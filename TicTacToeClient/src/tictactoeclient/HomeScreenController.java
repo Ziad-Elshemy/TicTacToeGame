@@ -111,6 +111,9 @@ public class HomeScreenController implements Initializable {
     private Circle avatar4;
     @FXML
     private ImageView userImage4;
+    
+    Navigator navigator;
+
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
@@ -119,11 +122,17 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     void onInviteButtonClicked(ActionEvent event) {
+         
+        navigator.goToPage(event,"GameScreen.fxml");
+
 
     }
 
     @FXML
     void onLocalTwoPlayersButtonClicked(ActionEvent event) {
+        
+         navigator.goToPage(event,"GameScreen.fxml");
+
 
     }
 
@@ -134,6 +143,9 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     void onSinglePlayerButtonClicked(ActionEvent event) {
+        
+          navigator.goToPage(event,"GameScreen.fxml");
+
 
     }
 
@@ -142,7 +154,8 @@ public class HomeScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        navigator=new Navigator();
     }    
     
 }
