@@ -71,8 +71,8 @@ public class LoginScreenController implements Initializable {
         double vboxHeight = mainVBox.getHeight();
 
         // Center the VBox dynamically
-        AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
-        AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
+       //AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
+       //AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
     
     }    
 

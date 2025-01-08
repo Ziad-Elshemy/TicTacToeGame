@@ -127,7 +127,6 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             //disableBoard();
             counter=0;
-            showVideo("file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/l.mp4","O - Lose");
 
             showVideo("file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/w.mp4","X - Won");
         }else if(checkWinner("O")){
