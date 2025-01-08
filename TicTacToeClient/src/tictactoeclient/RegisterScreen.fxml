@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.registerscene.RegisterSceneController">
+<Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
    <children>
       <ImageView fx:id="logoImage" fitHeight="105.0" fitWidth="440.0" layoutX="190.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
