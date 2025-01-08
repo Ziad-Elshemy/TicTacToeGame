@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Ziad-Elshemy
  */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentTestController implements Initializable {
     
     Navigator navigator;
     
