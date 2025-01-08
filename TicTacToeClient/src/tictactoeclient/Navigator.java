@@ -31,7 +31,7 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLDocumentTestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
