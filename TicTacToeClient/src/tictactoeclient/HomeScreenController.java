@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
@@ -111,9 +112,6 @@ public class HomeScreenController implements Initializable {
     private Circle avatar4;
     @FXML
     private ImageView userImage4;
-    
-    Navigator navigator;
-
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
