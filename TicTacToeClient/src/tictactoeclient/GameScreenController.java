@@ -5,6 +5,7 @@
  */
 package tictactoeclient;
 
+import utilities.Colors;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import utilities.Strings;
 
 /**
  * FXML Controller class
@@ -128,7 +130,7 @@ public class GameScreenController implements Initializable {
             //disableBoard();
             counter=0;
 
-            showVideo("file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/w.mp4","X - Won");
+            showVideo(Strings.winnerVideoPath,"X - Won"); 
         }else if(checkWinner("O")){
             playerOScore+=10;
             playerOScoreBtn.setText(""+playerOScore);
@@ -137,7 +139,7 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             //disableBoard();
             counter=0;
-            showVideo("file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/w.mp4","O - Won");
+            showVideo(Strings.winnerVideoPath,"O - Won");
         }else if(counter == 9){
             playerXScore+=5;
             playerOScore+=5;
@@ -170,6 +172,8 @@ public class GameScreenController implements Initializable {
         stage.setOnCloseRequest((event)->{
             
             VideoPlayerController.mediaPlayer.pause();
+            TicTacToeClient.mediaPlayer.play();
+
         
         
         });

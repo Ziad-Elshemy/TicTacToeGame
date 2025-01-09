@@ -79,39 +79,19 @@ public class LoginScreenController implements Initializable {
     @FXML
     private void gologin(ActionEvent event) {
         navigator.goToPage(event, "HomeScreen.fxml");
-//         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
-//            Scene page1Scene = new Scene(loader.load());
-//            
-//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//            stage.setScene(page1Scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            
-//            System.out.println(ex.toString());
-//        }
+        
     }
 
     @FXML
     private void goregister(ActionEvent event) {
+        
         navigator.goToPage(event, "RegisterScreen.fxml");
         
-//         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScreen.fxml"));
-//            Scene page1Scene = new Scene(loader.load());
-//            
-//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//            stage.setScene(page1Scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            
-//            System.out.println(ex.toString());
-//        }
     }
 
     @FXML
     private void localGameBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "FXMLGameScreen.fxml");
+        navigator.goToPage(event, "GameScreen.fxml");
     }
     
 }

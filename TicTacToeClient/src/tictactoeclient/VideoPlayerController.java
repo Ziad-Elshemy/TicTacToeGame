@@ -50,6 +50,7 @@ public class VideoPlayerController implements Initializable {
         video.setFitWidth(700);
         video.setMediaPlayer(mediaPlayer); 
         mediaPlayer.play();
+        TicTacToeClient.mediaPlayer.pause();
         
         
         
