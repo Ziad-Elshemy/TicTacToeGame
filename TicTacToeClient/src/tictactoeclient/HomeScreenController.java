@@ -112,6 +112,7 @@ public class HomeScreenController implements Initializable {
     private Circle avatar4;
     @FXML
     private ImageView userImage4;
+    Navigator navigator;
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
