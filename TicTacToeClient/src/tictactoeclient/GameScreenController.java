@@ -5,21 +5,28 @@
  */
 package tictactoeclient;
 
+import utilities.Colors;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import utilities.Strings;
 
 /**
  * FXML Controller class
  *
  * @author Ziad-Elshemy
  */
-public class FXMLGameScreenController implements Initializable {
+public class GameScreenController implements Initializable {
     
     int counter;
     int playerXScore;
@@ -91,7 +98,7 @@ public class FXMLGameScreenController implements Initializable {
 
 
     @FXML
-    private void onPlayerClick(ActionEvent event) {
+    private void onPlayerClick(ActionEvent event) throws IOException {
         Button button = (Button)event.getSource();
         String playerSympol = "";
         if(!button.getText().toString().isEmpty()){
@@ -122,6 +129,8 @@ public class FXMLGameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             //disableBoard();
             counter=0;
+
+            showVideo(Strings.winnerVideoPath,"X - Won"); 
         }else if(checkWinner("O")){
             playerOScore+=10;
             playerOScoreBtn.setText(""+playerOScore);
@@ -130,6 +139,7 @@ public class FXMLGameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             //disableBoard();
             counter=0;
+            showVideo(Strings.winnerVideoPath,"O - Won");
         }else if(counter == 9){
             playerXScore+=5;
             playerOScore+=5;
@@ -142,6 +152,36 @@ public class FXMLGameScreenController implements Initializable {
             counter=0;
         }
         
+    }
+    
+    
+    void showVideo(String vidoeUrl , String symbol) throws IOException{
+        
+        
+        VideoPlayerController.videoUrl=vidoeUrl;
+        
+        
+        Parent root = FXMLLoader.load(getClass().getResource("VideoPlayer.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setTitle(symbol);
+        stage.show();
+        
+        stage.setOnCloseRequest((event)->{
+            
+            VideoPlayerController.mediaPlayer.pause();
+            TicTacToeClient.mediaPlayer.play();
+
+        
+        
+        });
+        
+        
+        
+
+    
     }
     
     void writePlayerSymolInArray(Button button,String playerSympol){

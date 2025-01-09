@@ -71,47 +71,27 @@ public class LoginScreenController implements Initializable {
         double vboxHeight = mainVBox.getHeight();
 
         // Center the VBox dynamically
-        AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
-        AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
+       //AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
+       //AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
     
     }    
 
     @FXML
     private void gologin(ActionEvent event) {
         navigator.goToPage(event, "HomeScreen.fxml");
-//         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
-//            Scene page1Scene = new Scene(loader.load());
-//            
-//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//            stage.setScene(page1Scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            
-//            System.out.println(ex.toString());
-//        }
+        
     }
 
     @FXML
     private void goregister(ActionEvent event) {
+        
         navigator.goToPage(event, "RegisterScreen.fxml");
         
-//         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScreen.fxml"));
-//            Scene page1Scene = new Scene(loader.load());
-//            
-//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//            stage.setScene(page1Scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            
-//            System.out.println(ex.toString());
-//        }
     }
 
     @FXML
     private void localGameBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "FXMLGameScreen.fxml");
+        navigator.goToPage(event, "GameScreen.fxml");
     }
     
 }

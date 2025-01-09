@@ -5,76 +5,92 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
+
+<VBox alignment="CENTER" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
    <children>
-      <ImageView fx:id="logoImage" fitHeight="105.0" fitWidth="440.0" layoutX="190.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logo.png" />
-         </image>
-      </ImageView>
-      <Pane fx:id="innerPane" layoutX="192.0" layoutY="200.0" prefHeight="257.0" prefWidth="363.0" style="-fx-border-color: #;">
+      <HBox alignment="CENTER" style="-fx-background-color: #009EAD;">
          <children>
-            <TextField fx:id="usernameTextField" layoutX="144.0" layoutY="71.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
-            <Label fx:id="usernameLabel" layoutX="12.0" layoutY="71.0" style="-fx-font: Fredoke One;" text="Username" textFill="#afdfe8">
-               <font>
-                  <Font name="Arial Bold Italic" size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="emailLabel" layoutX="14.0" layoutY="118.0" text="e-mail" textFill="#afdfe8">
-               <font>
-                  <Font name="Arial Bold Italic" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="emailTextField" layoutX="144.0" layoutY="118.0" style="-fx-background-radius: 20;" />
-            <Label fx:id="passwordLabel" layoutX="13.0" layoutY="163.0" text="Password" textFill="#afdfe8">
-               <font>
-                  <Font name="Arial Bold Italic" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="passwordTextField" layoutX="144.0" layoutY="163.0" style="-fx-background-radius: 20;" />
-            <Button fx:id="registerButton" layoutX="175.0" layoutY="199.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Label layoutX="114.0" layoutY="7.0" style="-fx-alignment: center;" text="Register">
-               <font>
-                  <Font name="Arial Bold Italic" size="36.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0" startX="0.32304038004750596">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.006711409395973154">
-                           <color>
-                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.4960099852676379">
-                           <color>
-                              <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color blue="1.0" green="1.0" red="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
+            <AnchorPane>
+               <children>
+                  <Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
+                     <children>
+                        <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="606.0" layoutX="125.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="innerPane" layoutX="188.0" layoutY="258.0" prefHeight="303.0" prefWidth="413.0" style="-fx-border-color: #;">
+                           <children>
+                              <TextField fx:id="usernameTextField" layoutX="144.0" layoutY="71.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
+                              <Label fx:id="usernameLabel" layoutX="12.0" layoutY="71.0" style="-fx-font: Fredoke One;" text="Username" textFill="#afdfe8">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="emailLabel" layoutX="14.0" layoutY="118.0" text="e-mail" textFill="#afdfe8">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="emailTextField" layoutX="144.0" layoutY="118.0" style="-fx-background-radius: 20;" />
+                              <Label fx:id="passwordLabel" layoutX="13.0" layoutY="163.0" text="Password" textFill="#afdfe8">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="passwordTextField" layoutX="144.0" layoutY="163.0" style="-fx-background-radius: 20;" />
+                              <Button fx:id="registerButton" layoutX="175.0" layoutY="199.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="114.0" layoutY="7.0" style="-fx-alignment: center;" text="Register">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="36.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="1.0" startX="0.32304038004750596">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.006711409395973154">
+                                             <color>
+                                                <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.4960099852676379">
+                                             <color>
+                                                <Color blue="0.16862745583057404" green="0.6509804129600525" red="1.0" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color blue="1.0" green="1.0" red="1.0" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
          </children>
-      </Pane>
+      </HBox>
    </children>
-</Pane>
+</VBox>
