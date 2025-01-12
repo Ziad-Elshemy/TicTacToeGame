@@ -15,8 +15,8 @@
       <VBox fx:id="mainVBox" alignment="CENTER" layoutX="193.0" layoutY="167.0" prefHeight="383.0" prefWidth="402.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;">
          <Label style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" text="Welcome to Tic Tac Toe" />
          
-         <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
-         <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
+         <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-height: 40; -fx-background-radius: 15; -fx-font-size: 14px;" />
+         <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-height: 40; -fx-background-radius: 15; -fx-font-size: 14px;" />
          
          <VBox alignment="CENTER" spacing="10">
             <Button fx:id="loginButton" onAction="#gologin" style="-fx-background-color: #ffa62b; -fx-text-fill: white; -fx-font-size: 16px; -fx-pref-width: 250; -fx-background-radius: 20;" text="Login" />

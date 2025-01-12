@@ -12,7 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 
 /**
  * FXML Controller class
@@ -24,6 +27,7 @@ public class FXMLGameScreenController implements Initializable {
     int counter;
     int playerXScore;
     int playerOScore;
+    int drawScore;
     Navigator navigator;
     ArrayList<String> boardState;
 
@@ -57,6 +61,14 @@ public class FXMLGameScreenController implements Initializable {
     private Button playerTurnBtn;
     @FXML
     private Button playerOScoreBtn;
+    @FXML
+    private Polygon leftPolygon;
+    @FXML
+    private Polygon rightPolygon;
+    @FXML
+    private Label gameOverToast;
+    @FXML
+    private Rectangle gameOverRect;
 
     /**
      * Initializes the controller class.
@@ -68,6 +80,7 @@ public class FXMLGameScreenController implements Initializable {
         navigator = new Navigator();
         playerXScore = 0;
         playerOScore = 0;
+        drawScore = 0;
         initializeBoardState();
         disableBoard();
         counter = 0;
@@ -76,7 +89,7 @@ public class FXMLGameScreenController implements Initializable {
 
     @FXML
     private void exitBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "Login.fxml");
+        navigator.goToPage(event, "LoginScreen.fxml");
     }
 
     @FXML
@@ -120,6 +133,8 @@ public class FXMLGameScreenController implements Initializable {
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
+            String text = "Player X win";
+            showGameOverToast(text);
             //disableBoard();
             counter=0;
         }else if(checkWinner("O")){
@@ -128,16 +143,23 @@ public class FXMLGameScreenController implements Initializable {
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
+            String text = "Player O win";
+            showGameOverToast(text);
             //disableBoard();
             counter=0;
+            // check for draw
         }else if(counter == 9){
             playerXScore+=5;
             playerOScore+=5;
+            drawScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             playerOScoreBtn.setText(""+playerOScore);
+            drawScoreBtn.setText(""+drawScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
+            String text = "It's draw";
+            showGameOverToast(text);
             //disableBoard();
             counter=0;
         }
@@ -217,8 +239,24 @@ public class FXMLGameScreenController implements Initializable {
         for(int i=0; i<9; i++){
             boardState.add("");
         }
+        hideGameOverToast();
         reInitializeBoard();
         
+    }
+    
+    private void showGameOverToast(String text){
+        leftPolygon.setVisible(true);
+        rightPolygon.setVisible(true);
+        gameOverRect.setVisible(true);
+        gameOverToast.setVisible(true);
+        gameOverToast.setText("Game Over. "+ text);
+    }
+    
+    private void hideGameOverToast(){
+        leftPolygon.setVisible(false);
+        rightPolygon.setVisible(false);
+        gameOverRect.setVisible(false);
+        gameOverToast.setVisible(false);
     }
 
     //["X","x","X",
@@ -232,19 +270,19 @@ public class FXMLGameScreenController implements Initializable {
                boardState.get(i+2).toString().equals(playerSympol)){
                 System.out.println("winner by rows");
                 if(i==0){
-                    btn1.setStyle("-fx-background-color: #00FF00");
-                    btn2.setStyle("-fx-background-color: #00FF00");
-                    btn3.setStyle("-fx-background-color: #00FF00");
+                    btn1.setStyle("-fx-background-color: #008000");
+                    btn2.setStyle("-fx-background-color: #008000");
+                    btn3.setStyle("-fx-background-color: #008000");
                 }
                 if(i==3){
-                    btn4.setStyle("-fx-background-color: #00FF00");
-                    btn5.setStyle("-fx-background-color: #00FF00");
-                    btn6.setStyle("-fx-background-color: #00FF00");
+                    btn4.setStyle("-fx-background-color: #008000");
+                    btn5.setStyle("-fx-background-color: #008000");
+                    btn6.setStyle("-fx-background-color: #008000");
                 }
                 if(i==6){
-                    btn7.setStyle("-fx-background-color: #00FF00");
-                    btn8.setStyle("-fx-background-color: #00FF00");
-                    btn9.setStyle("-fx-background-color: #00FF00");
+                    btn7.setStyle("-fx-background-color: #008000");
+                    btn8.setStyle("-fx-background-color: #008000");
+                    btn9.setStyle("-fx-background-color: #008000");
                 }
                 return true;
             }   
@@ -256,6 +294,21 @@ public class FXMLGameScreenController implements Initializable {
                boardState.get(i+6).toString().equals(playerSympol)){
                 
                 System.out.println("winner by columns");
+                if(i==0){
+                    btn1.setStyle("-fx-background-color: #008000");
+                    btn4.setStyle("-fx-background-color: #008000");
+                    btn7.setStyle("-fx-background-color: #008000");
+                }
+                if(i==1){
+                    btn2.setStyle("-fx-background-color: #008000");
+                    btn5.setStyle("-fx-background-color: #008000");
+                    btn8.setStyle("-fx-background-color: #008000");
+                }
+                if(i==2){
+                    btn3.setStyle("-fx-background-color: #008000");
+                    btn6.setStyle("-fx-background-color: #008000");
+                    btn9.setStyle("-fx-background-color: #008000");
+                }
                 return true;
             }   
         }
@@ -264,6 +317,9 @@ public class FXMLGameScreenController implements Initializable {
            boardState.get(4).toString().equals(playerSympol)&&
            boardState.get(8).toString().equals(playerSympol)){
             System.out.println("winner by diagonals");
+            btn1.setStyle("-fx-background-color: #008000");
+            btn5.setStyle("-fx-background-color: #008000");
+            btn9.setStyle("-fx-background-color: #008000");
             return true;
         }
         // check for diagonals winner
@@ -271,6 +327,9 @@ public class FXMLGameScreenController implements Initializable {
            boardState.get(4).toString().equals(playerSympol)&&
            boardState.get(6).toString().equals(playerSympol)){
             System.out.println("winner by diagonals");
+            btn3.setStyle("-fx-background-color: #008000");
+            btn5.setStyle("-fx-background-color: #008000");
+            btn7.setStyle("-fx-background-color: #008000");
             return true;
         }
     return false;
