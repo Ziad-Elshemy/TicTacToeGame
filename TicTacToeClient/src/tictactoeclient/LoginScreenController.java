@@ -91,7 +91,7 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void localGameBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "GameScreen.fxml");
+        navigator.goToPage(event, "FXMLGameScreen.fxml");
     }
     
 }

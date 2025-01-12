@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.LoginScreenController">
+<VBox alignment="CENTER" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.LoginScreenController">
    <children>
       <HBox alignment="CENTER" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
          <children>
@@ -39,7 +39,7 @@
                   
                   <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="660.0" layoutX="140.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/logo.png" />
+                        <Image url="@../Images/logo.png" />
                      </image>
                   </ImageView>
                </children>

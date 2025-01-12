@@ -71,6 +71,8 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private void onRegisterClick(ActionEvent event) 
     {
+        sceneSwitch(event);
+        System.out.println("Register Button Clicked");
       
     }
     

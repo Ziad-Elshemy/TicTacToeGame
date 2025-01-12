@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -77,6 +78,8 @@ public class GameScreenController implements Initializable {
     private Label gameOverToast;
     @FXML
     private Rectangle gameOverRect;
+    @FXML
+    private StackPane rootPane;
 
     /**
      * Initializes the controller class.
@@ -146,7 +149,8 @@ public class GameScreenController implements Initializable {
             //disableBoard();
             counter=0;
 
-            showVideo(Strings.winnerVideoPath,"X - Won"); 
+            showVideo(Strings.winnerVideoPath,"X - Winner");
+            //showVideo(Strings.loserVideoPath, "O - loser"); 
         }else if(checkWinner("O")){
             playerOScore+=10;
             playerOScoreBtn.setText(""+playerOScore);
@@ -158,7 +162,8 @@ public class GameScreenController implements Initializable {
             //disableBoard();
             counter=0;
             // check for draw
-            showVideo(Strings.winnerVideoPath,"O - Won");
+            showVideo(Strings.winnerVideoPath,"O - Winner");
+            //showVideo(Strings.loserVideoPath, "X - loser");
         }else if(counter == 9){
             playerXScore+=5;
             playerOScore+=5;
@@ -173,6 +178,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             //disableBoard();
             counter=0;
+            //showVideo(Strings.drawVideoPath, "Draw");
         }
         
     }
@@ -227,7 +233,7 @@ public class GameScreenController implements Initializable {
         }else if(button.getId().equals(btn9.getId())){
             boardState.set(8, playerSympol);
         }
-    }
+    }  
     
     private void disableBoard(){
         btn1.setDisable(true);

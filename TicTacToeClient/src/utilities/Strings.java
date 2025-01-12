@@ -10,10 +10,12 @@ package utilities;
  * @author esraa.m.mosaad
  */
 public class Strings {
-    public static String winnerVideoPath="file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/w.mp4";
+    public static String winnerVideoPath="src/videos/w.mp4";
+    public static String loserVideoPath="src/videos/w.mp4";
+    public static String drawVideoPath="src/videos/w.mp4";
     
     
-    
+
     
     
 }

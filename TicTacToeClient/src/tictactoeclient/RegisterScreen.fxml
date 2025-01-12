@@ -14,18 +14,17 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
    <children>
       <HBox alignment="CENTER" style="-fx-background-color: #009EAD;">
          <children>
             <AnchorPane>
                <children>
-                  <Pane fx:id="normalPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
+                  <Pane fx:id="normalPane" prefHeight="860" prefWidth="1430.0" style="-fx-background-color: #009EAD;">
                      <children>
                         <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="606.0" layoutX="125.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/logo.png" />
+                              <Image url="@../Images/logo.png" />
                            </image>
                         </ImageView>
                         <Pane fx:id="innerPane" layoutX="188.0" layoutY="258.0" prefHeight="303.0" prefWidth="413.0" style="-fx-border-color: #;">

@@ -48,7 +48,7 @@ public class SplashController implements Initializable {
 //        timeline.setCycleCount(100); // 100 steps (10 seconds total)
 
 // Duration of the entire animation
-    double totalDuration = 5.0; // 5 seconds
+    double totalDuration = 2.5; // 5 seconds
     int steps = 100; // Number of steps in the animation
     
     // Timeline to gradually fill the progress bar

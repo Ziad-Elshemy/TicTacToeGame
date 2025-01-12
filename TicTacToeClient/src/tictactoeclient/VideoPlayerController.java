@@ -5,6 +5,7 @@
  */
 package tictactoeclient;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -43,7 +44,7 @@ public class VideoPlayerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        media = new Media(videoUrl);
+        media = new Media(new File(videoUrl).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         video.setFitHeight(400);

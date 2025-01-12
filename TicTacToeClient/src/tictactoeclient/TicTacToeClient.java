@@ -5,6 +5,7 @@
  */
 package tictactoeclient;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,12 +32,13 @@ public class TicTacToeClient extends Application {
     public void start(Stage stage) throws Exception {
         
         
-        videoUrl="file:/C:/Users/esraa/OneDrive/Documents/NetBeansProjects/TicTacToeGame/TicTacToeClient/src/videos/m.mp3";
-        media = new Media(videoUrl);
+        videoUrl="src/videos/m.mp3";
+        media = new Media(new File(videoUrl).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
         music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+        
         
 
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
