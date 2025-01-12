@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD; " xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.SplashController">
+
+   <children>
+      <ProgressBar fx:id="progressBar" layoutX="232.0" layoutY="431.0" prefHeight="32.0" prefWidth="325.0" progress="0.0" />
+      <Label layoutX="343.0" layoutY="476.0" text="Loading ..." textFill="#ffa62b">
+         <font>
+            <Font name="Calibri Bold" size="24.0" />
+         </font></Label>
+      <ImageView fitHeight="143.0" fitWidth="606.0" layoutX="121.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="498.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="110.640625" AnchorPane.topAnchor="63.0">
+         <image>
+            <Image url="@../Images/logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="112.0" layoutY="299.0" prefHeight="70.0" prefWidth="578.0" text="The timeless game, reimagined for your desktop!" textFill="#82c0cc">
+         <font>
+            <Font name="Calibri Bold" size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
