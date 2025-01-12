@@ -1,5 +1,5 @@
-/TicTacToeClient/dist/
-/TicTacToeClient/build/
-/TicTacToeClient/nbproject/private/
+/TicTacToeClient/dist/*
+/TicTacToeClient/build/*
+/TicTacToeClient/nbproject/private/*
 /TicTacToeClient/build.xml
 /TicTacToeClient/manifest.mf
