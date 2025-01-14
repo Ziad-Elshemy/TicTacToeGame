@@ -5,11 +5,17 @@
  */
 package tictactoeclient;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import utilities.Colors;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +25,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tictactoeclient.GameTracker.Move;
 import utilities.Strings;
 
 /**
@@ -39,7 +45,12 @@ public class GameScreenController implements Initializable {
     int drawScore;
     Navigator navigator;
     ArrayList<String> boardState;
+    
+    GameTracker tracker; /// record
+    boolean isRecording;   //// record
 
+    
+    
     @FXML
     private Button btn1;
     @FXML
@@ -80,6 +91,10 @@ public class GameScreenController implements Initializable {
     private Rectangle gameOverRect;
     @FXML
     private StackPane rootPane;
+    @FXML
+    private Button RecordBtn;
+    @FXML
+    private Button playrecordBtn;
 
     /**
      * Initializes the controller class.
@@ -88,6 +103,8 @@ public class GameScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
+        tracker = new GameTracker();  // record
+        
         navigator = new Navigator();
         playerXScore = 0;
         playerOScore = 0;
@@ -95,6 +112,7 @@ public class GameScreenController implements Initializable {
         initializeBoardState();
         disableBoard();
         counter = 0;
+        isRecording = false; //record
     }    
 
 
@@ -111,6 +129,9 @@ public class GameScreenController implements Initializable {
         playerTurnBtn.setText("X-TURN");
         playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         initializeBoardState();
+        
+        RecordBtn.setDisable(false);////record
+        tracker.clearMoves();
     }
 
 
@@ -136,6 +157,16 @@ public class GameScreenController implements Initializable {
         }
         counter++;
         
+        if (counter > 0)  // check if the game is at the beginning
+        {
+            RecordBtn.setDisable(true);
+        }
+        
+        if(isRecording)
+        {
+            tracker.recordMove(button, playerSympol.charAt(0));
+        }
+        
         writePlayerSymolInArray(button, playerSympol);
         
         if(checkWinner("X")){
@@ -146,6 +177,11 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             String text = "Player X win";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
 
@@ -159,6 +195,11 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             String text = "Player O win";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
             // check for draw
@@ -176,6 +217,11 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             String text = "It's draw";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
             //showVideo(Strings.drawVideoPath, "Draw");
@@ -186,10 +232,7 @@ public class GameScreenController implements Initializable {
     
     void showVideo(String vidoeUrl , String symbol) throws IOException{
         
-        
         VideoPlayerController.videoUrl=vidoeUrl;
-        
-        
         Parent root = FXMLLoader.load(getClass().getResource("VideoPlayer.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
@@ -203,14 +246,7 @@ public class GameScreenController implements Initializable {
             VideoPlayerController.mediaPlayer.pause();
             TicTacToeClient.mediaPlayer.play();
 
-        
-        
         });
-        
-        
-        
-
-    
     }
     
     void writePlayerSymolInArray(Button button,String playerSympol){
@@ -332,6 +368,7 @@ public class GameScreenController implements Initializable {
                     btn9.setStyle("-fx-background-color: #008000");
                 }
                 return true;
+                
             }   
         }
         for(int i=0; i<3; i++){
@@ -381,5 +418,81 @@ public class GameScreenController implements Initializable {
         }
     return false;
     }
+
+    @FXML
+    private void RecordBtnAction(ActionEvent event) {
+        tracker.clearMoves();
+        isRecording = true;
+    }
+
+    @FXML
+    private void playrecordBtnAction(ActionEvent event) {
+        if(!tracker.getMoves().isEmpty())
+        {
+             initializeBoardState();
+             disableBoard();
+           //  replayGame();
+             RecordBtn.setDisable(false);
+        }
+        
+    }
     
+    
+    
+    
+ /*   
+    private void replayGame() {
+        try {
+            FileInputStream fileInput;
+            ObjectInputStream objectInput;
+            fileInput =new FileInputStream(new File("C:/Users/TBARAK/Desktop/file1"));
+            ObjectInputStream = new ObjectInputStream(fileInput);
+            new Thread(() -> {
+                try {
+                    
+                    
+                    
+                    //System.out.println("replay function");
+                    for (Move move : tracker.getMoves()) {
+                        Button button = move.getButton(); // Get the button directly from the Move object
+                        char player = move.getPlayer();   // Get the player (X or O)
+                        
+                        javafx.application.Platform.runLater(() -> {
+                            button.setText(String.valueOf(player));  // Set the text of the button to the player's mark
+                        });
+                        
+                        Thread.sleep(700);  // 0.7-second delay between moves
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+*/
+   /* 
+    private void replayGame() {
+    new Thread(() -> {
+        try {
+            //System.out.println("replay function");
+            for (Move move : tracker.getMoves()) {
+                Button button = move.getButton(); // Get the button directly from the Move object
+                char player = move.getPlayer();   // Get the player (X or O)
+
+                javafx.application.Platform.runLater(() -> {
+                    button.setText(String.valueOf(player));  // Set the text of the button to the player's mark
+                });
+
+                Thread.sleep(700);  // 0.7-second delay between moves
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }).start();
+}
+*/
 }

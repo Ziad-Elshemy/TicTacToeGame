@@ -26,7 +26,7 @@ public class TicTacToeClient extends Application {
     private  Media media;
     static  MediaPlayer mediaPlayer;
     private  String videoUrl;
-    private  MediaView music;
+    //private  MediaView music;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -35,7 +35,7 @@ public class TicTacToeClient extends Application {
         videoUrl="src/videos/m.mp3";
         media = new Media(new File(videoUrl).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
-        music=new MediaView(mediaPlayer);
+        //music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
         
@@ -46,9 +46,6 @@ public class TicTacToeClient extends Application {
         stage.setScene(scene);
         stage.show();
         
-        
-      
-     
     }
 
     /**
