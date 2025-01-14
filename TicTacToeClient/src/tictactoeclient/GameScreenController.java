@@ -207,6 +207,16 @@ public class GameScreenController implements Initializable {
         
         });
         
+       VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                
+                stage.close();
+                
+                
+            }
+        });
+        
         
         
 
