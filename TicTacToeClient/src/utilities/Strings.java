@@ -13,6 +13,8 @@ public class Strings {
     public static String winnerVideoPath="src/videos/w.mp4";
     public static String loserVideoPath="src/videos/w.mp4";
     public static String drawVideoPath="src/videos/w.mp4";
+    public static String music="src/videos/m.mp3";
+
     
     
 

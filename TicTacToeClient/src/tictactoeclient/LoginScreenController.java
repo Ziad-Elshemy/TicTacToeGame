@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -48,6 +49,42 @@ public class LoginScreenController implements Initializable {
     private VBox mainVBox;
     @FXML
     private ImageView logoImage;
+    
+    @FXML
+    private Button muteBtn;
+    
+    
+    @FXML
+    private ImageView muteImg;
+    
+   
+    
+    
+    
+    @FXML
+    void onMuteBtnClicked(ActionEvent event){
+        
+        
+        
+       
+        
+       if( TicTacToeClient.isMuted){
+        TicTacToeClient.mediaPlayer.play();
+        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+         TicTacToeClient.isMuted=false;
+        
+        }
+       else {
+        TicTacToeClient.mediaPlayer.pause();
+        muteImg.setImage(new Image("file:src/Images/mute.png"));
+         TicTacToeClient.isMuted=true;
+       
+       }
+        
+    
+    
+    
+    }
 
     /**
      * Initializes the controller class.
@@ -58,6 +95,7 @@ public class LoginScreenController implements Initializable {
          // Center the VBox when the window is first loaded
         navigator = new Navigator();
         centerVBox();
+        TicTacToeClient.isMuted=false;
 
         // Add listeners to handle resizing dynamically
 //        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
