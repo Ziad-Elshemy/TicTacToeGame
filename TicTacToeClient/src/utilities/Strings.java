@@ -11,8 +11,8 @@ package utilities;
  */
 public class Strings {
     public static String winnerVideoPath="src/videos/w.mp4";
-    public static String loserVideoPath="src/videos/w.mp4";
-    public static String drawVideoPath="src/videos/w.mp4";
+    public static String loserVideoPath="src/videos/loser.mp4";
+    public static String drawVideoPath="src/videos/d.mp4";
     
     
 

@@ -5,16 +5,25 @@
  */
 package tictactoeclient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import utilities.Strings;
 
 /**
  * FXML Controller class
@@ -188,7 +197,7 @@ public class VsComputerSceneController implements Initializable {
          for(int i=0 ; i<9 ; i++)
         {
             myButtons[i].setText("");
-            myButtons[i].setStyle("-fx-background color :rgb(22, 105, 122) ;");
+            myButtons[i].setStyle("-fx-background-color: #16697A");
         }
     }
     
@@ -386,6 +395,11 @@ public class VsComputerSceneController implements Initializable {
                 myButtons[i].setText("X");
                 if(checkForWinner())
                 {
+                    try {
+                        showVideo(Strings.winnerVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     gameOverToast.setText("Human Wins !!!");
                     humanWinCounter+=5;
                     humanScoreButton.setText(Integer.toString(humanWinCounter));
@@ -401,6 +415,11 @@ public class VsComputerSceneController implements Initializable {
                     computerEasyMove(i, board);
                     if(checkForWinner())
                     {
+                        try {
+                            showVideo(Strings.loserVideoPath,"You are Loser");
+                        } catch (IOException ex) {
+                            Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         gameOverToast.setText("Computer Wins !!!");
                         computerWinCounter+=5;
                         computerScoreButton.setText(Integer.toString(computerWinCounter));
@@ -436,6 +455,39 @@ public class VsComputerSceneController implements Initializable {
         move = PlayAgainstComputer.findBestMove(board);
         int index = getIndex(move[0], move[1]);
         myButtons[index].setText("O");
+    }
+    
+    void showVideo(String vidoeUrl , String symbol) throws IOException{
+        
+        VideoPlayerController.videoUrl=vidoeUrl;
+        Parent root = FXMLLoader.load(getClass().getResource("VideoPlayer.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setTitle(symbol);
+        stage.show();
+        
+        stage.setOnCloseRequest((event)->{
+            
+            VideoPlayerController.mediaPlayer.pause();
+            TicTacToeClient.mediaPlayer.play();
+
+        });
+        
+       VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                
+                stage.close();
+                
+                
+            }
+        });
+        
+        
+        
+
     }
     
      private void computerSmartMove(int i , int [][] board)

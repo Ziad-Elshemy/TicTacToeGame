@@ -6,6 +6,8 @@
 package tictactoeclient;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +31,7 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
         } catch (IOException ex) {
-            //Logger.getLogger(FXMLDocumentTestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+        }     
     }
 }

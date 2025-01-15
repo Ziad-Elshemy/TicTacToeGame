@@ -229,7 +229,7 @@ public class GameScreenController implements Initializable {
             }
             //disableBoard();
             counter=0;
-            //showVideo(Strings.drawVideoPath, "Draw");
+            showVideo(Strings.drawVideoPath, "Draw");
         }
         
     }

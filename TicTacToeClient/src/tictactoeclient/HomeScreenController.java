@@ -130,7 +130,7 @@ public class HomeScreenController implements Initializable {
     @FXML
     void onLocalTwoPlayersButtonClicked(ActionEvent event) {
         
-         navigator.goToPage(event,"GameScreen.fxml");
+         navigator.goToPage(event,"FXMLGameScreen.fxml");
 
 
     }

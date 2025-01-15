@@ -11,51 +11,47 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
+<VBox alignment="CENTER" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.RegisterScreenController">
    <children>
-      <HBox alignment="CENTER" style="-fx-background-color: #009EAD;">
+      <HBox alignment="CENTER" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;">
          <children>
-            <AnchorPane>
+            <AnchorPane prefHeight="860.0" prefWidth="1430.0">
                <children>
-                  <Pane fx:id="normalPane" layoutX="-244.0" layoutY="-6.0" prefHeight="860" prefWidth="1430.0" style="-fx-background-color: #009EAD; -fx-background-radius: 20;">
+                  <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="606.0" layoutX="424.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Pane fx:id="innerPane" layoutX="492.0" layoutY="305.0" prefHeight="303.0" prefWidth="413.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;">
                      <children>
-                        <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="606.0" layoutX="479.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/logo.png" />
-                           </image>
-                        </ImageView>
-                        <Pane fx:id="innerPane" layoutX="549.0" layoutY="284.0" prefHeight="303.0" prefWidth="413.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;">
-                           <children>
-                              <TextField fx:id="usernameTextField" layoutX="165.0" layoutY="84.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
-                              <Label fx:id="usernameLabel" layoutX="22.0" layoutY="85.0" style="-fx-font: Fredoke One;" text="Username" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold Italic" size="24.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="emailLabel" layoutX="44.0" layoutY="130.0" text="e-mail" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold Italic" size="24.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="emailTextField" layoutX="165.0" layoutY="129.0" style="-fx-background-radius: 20;" />
-                              <Label fx:id="passwordLabel" layoutX="27.0" layoutY="176.0" text="Password" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold Italic" size="24.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="passwordTextField" layoutX="165.0" layoutY="174.0" style="-fx-background-radius: 20;" />
-                              <Button fx:id="registerButton" layoutX="192.0" layoutY="222.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold Italic" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Label layoutX="161.0" layoutY="7.0" style="-fx-alignment: center;" text="Register" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold Italic" size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
+                        <TextField fx:id="usernameTextField" layoutX="165.0" layoutY="84.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
+                        <Label fx:id="usernameLabel" layoutX="22.0" layoutY="85.0" style="-fx-font: Fredoke One;" text="Username" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emailLabel" layoutX="44.0" layoutY="130.0" text="e-mail" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="emailTextField" layoutX="165.0" layoutY="129.0" style="-fx-background-radius: 20;" />
+                        <Label fx:id="passwordLabel" layoutX="27.0" layoutY="176.0" text="Password" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="passwordTextField" layoutX="165.0" layoutY="174.0" style="-fx-background-radius: 20;" />
+                        <Button fx:id="registerButton" layoutX="212.0" layoutY="222.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="18.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="161.0" layoutY="7.0" style="-fx-alignment: center;" text="Register" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="36.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                </children>

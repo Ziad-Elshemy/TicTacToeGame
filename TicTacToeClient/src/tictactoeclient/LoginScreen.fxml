@@ -17,7 +17,7 @@
          <children>
             <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
                <children>
-                  <VBox fx:id="mainVBox" alignment="CENTER" layoutX="175.0" layoutY="251.0" prefHeight="364.0" prefWidth="471.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;" AnchorPane.bottomAnchor="183.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="142.0" AnchorPane.topAnchor="251.0">
+                  <VBox fx:id="mainVBox" alignment="CENTER" layoutX="146.0" layoutY="253.0" prefHeight="364.0" prefWidth="471.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="146.0" AnchorPane.rightAnchor="171.0" AnchorPane.topAnchor="253.0">
                      <Label style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" text="Welcome to Tic Tac Toe" />
                      
                      <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="406.0" promptText="Username" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
@@ -37,7 +37,7 @@
                      </VBox>
                   </VBox>
                   
-                  <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="660.0" layoutX="140.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="660.0" layoutX="104.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/logo.png" />
                      </image>
