@@ -65,7 +65,6 @@ public class RegisterScreenController implements Initializable {
         normalPane.setBackground(new Background(new BackgroundFill(Color.rgb(22, 105, 122),null,null)));
         registerButton.setBackground(new Background(new BackgroundFill(Color.rgb(130,192, 204),null,null)));
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
-        innerPane.setStyle("-fx-border-radius: 15;"+" "+"-fx-background-radius: 15;"+" "+"-fx-padding: 10; "+" "+"-fx-background-color: white;");
     }    
 
     @FXML
