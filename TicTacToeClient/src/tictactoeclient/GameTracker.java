@@ -7,42 +7,44 @@ package tictactoeclient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import javafx.scene.control.Button;
+
 
 /**
  *
  * @author TBARAK
  */
-public class GameTracker {
-    private List<Move> moves = new ArrayList<>();
+public class GameTracker implements Serializable{
+    private ArrayList<Move> moves = new ArrayList<>();
     
     // class to represent a move
-    public static class Move implements Serializable{
-        transient Button button;
+    public class Move implements Serializable{
+
+        String button;
         char player;
 
-        public Move(Button button, char player) {
+        public Move(String button, char player) {
             this.button = button;
             this.player = player;
         }
 
-        public Button getButton() {
+        public String getButton() {
             return button;
         }
 
         public char getPlayer() {
             return player;
         }
+        
     }
 
     //  record a move
-    public void recordMove(Button button, char player) {
+    public void recordMove(String button, char player) {
         moves.add(new Move(button, player));
+        //System.out.println("button ="+button+"player = "+player);
     }
 
     // get moves
-    public List<Move> getMoves() {
+    public ArrayList<Move> getMoves() {
         return moves;
     }
 
@@ -52,7 +54,8 @@ public class GameTracker {
     }
     //sava to file
     public void saveToFile(){
-        RecordFile recordFile = new RecordFile(moves);
+        System.out.println("MOVES is GameRecod" + moves.toString());
+        RecordFile.addToFile(moves);
 
     }
 }

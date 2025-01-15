@@ -5,16 +5,25 @@
  */
 package tictactoeclient;
 
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import tictactoeclient.GameTracker.Move;
 
 /**
@@ -22,33 +31,56 @@ import tictactoeclient.GameTracker.Move;
  * @author HANY
  */
 public class RecordFile {
-    //FileChooser fileChooser;
     File file;
     FileOutputStream fileOutput;
-    DataOutputStream dataOutput;
     ObjectOutputStream objectOutput;
-    public RecordFile(List<Move> mov)
-    {
-        //fileChooser = new FileChooser();
-        //file = fileChooser.showSaveDialog(null);
-        if(file !=null)
-        {
-            try {
-                fileOutput = new FileOutputStream(new File("C:/Users/TBARAK/Desktop/file1"));
-                dataOutput = new DataOutputStream(fileOutput);
-                objectOutput = new ObjectOutputStream(fileOutput);
-                String msg = "added to file";
-                ///dataOutput.writeUTF(msg);
-                objectOutput.writeObject(mov);
-                dataOutput.close();
-                fileOutput.close();
-                
-                
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(RecordFile.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(RecordFile.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    static String localDate = getDate();
+    
+    
+     public static void addToFile(ArrayList<Move> moves) {
+        String fileName = localDate;  // Use current date and time as file name
+        File file = new File("src/games/" + fileName);
+
+        try (FileOutputStream fileOutput = new FileOutputStream(file);
+             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
+
+            System.out.println("MOVES in RecordFile class: " + moves.toString());
+            objectOutput.writeObject(moves);  // Write the list of moves to the file
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
+    public static ArrayList<Move> readFromFile() {
+        ArrayList<Move> moves = null;
+        System.out.println("Current Date ="+localDate);
+        File file=new File( "src/games/"+localDate);
+        try (
+              
+             FileInputStream fileInputStream = new FileInputStream(file);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+
+            moves = (ArrayList<Move>) objectInputStream.readObject(); // read ArrayList of moves
+
+        
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RecordFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RecordFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RecordFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return moves;
+    }
+    private static String getDate()
+    {
+      Date  myDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        
+        return dateFormat.format(myDate);
+    }
+    
 }

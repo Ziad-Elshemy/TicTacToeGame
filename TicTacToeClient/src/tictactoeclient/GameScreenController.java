@@ -5,17 +5,21 @@
  */
 package tictactoeclient;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import utilities.Colors;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +33,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static sun.plugin2.os.windows.Windows.ReadFile;
 import tictactoeclient.GameTracker.Move;
 import utilities.Strings;
 
@@ -164,7 +169,7 @@ public class GameScreenController implements Initializable {
         
         if(isRecording)
         {
-            tracker.recordMove(button, playerSympol.charAt(0));
+            tracker.recordMove(button.getId(), playerSympol.charAt(0));
         }
         
         writePlayerSymolInArray(button, playerSympol);
@@ -431,68 +436,18 @@ public class GameScreenController implements Initializable {
         {
              initializeBoardState();
              disableBoard();
-           //  replayGame();
+             startReplayGame();
              RecordBtn.setDisable(false);
         }
         
     }
-    
-    
-    
-    
- /*   
-    private void replayGame() {
-        try {
-            FileInputStream fileInput;
-            ObjectInputStream objectInput;
-            fileInput =new FileInputStream(new File("C:/Users/TBARAK/Desktop/file1"));
-            ObjectInputStream = new ObjectInputStream(fileInput);
-            new Thread(() -> {
-                try {
-                    
-                    
-                    
-                    //System.out.println("replay function");
-                    for (Move move : tracker.getMoves()) {
-                        Button button = move.getButton(); // Get the button directly from the Move object
-                        char player = move.getPlayer();   // Get the player (X or O)
-                        
-                        javafx.application.Platform.runLater(() -> {
-                            button.setText(String.valueOf(player));  // Set the text of the button to the player's mark
-                        });
-                        
-                        Thread.sleep(700);  // 0.7-second delay between moves
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}
-*/
-   /* 
-    private void replayGame() {
-    new Thread(() -> {
-        try {
-            //System.out.println("replay function");
-            for (Move move : tracker.getMoves()) {
-                Button button = move.getButton(); // Get the button directly from the Move object
-                char player = move.getPlayer();   // Get the player (X or O)
 
-                javafx.application.Platform.runLater(() -> {
-                    button.setText(String.valueOf(player));  // Set the text of the button to the player's mark
-                });
+ private void startReplayGame()
+ {
+      ArrayList<GameTracker.Move> moves = RecordFile.readFromFile();
+      GameReplay gamereplay = new GameReplay();
+     gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+ }
 
-                Thread.sleep(700);  // 0.7-second delay between moves
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }).start();
-}
-*/
+
 }
