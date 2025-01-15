@@ -40,7 +40,7 @@ public class TicTacToeClient extends Application {
         mediaPlayer.play();
         
         
-
+        
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

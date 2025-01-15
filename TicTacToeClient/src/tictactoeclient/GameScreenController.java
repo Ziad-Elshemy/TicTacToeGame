@@ -252,6 +252,20 @@ public class GameScreenController implements Initializable {
             TicTacToeClient.mediaPlayer.play();
 
         });
+        
+       VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                
+                stage.close();
+                
+                
+            }
+        });
+        
+        
+        
+
     }
     
     void writePlayerSymolInArray(Button button,String playerSympol){
