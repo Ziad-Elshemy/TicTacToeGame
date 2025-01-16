@@ -178,7 +178,7 @@ public class GameScreenController implements Initializable {
         writePlayerSymolInArray(button, playerSympol);
         
         if(checkWinner("X")){
-            playerXScore+=10;
+            playerXScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
@@ -196,7 +196,7 @@ public class GameScreenController implements Initializable {
             showVideo(Strings.winnerVideoPath,"X - Winner");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
         }else if(checkWinner("O")){
-            playerOScore+=10;
+            playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
@@ -214,8 +214,8 @@ public class GameScreenController implements Initializable {
             showVideo(Strings.winnerVideoPath,"O - Winner");
             //showVideo(Strings.loserVideoPath, "X - loser");
         }else if(counter == 9){
-            playerXScore+=5;
-            playerOScore+=5;
+            //playerXScore+=5;
+            //playerOScore+=5;
             drawScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             playerOScoreBtn.setText(""+playerOScore);

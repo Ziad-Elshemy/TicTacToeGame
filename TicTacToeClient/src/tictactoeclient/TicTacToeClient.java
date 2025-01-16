@@ -41,7 +41,7 @@ public class TicTacToeClient extends Application {
         mediaPlayer =new MediaPlayer(media);
         //music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.volumeProperty().set(0.02);
+        mediaPlayer.volumeProperty().set(0.05);
         mediaPlayer.play();
         
         
