@@ -144,7 +144,7 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     void onLogoutButtonClicked(ActionEvent event) {
-
+        navigator.goToPage(event,"LoginScreen.fxml");
     }
 
     @FXML
