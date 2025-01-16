@@ -15,15 +15,29 @@
    <children>
       <HBox alignment="CENTER" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
          <children>
+            <AnchorPane prefHeight="795.0" prefWidth="0.0">
+               <children>
+                  <Button fx:id="muteBtn" layoutX="-261.0" layoutY="658.0" mnemonicParsing="false" onAction="#onMuteBtnClicked" prefHeight="58.0" prefWidth="71.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="TRANSPARENT">
+                     <graphic>
+                        <ImageView fx:id="muteImg" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/volume.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
             <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="704.0" prefWidth="788.0" style="-fx-background-color: #009EAD;">
                <children>
-                  <VBox fx:id="mainVBox" alignment="CENTER" layoutX="146.0" layoutY="253.0" prefHeight="364.0" prefWidth="471.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="146.0" AnchorPane.rightAnchor="171.0" AnchorPane.topAnchor="253.0">
+                  <VBox fx:id="mainVBox" alignment="CENTER" layoutX="159.0" layoutY="240.0" prefHeight="364.0" prefWidth="471.0" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10; -fx-padding: 40;" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="158.0" AnchorPane.topAnchor="240.0">
+
                      <Label style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" text="Welcome to Tic Tac Toe" />
                      
-                     <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="406.0" promptText="Username" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
+                                                                     <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="406.0" promptText="Username" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
                      <PasswordField fx:id="passwordField" prefHeight="63.0" prefWidth="406.0" promptText="Password" style="-fx-pref-height: 40; -fx-font-size: 14px;" />
                      
-                     <VBox alignment="CENTER" spacing="10">
+                                                                     <VBox alignment="CENTER" spacing="10">
                         <Button fx:id="loginButton" onAction="#gologin" style="-fx-background-color: #ffa62b; -fx-text-fill: white; -fx-font-size: 16px; -fx-pref-width: 250; -fx-background-radius: 20;" text="Login">
                            <VBox.margin>
                               <Insets />
@@ -37,7 +51,8 @@
                      </VBox>
                   </VBox>
                   
-                  <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="660.0" layoutX="104.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="logoImage" fitHeight="143.0" fitWidth="660.0" layoutX="147.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+
                      <image>
                         <Image url="@../Images/logo.png" />
                      </image>

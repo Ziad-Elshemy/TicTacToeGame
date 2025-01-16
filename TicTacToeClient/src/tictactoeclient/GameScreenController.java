@@ -252,7 +252,10 @@ public class GameScreenController implements Initializable {
         stage.setOnCloseRequest((event)->{
             
             VideoPlayerController.mediaPlayer.pause();
-            TicTacToeClient.mediaPlayer.play();
+            if(!TicTacToeClient.isMuted){
+               TicTacToeClient.mediaPlayer.play();
+            
+            }
 
         });
         
@@ -261,6 +264,10 @@ public class GameScreenController implements Initializable {
             public void run() {
                 
                 stage.close();
+                if(!TicTacToeClient.isMuted){
+                   TicTacToeClient.mediaPlayer.play();
+            
+            }
                 
                 
             }

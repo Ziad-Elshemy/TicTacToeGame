@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -65,27 +66,6 @@ public class HomeScreenController implements Initializable {
     private Text score11;
 
 
-    @FXML
-    private Circle avatar112;
-
-    @FXML
-    private Text username12;
-
-    @FXML
-    private Text score12;
-
-
-    @FXML
-    private Circle avatar1121;
-
-    @FXML
-    private Text username121;
-
-    @FXML
-    private Text score121;
-
-    @FXML
-    private Button inviteButton;
 
     @FXML
     private Button editProfileButton;
@@ -100,32 +80,59 @@ public class HomeScreenController implements Initializable {
     private Button localTwoPlayersButton;
     @FXML
     private Circle avatarOne;
-    @FXML
-    private Circle avatar2;
-    @FXML
-    private ImageView userImage2;
-    @FXML
-    private Circle avatar3;
-    @FXML
-    private ImageView userImage3;
-    @FXML
-    private Circle avatar4;
-    @FXML
-    private ImageView userImage4;
     Navigator navigator;
+    @FXML
+    private AnchorPane userCard;
+    @FXML
+    private AnchorPane userCard1;
+    @FXML
+    private Circle avatarOne1;
+    @FXML
+    private ImageView userImage11;
+    @FXML
+    private AnchorPane userCard11;
+    @FXML
+    private Circle avatarOne11;
+    @FXML
+    private ImageView userImage111;
+    @FXML
+    private Circle avatar1111;
+    @FXML
+    private Text username111;
+    @FXML
+    private Text score111;
+    @FXML
+    private AnchorPane userCard111;
+    @FXML
+    private Circle avatarOne111;
+    @FXML
+    private ImageView userImage1111;
+    @FXML
+    private Circle avatar11111;
+    @FXML
+    private Text username1111;
+    @FXML
+    private Text score1111;
+    @FXML
+    private Button muteBtn;
+    @FXML
+    private ImageView muteImg;
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "FXMLEditProfile.fxml");
 
     }
 
-    @FXML
     void onInviteButtonClicked(ActionEvent event) {
          
         navigator.goToPage(event,"GameScreen.fxml");
 
 
     }
+    
+   
 
     @FXML
     void onLocalTwoPlayersButtonClicked(ActionEvent event) {
@@ -155,6 +162,45 @@ public class HomeScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         navigator=new Navigator();
+        if( !TicTacToeClient.isMuted){
+           
+         muteImg.setImage(new Image("file:src/Images/volume.png")); 
+        
+        }
+        
+       else {
+           
+         muteImg.setImage(new Image("file:src/Images/mute.png"));
+       
+       }
     }    
+
+     
+    @FXML
+    void onMuteBtnClicked(ActionEvent event){
+        
+        
+       if( TicTacToeClient.isMuted){
+        TicTacToeClient.mediaPlayer.play();
+        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+         TicTacToeClient.isMuted=false;
+        
+        }
+       else {
+        TicTacToeClient.mediaPlayer.pause();
+        muteImg.setImage(new Image("file:src/Images/mute.png"));
+         TicTacToeClient.isMuted=true;
+       
+       }
+        
+
+    }
+    
+    @FXML
+    void onBackIconClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "LoginScreen.fxml");
+
+    }
     
 }

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
  */
 public class Navigator {
     public void goToPage(ActionEvent event,String targetPage){
+        
         try {
             System.out.println("You clicked me!");
             //label.setText("Hello World!");
@@ -32,6 +33,8 @@ public class Navigator {
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
+        
+
     }
 }
