@@ -26,8 +26,10 @@ public class TicTacToeClient extends Application {
     
     private  Media media;
     static  MediaPlayer mediaPlayer;
-    private  MediaView music;
+
+  private  MediaView music;
      static boolean isMuted;
+
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -37,9 +39,9 @@ public class TicTacToeClient extends Application {
         
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
-        music=new MediaView(mediaPlayer);
+        //music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
+        //mediaPlayer.play();
         
         
         
@@ -48,9 +50,6 @@ public class TicTacToeClient extends Application {
         stage.setScene(scene);
         stage.show();
         
-        
-      
-     
     }
 
     /**

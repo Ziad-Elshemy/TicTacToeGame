@@ -143,5 +143,10 @@ public class LoginScreenController implements Initializable {
     private void localGameBtnAction(ActionEvent event) {
         navigator.goToPage(event, "FXMLGameScreen.fxml");
     }
+
+    @FXML
+    private void onPcButton(ActionEvent event) {
+        navigator.goToPage(event, "VsComputerScene.fxml");
+    }
     
 }
