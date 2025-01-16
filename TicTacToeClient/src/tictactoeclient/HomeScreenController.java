@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -119,6 +120,8 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "FXMLEditProfile.fxml");
 
     }
 
@@ -128,6 +131,8 @@ public class HomeScreenController implements Initializable {
 
 
     }
+    
+   
 
     @FXML
     void onLocalTwoPlayersButtonClicked(ActionEvent event) {
@@ -157,12 +162,45 @@ public class HomeScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         navigator=new Navigator();
+        if( !TicTacToeClient.isMuted){
+           
+         muteImg.setImage(new Image("file:src/Images/volume.png")); 
+        
+        }
+        
+       else {
+           
+         muteImg.setImage(new Image("file:src/Images/mute.png"));
+       
+       }
     }    
 
+     
     @FXML
-    private void onMuteBtnClicked(ActionEvent event) {
+    void onMuteBtnClicked(ActionEvent event){
         
         
+       if( TicTacToeClient.isMuted){
+        TicTacToeClient.mediaPlayer.play();
+        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+         TicTacToeClient.isMuted=false;
+        
+        }
+       else {
+        TicTacToeClient.mediaPlayer.pause();
+        muteImg.setImage(new Image("file:src/Images/mute.png"));
+         TicTacToeClient.isMuted=true;
+       
+       }
+        
+
+    }
+    
+    @FXML
+    void onBackIconClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "LoginScreen.fxml");
+
     }
     
 }

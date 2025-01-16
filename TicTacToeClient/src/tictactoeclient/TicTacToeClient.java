@@ -32,6 +32,8 @@ public class TicTacToeClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
+         isMuted=false;
+        
         
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);

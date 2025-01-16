@@ -95,7 +95,19 @@ public class LoginScreenController implements Initializable {
          // Center the VBox when the window is first loaded
         navigator = new Navigator();
         centerVBox();
-        TicTacToeClient.isMuted=false;
+       
+        
+             
+       if( !TicTacToeClient.isMuted){
+           
+         muteImg.setImage(new Image("file:src/Images/volume.png")); 
+        
+        }
+       else {
+           
+         muteImg.setImage(new Image("file:src/Images/mute.png"));
+       
+       }
 
         // Add listeners to handle resizing dynamically
 //        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
