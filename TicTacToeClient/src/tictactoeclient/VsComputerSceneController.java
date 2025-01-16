@@ -135,6 +135,7 @@ public class VsComputerSceneController implements Initializable {
         stalemate=true;
         firstMove=true;
         Difficulty='\0';
+        hideGameStatus();
         boardInit();
         difficultyButtonEnable();
         buttonsDisable();
@@ -465,6 +466,11 @@ public class VsComputerSceneController implements Initializable {
                     }
                     else if(checkDraw())
                     {
+                         try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                         showGameStatus();
                         gameOverToast.setText("Stalemate !!");
                         drawCounter++;
@@ -538,75 +544,82 @@ public class VsComputerSceneController implements Initializable {
         int index = getIndex(move[0], move[1]);
         myButtons[index].setText("O");
     }
+     
+    private String[][] convertBoardToStringArray(int[][] board) {
+     String[][] stringBoard = new String[3][3];
+     for (int i = 0; i < 3; i++) {
+         for (int j = 0; j < 3; j++) {
+             if (board[i][j] == -1) {
+                 stringBoard[i][j] = "X";
+             } else if (board[i][j] == 1) {
+                 stringBoard[i][j] = "O";
+             } else {
+                 stringBoard[i][j] = "";
+             }
+         }
+     }
+     return stringBoard;
+   }
     
-    private void hardGameLogic(int i, ActionEvent event)
-    {
-        if(event.getSource()== myButtons[i])
-        {
-            if(myButtons[i].getText().isEmpty())
-            {
-                myButtons[i].setText("X");
-                if(checkForWinner())
-                {
-                    try {
+    
+   private void hardGameLogic(int i, ActionEvent event) {
+    if (event.getSource() == myButtons[i]) {
+        if (myButtons[i].getText().isEmpty()) {
+            myButtons[i].setText("X");
+            board[getRowCol(i)[0]][getRowCol(i)[1]] = -1; // Update the board for human move
+            if (checkForWinner()) {
+                 try {
                         showVideo(Strings.winnerVideoPath,"You are Winner");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    showGameStatus();
-                    gameOverToast.setText("Human Wins !!!");
-                    humanWinCounter+=5;
-                    humanScoreButton.setText(Integer.toString(humanWinCounter));
-                }
-                else if(checkDraw())
-                {
-                    try {
+                 showGameStatus();
+                gameOverToast.setText("Human Wins !!!");
+                humanWinCounter += 5;
+                humanScoreButton.setText(Integer.toString(humanWinCounter));
+            } else if (checkDraw()) {
+                 try {
                         showVideo(Strings.drawVideoPath,"You are Winner");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    showGameStatus();
-                    gameOverToast.setText("Stalemate !!!");
-                    drawCounter++;
-                    drawScoreButton.setText(Integer.toString(drawCounter));
-                }
-                else
-                {
-                    computerSmartMove(i, board);
-                    firstMove=false;
-                    if(checkForWinner())
-                    {
-                        try {
+                 showGameStatus();
+                gameOverToast.setText("Stalemate !!!");
+                drawCounter++;
+                drawScoreButton.setText(Integer.toString(drawCounter));
+            } else {
+                // Use HardLogic to determine the best move
+                HardLogic hardLogic = new HardLogic(convertBoardToStringArray(board));
+                int[] bestMove = hardLogic.findBestMove(9); // Adjust depth limit as needed
+                int index = getIndex(bestMove[0], bestMove[1]);
+                myButtons[index].setText("O");
+                board[bestMove[0]][bestMove[1]] = 1; // Update the board for computer move
+
+                if (checkForWinner()) {
+                     try {
                         showVideo(Strings.loserVideoPath,"You are Winner");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                        showGameStatus();
-                        gameOverToast.setText("Computer Wins !!!");
-                        computerWinCounter+=5;
-                        computerScoreButton.setText(Integer.toString(computerWinCounter));
-
-                    }
-                    else if(checkDraw())
-                    {
-                        try {
+                     showGameStatus();
+                    gameOverToast.setText("Computer Wins !!!");
+                    computerWinCounter += 5;
+                    computerScoreButton.setText(Integer.toString(computerWinCounter));
+                } else if (checkDraw()) {
+                     try {
                         showVideo(Strings.drawVideoPath,"You are Winner");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                        showGameStatus();
-                        gameOverToast.setText("Stalemate !!!");
-                        drawCounter++;
-                        drawScoreButton.setText(Integer.toString(drawCounter));
-                    }
-                    else
-                    {
-                        board[move[0]][move[1]]=-1;
-                    }
+                     showGameStatus();
+                    gameOverToast.setText("Stalemate !!!");
+                    drawCounter++;
+                    drawScoreButton.setText(Integer.toString(drawCounter));
                 }
             }
         }
     }
+   }
     
     private void hideGameStatus()
     {
