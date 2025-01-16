@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -44,13 +45,18 @@ public class EditProfileController implements Initializable {
     private Button cancelButton;
     @FXML
     private TextField passWordField;
+    
+    @FXML
+    private ImageView muteImg;
+    
+    Navigator navigator; 
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        navigator=new Navigator();
     }    
 
     @FXML
@@ -63,6 +69,34 @@ public class EditProfileController implements Initializable {
 
     @FXML
     private void onCancelButtonClicked(ActionEvent event) {
+    }
+    
+    @FXML
+    void onBackIconClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "HomeScreen.fxml");
+
+    }
+    
+         
+    @FXML
+    void onMuteBtnClicked(ActionEvent event){
+        
+        
+       if( TicTacToeClient.isMuted){
+        TicTacToeClient.mediaPlayer.play();
+        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+         TicTacToeClient.isMuted=false;
+        
+        }
+       else {
+        TicTacToeClient.mediaPlayer.pause();
+        muteImg.setImage(new Image("file:src/Images/mute.png"));
+         TicTacToeClient.isMuted=true;
+       
+       }
+        
+
     }
 
 
