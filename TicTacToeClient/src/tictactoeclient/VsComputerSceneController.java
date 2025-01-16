@@ -101,6 +101,7 @@ public class VsComputerSceneController implements Initializable {
           computerWinCounter=0;
           drawCounter=0;
           humanWinCounter=0;
+          hideGameStatus();
     }    
 
     @FXML
@@ -134,6 +135,7 @@ public class VsComputerSceneController implements Initializable {
         stalemate=true;
         firstMove=true;
         Difficulty='\0';
+        hideGameStatus();
         boardInit();
         difficultyButtonEnable();
         buttonsDisable();
@@ -147,6 +149,8 @@ public class VsComputerSceneController implements Initializable {
         stalemate=true;
         firstMove=true;
         buttonsEnable();
+        hardButton.setDisable(true);
+        mediumButton.setDisable(true);
         clear();
         boardInit();
         Difficulty = 'E';
@@ -160,6 +164,8 @@ public class VsComputerSceneController implements Initializable {
         firstMove=true;
         boardInit();
         buttonsEnable();
+        hardButton.setDisable(true);
+        easyButton.setDisable(true);
         clear();
         Difficulty = 'M';
     }
@@ -171,6 +177,8 @@ public class VsComputerSceneController implements Initializable {
         stalemate=true;
         firstMove=true;
         buttonsEnable();
+        mediumButton.setDisable(true);
+        easyButton.setDisable(true);
         clear();
         boardInit();
         Difficulty = 'H';
@@ -350,12 +358,24 @@ public class VsComputerSceneController implements Initializable {
                 myButtons[i].setText("X");
                 if(checkForWinner())
                 {
+                    try {
+                        showVideo(Strings.winnerVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    showGameStatus();
                     gameOverToast.setText("Human Wins !!!");
                     humanWinCounter+=5;
                     humanScoreButton.setText(Integer.toString(humanWinCounter));
                 }
                 else if(checkDraw())
                 {
+                    try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    showGameStatus();
                     gameOverToast.setText("Stalemate !!!");
                     drawCounter++;
                     drawScoreButton.setText(Integer.toString(drawCounter));
@@ -366,6 +386,12 @@ public class VsComputerSceneController implements Initializable {
                     firstMove=false;
                     if(checkForWinner())
                     {
+                        try {
+                        showVideo(Strings.loserVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        showGameStatus();
                         gameOverToast.setText("Computer Wins !!!");
                         computerWinCounter+=5;
                         computerScoreButton.setText(Integer.toString(computerWinCounter));
@@ -373,6 +399,12 @@ public class VsComputerSceneController implements Initializable {
                     }
                     else if(checkDraw())
                     {
+                        try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        showGameStatus();
                         gameOverToast.setText("Stalemate !!!");
                         drawCounter++;
                         drawScoreButton.setText(Integer.toString(drawCounter));
@@ -400,12 +432,19 @@ public class VsComputerSceneController implements Initializable {
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    showGameStatus();
                     gameOverToast.setText("Human Wins !!!");
                     humanWinCounter+=5;
                     humanScoreButton.setText(Integer.toString(humanWinCounter));
                 }
                 else if(checkDraw())
                 {
+                    try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    showGameStatus();
                     gameOverToast.setText("Stalemate !!!");
                     drawCounter++;
                     drawScoreButton.setText(Integer.toString(drawCounter));
@@ -420,12 +459,19 @@ public class VsComputerSceneController implements Initializable {
                         } catch (IOException ex) {
                             Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        showGameStatus();
                         gameOverToast.setText("Computer Wins !!!");
                         computerWinCounter+=5;
                         computerScoreButton.setText(Integer.toString(computerWinCounter));
                     }
                     else if(checkDraw())
                     {
+                         try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        showGameStatus();
                         gameOverToast.setText("Stalemate !!");
                         drawCounter++;
                         drawScoreButton.setText(Integer.toString(drawCounter));
@@ -498,51 +544,6 @@ public class VsComputerSceneController implements Initializable {
         int index = getIndex(move[0], move[1]);
         myButtons[index].setText("O");
     }
-    
- /*   private void hardGameLogic(int i, ActionEvent event)
-    {
-        if(event.getSource()== myButtons[i])
-        {
-            if(myButtons[i].getText().isEmpty())
-            {
-                myButtons[i].setText("X");
-                if(checkForWinner())
-                {
-                    gameOverToast.setText("Human Wins !!!");
-                    humanWinCounter+=5;
-                    humanScoreButton.setText(Integer.toString(humanWinCounter));
-                }
-                else if(checkDraw())
-                {
-                    gameOverToast.setText("Stalemate !!!");
-                    drawCounter++;
-                    drawScoreButton.setText(Integer.toString(drawCounter));
-                }
-                else
-                {
-                    computerSmartMove(i, board);
-                    firstMove=false;
-                    if(checkForWinner())
-                    {
-                        gameOverToast.setText("Computer Wins !!!");
-                        computerWinCounter+=5;
-                        computerScoreButton.setText(Integer.toString(computerWinCounter));
-
-                    }
-                    else if(checkDraw())
-                    {
-                        gameOverToast.setText("Stalemate !!!");
-                        drawCounter++;
-                        drawScoreButton.setText(Integer.toString(drawCounter));
-                    }
-                    else
-                    {
-                        board[move[0]][move[1]]=-1;
-                    }
-                }
-            }
-        }
-    }*/
      
     private String[][] convertBoardToStringArray(int[][] board) {
      String[][] stringBoard = new String[3][3];
@@ -567,10 +568,22 @@ public class VsComputerSceneController implements Initializable {
             myButtons[i].setText("X");
             board[getRowCol(i)[0]][getRowCol(i)[1]] = -1; // Update the board for human move
             if (checkForWinner()) {
+                 try {
+                        showVideo(Strings.winnerVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                 showGameStatus();
                 gameOverToast.setText("Human Wins !!!");
                 humanWinCounter += 5;
                 humanScoreButton.setText(Integer.toString(humanWinCounter));
             } else if (checkDraw()) {
+                 try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                 showGameStatus();
                 gameOverToast.setText("Stalemate !!!");
                 drawCounter++;
                 drawScoreButton.setText(Integer.toString(drawCounter));
@@ -583,10 +596,22 @@ public class VsComputerSceneController implements Initializable {
                 board[bestMove[0]][bestMove[1]] = 1; // Update the board for computer move
 
                 if (checkForWinner()) {
+                     try {
+                        showVideo(Strings.loserVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     showGameStatus();
                     gameOverToast.setText("Computer Wins !!!");
                     computerWinCounter += 5;
                     computerScoreButton.setText(Integer.toString(computerWinCounter));
                 } else if (checkDraw()) {
+                     try {
+                        showVideo(Strings.drawVideoPath,"You are Winner");
+                    } catch (IOException ex) {
+                        Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     showGameStatus();
                     gameOverToast.setText("Stalemate !!!");
                     drawCounter++;
                     drawScoreButton.setText(Integer.toString(drawCounter));
@@ -594,5 +619,20 @@ public class VsComputerSceneController implements Initializable {
             }
         }
     }
-  }
+   }
+    
+    private void hideGameStatus()
+    {
+        leftPolygon.setVisible(false);
+        rightPolygon.setVisible(false);
+        gameOverRect.setVisible(false);
+        gameOverToast.setVisible(false);
+    }
+     private void showGameStatus()
+    {
+        leftPolygon.setVisible(true);
+        rightPolygon.setVisible(true);
+        gameOverRect.setVisible(true);
+        gameOverToast.setVisible(true);
+    }
 }
