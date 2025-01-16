@@ -5,11 +5,21 @@
  */
 package tictactoeclient;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import utilities.Colors;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +29,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static sun.plugin2.os.windows.Windows.ReadFile;
+import tictactoeclient.GameTracker.Move;
 import utilities.Strings;
 
 /**
@@ -37,9 +48,15 @@ public class GameScreenController implements Initializable {
     int playerXScore;
     int playerOScore;
     int drawScore;
+    boolean isGameEnded = false;
     Navigator navigator;
     ArrayList<String> boardState;
+    
+    GameTracker tracker; /// record
+    boolean isRecording;   //// record
 
+    
+    
     @FXML
     private Button btn1;
     @FXML
@@ -80,6 +97,10 @@ public class GameScreenController implements Initializable {
     private Rectangle gameOverRect;
     @FXML
     private StackPane rootPane;
+    @FXML
+    private Button RecordBtn;
+    @FXML
+    private Button playrecordBtn;
 
     /**
      * Initializes the controller class.
@@ -88,6 +109,8 @@ public class GameScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
+        tracker = new GameTracker();  // record
+        
         navigator = new Navigator();
         playerXScore = 0;
         playerOScore = 0;
@@ -95,6 +118,7 @@ public class GameScreenController implements Initializable {
         initializeBoardState();
         disableBoard();
         counter = 0;
+        isRecording = false; //record
     }    
 
 
@@ -106,19 +130,24 @@ public class GameScreenController implements Initializable {
     @FXML
     private void newGameBtnAction(ActionEvent event) {
         enableBoard();
+        isGameEnded = false;
         playerTurnBtn.setVisible(true);
         newGameBtn.setVisible(false);
         playerTurnBtn.setText("X-TURN");
         playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         initializeBoardState();
+        
+        RecordBtn.setDisable(false);////record
+        tracker.clearMoves();
     }
 
 
     @FXML
     private void onPlayerClick(ActionEvent event) throws IOException {
+        
         Button button = (Button)event.getSource();
         String playerSympol = "";
-        if(!button.getText().toString().isEmpty()){
+        if(!button.getText().toString().isEmpty()||isGameEnded){
             return;
         }
         if(counter %2 == 0){
@@ -136,37 +165,57 @@ public class GameScreenController implements Initializable {
         }
         counter++;
         
+        if (counter > 0)  // check if the game is at the beginning
+        {
+            RecordBtn.setDisable(true);
+        }
+        
+        if(isRecording)
+        {
+            tracker.recordMove(button.getId(), playerSympol.charAt(0));
+        }
+        
         writePlayerSymolInArray(button, playerSympol);
         
         if(checkWinner("X")){
-            playerXScore+=10;
+            playerXScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
             String text = "Player X win";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
 
             showVideo(Strings.winnerVideoPath,"X - Winner");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
         }else if(checkWinner("O")){
-            playerOScore+=10;
+            playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
             String text = "Player O win";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
             // check for draw
             showVideo(Strings.winnerVideoPath,"O - Winner");
             //showVideo(Strings.loserVideoPath, "X - loser");
         }else if(counter == 9){
-            playerXScore+=5;
-            playerOScore+=5;
+            //playerXScore+=5;
+            //playerOScore+=5;
             drawScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             playerOScoreBtn.setText(""+playerOScore);
@@ -176,9 +225,14 @@ public class GameScreenController implements Initializable {
             newGameBtn.setVisible(true);
             String text = "It's draw";
             showGameOverToast(text);
+            if(isRecording)
+            {
+                 tracker.saveToFile();  ////add record to file
+                 isRecording = false; ///
+            }
             //disableBoard();
             counter=0;
-            //showVideo(Strings.drawVideoPath, "Draw");
+            showVideo(Strings.drawVideoPath, "Draw");
         }
         
     }
@@ -186,10 +240,7 @@ public class GameScreenController implements Initializable {
     
     void showVideo(String vidoeUrl , String symbol) throws IOException{
         
-        
         VideoPlayerController.videoUrl=vidoeUrl;
-        
-        
         Parent root = FXMLLoader.load(getClass().getResource("VideoPlayer.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
@@ -201,16 +252,30 @@ public class GameScreenController implements Initializable {
         stage.setOnCloseRequest((event)->{
             
             VideoPlayerController.mediaPlayer.pause();
-            TicTacToeClient.mediaPlayer.play();
+            if(!TicTacToeClient.isMuted){
+               TicTacToeClient.mediaPlayer.play();
+            
+            }
 
+        });
         
-        
+       VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                
+                stage.close();
+                if(!TicTacToeClient.isMuted){
+                   TicTacToeClient.mediaPlayer.play();
+            
+            }
+                
+                
+            }
         });
         
         
         
 
-    
     }
     
     void writePlayerSymolInArray(Button button,String playerSympol){
@@ -247,6 +312,17 @@ public class GameScreenController implements Initializable {
         btn9.setDisable(true);
     }
     private void enableBoard(){
+        btn1.setDisable(false);
+        btn2.setDisable(false);
+        btn3.setDisable(false);
+        btn4.setDisable(false);
+        btn5.setDisable(false);
+        btn6.setDisable(false);
+        btn7.setDisable(false);
+        btn8.setDisable(false);
+        btn9.setDisable(false);
+    }
+    private void stopEditBoard(){
         btn1.setDisable(false);
         btn2.setDisable(false);
         btn3.setDisable(false);
@@ -331,7 +407,9 @@ public class GameScreenController implements Initializable {
                     btn8.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
+                isGameEnded = true;
                 return true;
+                
             }   
         }
         for(int i=0; i<3; i++){
@@ -356,6 +434,7 @@ public class GameScreenController implements Initializable {
                     btn6.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
+                isGameEnded = true;
                 return true;
             }   
         }
@@ -367,6 +446,7 @@ public class GameScreenController implements Initializable {
             btn1.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
             btn9.setStyle("-fx-background-color: #008000");
+            isGameEnded = true;
             return true;
         }
         // check for diagonals winner
@@ -377,9 +457,36 @@ public class GameScreenController implements Initializable {
             btn3.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
             btn7.setStyle("-fx-background-color: #008000");
+            isGameEnded = true;
             return true;
         }
     return false;
     }
-    
+
+    @FXML
+    private void RecordBtnAction(ActionEvent event) {
+        tracker.clearMoves();
+        isRecording = true;
+    }
+
+    @FXML
+    private void playrecordBtnAction(ActionEvent event) {
+        if(!tracker.getMoves().isEmpty())
+        {
+             initializeBoardState();
+             disableBoard();
+             startReplayGame();
+             RecordBtn.setDisable(false);
+        }
+        
+    }
+
+ private void startReplayGame()
+ {
+      ArrayList<GameTracker.Move> moves = RecordFile.readFromFile();
+      GameReplay gamereplay = new GameReplay();
+     gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+ }
+
+
 }
