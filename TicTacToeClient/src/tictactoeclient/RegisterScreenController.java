@@ -4,7 +4,9 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import onlineplaying.ConnectionsHandler;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
 /**
  * FXML Controller class
@@ -23,12 +29,12 @@ import javafx.scene.layout.Pane;
 public class RegisterScreenController implements Initializable {
     
     Navigator navigator;
+    Gson gson;
+    PlayerDto player;
 
     private Pane normalPane;
     @FXML
     private TextField usernameTextField;
-    @FXML
-    private TextField emailTextField;
     @FXML
     private TextField passwordTextField;
     @FXML
@@ -36,19 +42,23 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private Label usernameLabel;
     @FXML
-    private Label emailLabel;
-    @FXML
     private Label passwordLabel;
     @FXML
     private ImageView logoImage;
     @FXML
     private Pane innerPane;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private Label nameLabel;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        gson = new Gson();
+        player = new PlayerDto();
         navigator = new Navigator();
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
     }    
@@ -57,6 +67,33 @@ public class RegisterScreenController implements Initializable {
     private void onRegisterClick(ActionEvent event) 
     {
         System.out.println("Register Button Clicked");
-        navigator.goToPage(event, "HomeScreen.fxml");
+        //navigator.goToPage(event, "HomeScreen.fxml");
+        
+//        //test to send data 
+//        Stage stage = (Stage)registerButton.getScene().getWindow();
+//        new ConnectionsHandler(stage);
+        
+        player.setUserName(usernameTextField.getText());
+        player.setName(nameTextField.getText());
+        player.setPassword(passwordTextField.getText());
+        
+        // create an array to save the code of registeration and the player object then convert the array to a json string
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.REGESTER_CODE);
+        //convert the player object to be string to add it to the array
+        requestArr.add(gson.toJson(player));
+        //now we have array of strings contain code and object, 
+
+        //so we need to convert all the array to string to send it to the server
+        String jsonRegisterationRequest = gson.toJson(requestArr);
+        
+        // now we need to send this string to the server using the sendRequest function
+        TicTacToeClient.connectionHandler.sendRequest(jsonRegisterationRequest);
+        System.out.println("the sendRequest data is: "+jsonRegisterationRequest);
+        
+        
+        
+        
+        
     }
 }

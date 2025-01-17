@@ -7,6 +7,7 @@ package tictactoeclient;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import onlineplaying.ConnectionsHandler;
 
 /**
  * FXML Controller class
@@ -117,6 +120,8 @@ public class HomeScreenController implements Initializable {
     private Button muteBtn;
     @FXML
     private ImageView muteImg;
+    @FXML
+    private Button inviteBtn;
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
@@ -125,11 +130,12 @@ public class HomeScreenController implements Initializable {
 
     }
 
+     @FXML
     void onInviteButtonClicked(ActionEvent event) {
          
-        navigator.goToPage(event,"GameScreen.fxml");
-
-
+        navigator.goToPage(event,"FXMLGameScreen.fxml");
+        
+        
     }
     
    
