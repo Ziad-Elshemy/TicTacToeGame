@@ -48,6 +48,7 @@ public class GameScreenController implements Initializable {
     int playerXScore;
     int playerOScore;
     int drawScore;
+    boolean isGameEnded = false;
     Navigator navigator;
     ArrayList<String> boardState;
     
@@ -129,6 +130,7 @@ public class GameScreenController implements Initializable {
     @FXML
     private void newGameBtnAction(ActionEvent event) {
         enableBoard();
+        isGameEnded = false;
         playerTurnBtn.setVisible(true);
         newGameBtn.setVisible(false);
         playerTurnBtn.setText("X-TURN");
@@ -142,9 +144,10 @@ public class GameScreenController implements Initializable {
 
     @FXML
     private void onPlayerClick(ActionEvent event) throws IOException {
+        
         Button button = (Button)event.getSource();
         String playerSympol = "";
-        if(!button.getText().toString().isEmpty()){
+        if(!button.getText().toString().isEmpty()||isGameEnded){
             return;
         }
         if(counter %2 == 0){
@@ -175,7 +178,7 @@ public class GameScreenController implements Initializable {
         writePlayerSymolInArray(button, playerSympol);
         
         if(checkWinner("X")){
-            playerXScore+=10;
+            playerXScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
@@ -193,7 +196,7 @@ public class GameScreenController implements Initializable {
             showVideo(Strings.winnerVideoPath,"X - Winner");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
         }else if(checkWinner("O")){
-            playerOScore+=10;
+            playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
@@ -211,8 +214,8 @@ public class GameScreenController implements Initializable {
             showVideo(Strings.winnerVideoPath,"O - Winner");
             //showVideo(Strings.loserVideoPath, "X - loser");
         }else if(counter == 9){
-            playerXScore+=5;
-            playerOScore+=5;
+            //playerXScore+=5;
+            //playerOScore+=5;
             drawScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             playerOScoreBtn.setText(""+playerOScore);
@@ -229,7 +232,7 @@ public class GameScreenController implements Initializable {
             }
             //disableBoard();
             counter=0;
-            //showVideo(Strings.drawVideoPath, "Draw");
+            showVideo(Strings.drawVideoPath, "Draw");
         }
         
     }
@@ -249,7 +252,10 @@ public class GameScreenController implements Initializable {
         stage.setOnCloseRequest((event)->{
             
             VideoPlayerController.mediaPlayer.pause();
-            TicTacToeClient.mediaPlayer.play();
+            if(!TicTacToeClient.isMuted){
+               TicTacToeClient.mediaPlayer.play();
+            
+            }
 
         });
         
@@ -258,6 +264,10 @@ public class GameScreenController implements Initializable {
             public void run() {
                 
                 stage.close();
+                if(!TicTacToeClient.isMuted){
+                   TicTacToeClient.mediaPlayer.play();
+            
+            }
                 
                 
             }
@@ -302,6 +312,17 @@ public class GameScreenController implements Initializable {
         btn9.setDisable(true);
     }
     private void enableBoard(){
+        btn1.setDisable(false);
+        btn2.setDisable(false);
+        btn3.setDisable(false);
+        btn4.setDisable(false);
+        btn5.setDisable(false);
+        btn6.setDisable(false);
+        btn7.setDisable(false);
+        btn8.setDisable(false);
+        btn9.setDisable(false);
+    }
+    private void stopEditBoard(){
         btn1.setDisable(false);
         btn2.setDisable(false);
         btn3.setDisable(false);
@@ -386,6 +407,7 @@ public class GameScreenController implements Initializable {
                     btn8.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
+                isGameEnded = true;
                 return true;
                 
             }   
@@ -412,6 +434,7 @@ public class GameScreenController implements Initializable {
                     btn6.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
+                isGameEnded = true;
                 return true;
             }   
         }
@@ -423,6 +446,7 @@ public class GameScreenController implements Initializable {
             btn1.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
             btn9.setStyle("-fx-background-color: #008000");
+            isGameEnded = true;
             return true;
         }
         // check for diagonals winner
@@ -433,6 +457,7 @@ public class GameScreenController implements Initializable {
             btn3.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
             btn7.setStyle("-fx-background-color: #008000");
+            isGameEnded = true;
             return true;
         }
     return false;

@@ -15,7 +15,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import static tictactoeclient.VideoPlayerController.videoUrl;
+import onlineplaying.ConnectionsHandler;
+import utilities.Strings;
+
 
 /**
  *
@@ -25,18 +27,22 @@ public class TicTacToeClient extends Application {
     
     private  Media media;
     static  MediaPlayer mediaPlayer;
-    private  String videoUrl;
-    //private  MediaView music;
+    private  MediaView music;
+    static boolean isMuted;
+    public static ConnectionsHandler connectionHandler;
+
     
     @Override
     public void start(Stage stage) throws Exception {
         
+         isMuted=false;
         
-        videoUrl="src/videos/m.mp3";
-        media = new Media(new File(videoUrl).toURI().toString());
+        
+        media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
         //music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.volumeProperty().set(0.05);
         mediaPlayer.play();
         
         
@@ -45,6 +51,8 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
+        connectionHandler = new ConnectionsHandler(stage);
         
     }
 
