@@ -15,6 +15,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import onlineplaying.ConnectionsHandler;
 import utilities.Strings;
 
 
@@ -26,9 +27,9 @@ public class TicTacToeClient extends Application {
     
     private  Media media;
     static  MediaPlayer mediaPlayer;
-
-  private  MediaView music;
-     static boolean isMuted;
+    private  MediaView music;
+    static boolean isMuted;
+    public static ConnectionsHandler connectionHandler;
 
     
     @Override
@@ -50,6 +51,8 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
+        connectionHandler = new ConnectionsHandler(stage);
         
     }
 
