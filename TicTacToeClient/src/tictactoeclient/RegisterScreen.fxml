@@ -22,36 +22,49 @@
                         <Image url="@../Images/logo.png" />
                      </image>
                   </ImageView>
-                  <Pane fx:id="innerPane" layoutX="492.0" layoutY="305.0" prefHeight="303.0" prefWidth="413.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;">
+                  <Pane fx:id="innerPane" layoutX="413.0" layoutY="297.0" prefHeight="413.0" prefWidth="573.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;">
                      <children>
-                        <TextField fx:id="usernameTextField" layoutX="165.0" layoutY="84.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
-                        <Label fx:id="usernameLabel" layoutX="22.0" layoutY="85.0" style="-fx-font: Fredoke One;" text="Username" textFill="WHITE">
+                        <TextField fx:id="usernameTextField" layoutX="160.0" layoutY="91.0" prefHeight="42.0" prefWidth="261.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
+                        <Label fx:id="usernameLabel" layoutX="21.0" layoutY="99.0" style="-fx-font: Fredoke One;" text="Username" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold Italic" size="24.0" />
+                              <Font name="Arial Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="nameLabel" layoutX="44.0" layoutY="130.0" text="Name" textFill="WHITE">
+                        <Label fx:id="nameLabel" layoutX="23.0" layoutY="168.0" text="Name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold Italic" size="24.0" />
+                              <Font name="Arial Bold" size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="nameTextField" layoutX="165.0" layoutY="129.0" style="-fx-background-radius: 20;" />
-                        <Label fx:id="passwordLabel" layoutX="27.0" layoutY="176.0" text="Password" textFill="WHITE">
+                        <TextField fx:id="nameTextField" layoutX="160.0" layoutY="162.0" prefHeight="42.0" prefWidth="261.0" style="-fx-background-radius: 20;" />
+                        <Label fx:id="passwordLabel" layoutX="23.0" layoutY="233.0" text="Password" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold Italic" size="24.0" />
+                              <Font name="Arial Bold" size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="passwordTextField" layoutX="165.0" layoutY="174.0" style="-fx-background-radius: 20;" />
-                        <Button fx:id="registerButton" layoutX="212.0" layoutY="222.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+                        <TextField fx:id="passwordTextField" layoutX="161.0" layoutY="231.0" prefHeight="42.0" prefWidth="261.0" style="-fx-background-radius: 20;" />
+                        <Button fx:id="registerButton" layoutX="179.0" layoutY="303.0" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="42.0" prefWidth="225.0" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="18.0" />
                            </font>
                         </Button>
-                        <Label layoutX="161.0" layoutY="7.0" style="-fx-alignment: center;" text="Register" textFill="WHITE">
+                        <Label layoutX="217.0" layoutY="25.0" style="-fx-alignment: center;" text="Register" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold Italic" size="36.0" />
+                              <Font name="Arial Bold" size="36.0" />
                            </font>
                         </Label>
+                        <Label fx:id="usernameError" layoutX="173.0" layoutY="133.0" prefHeight="21.0" prefWidth="200.0" text="Please Enter Username" textFill="#dd0000" />
+                        <Label fx:id="nameError" layoutX="173.0" layoutY="204.0" prefHeight="21.0" prefWidth="200.0" text="Please Enter Username" textFill="#dd0000" />
+                        <Label fx:id="passwordError" layoutX="174.0" layoutY="273.0" prefHeight="21.0" prefWidth="200.0" text="Please Enter Username" textFill="#dd0000" />
+                        <Label layoutX="142.0" layoutY="362.0" prefHeight="21.0" prefWidth="233.0" text="Already Have An Account ?" textFill="#f8f8f8">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="loginBtn" layoutX="370.0" layoutY="356.0" mnemonicParsing="false" onAction="#onLoginBtnClicked" prefHeight="39.0" prefWidth="73.0" style="-fx-background-color: transparent;" text="Login" textFill="#82c0cc">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
                </children>

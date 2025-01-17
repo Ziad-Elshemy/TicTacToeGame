@@ -1,35 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoeclient;
 
-import java.io.IOException;
+import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
-/**
- * FXML Controller class
- *
- * @author youse
- */
+
 public class LoginScreenController implements Initializable {
     
     Navigator navigator;
+    Gson gson;
+    PlayerDto player;
 
     @FXML
     private TextField usernameField;
@@ -57,6 +51,11 @@ public class LoginScreenController implements Initializable {
     @FXML
     private ImageView muteImg;
     
+    @FXML
+    private Label passwordError;
+    
+    @FXML
+    private Label usernameError;
    
     
     
@@ -86,15 +85,16 @@ public class LoginScreenController implements Initializable {
     
     }
 
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-         // Center the VBox when the window is first loaded
+        
+        gson = new Gson();
+        player = new PlayerDto();
         navigator = new Navigator();
         centerVBox();
+        usernameError.setText("");
+        passwordError.setText(""); 
        
         
              
@@ -128,7 +128,33 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void gologin(ActionEvent event) {
-        navigator.goToPage(event, "HomeScreen.fxml");
+        
+        if(usernameField.getText().isEmpty()){
+            usernameError.setText("Please Enter Your Username");
+            usernameField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+       
+         
+        if(passwordField.getText().isEmpty()){
+            passwordError.setText("Please Enter Your Password");
+            passwordField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+        if(!usernameField.getText().isEmpty()&&!passwordField.getText().isEmpty()){
+
+
+            player.setUserName(usernameField.getText());
+            player.setPassword(passwordField.getText());
+            ArrayList requestArr = new ArrayList();
+            requestArr.add(Codes.LOGIN_CODE);
+            requestArr.add(gson.toJson(player));
+            System.out.println(requestArr.get(0).getClass().getName());  
+            String jsonLoginRequest = gson.toJson(requestArr);
+            TicTacToeClient.connectionHandler.sendRequest(jsonLoginRequest);
+            System.out.println("the sendRequest data is: "+jsonLoginRequest);
+        
+         }
         
     }
 

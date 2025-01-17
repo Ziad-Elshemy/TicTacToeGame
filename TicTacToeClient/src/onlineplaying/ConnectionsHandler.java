@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package onlineplaying;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,17 +12,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import tictactoeclient.Navigator;
 import utilities.Codes;
 
-/**
- *
- * @author Ziad-Elshemy
- */
+
 public class ConnectionsHandler {
     
     private static final Object lock = new Object();
@@ -46,9 +38,7 @@ public class ConnectionsHandler {
                 serverSocket = new Socket("127.0.0.1", 5005);
                 ear = new DataInputStream(serverSocket.getInputStream());
                 mouth = new PrintStream(serverSocket.getOutputStream());
-                
-                //mouth.println("Player No.");
-                
+                                
                 Thread th = new Thread(){
                     @Override
                     public void run() {
@@ -57,10 +47,13 @@ public class ConnectionsHandler {
                                 String json = ear.readLine();
                                 System.out.println(""+json);
                                 responseData = gson.fromJson(json, ArrayList.class);
-                                
                                 double code = (double) responseData.get(0);
+                                
                                 if(code == Codes.REGESTER_CODE){
                                     registerationResponse(stage);
+                                    
+                                }else if(code == Codes.LOGIN_CODE){
+                                    LoginResponse(stage); 
                                 }
                             }
                         } catch (IOException ex) {
@@ -90,15 +83,56 @@ public class ConnectionsHandler {
                         Logger.getLogger(ConnectionsHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
-                double registerationResult = (double) responseData.get(1);
-                Platform.runLater(()->{
-                    if (registerationResult == 1) {
-                            navigator.goToPage(stage, "/tictactoeclient/LoginScreen.fxml");
-                    }else if (registerationResult == 0) {
-                        System.out.println("please change you username");
+            Object result = responseData.get(1);
+            PlayerDto registrationResult = null;
+
+            if (result instanceof LinkedTreeMap) {
+                String jsonResult = gson.toJson(result); 
+                registrationResult = gson.fromJson(jsonResult, PlayerDto.class); 
+            }   
+            PlayerDto finalRegistrationResult = registrationResult;
+            Platform.runLater(()->{
+                    if (finalRegistrationResult!=null) {
+                            new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Create An Account ;)", ButtonType.OK).showAndWait();
+                            navigator.goToPage(stage, "/tictactoeclient/HomeScreen.fxml");
                     }else{
                         
+                        new Alert(Alert.AlertType.ERROR, "User Already Registered Try To login", ButtonType.OK).showAndWait();
+
+                    }
+                    
+                });
+            }
+            
+        }).start();
+    }
+    
+    public void LoginResponse(Stage stage) {
+        new Thread(()->{
+            synchronized(lock){
+                while(responseData.isEmpty()){
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ConnectionsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            Object result = responseData.get(1);
+            PlayerDto loginResult = null;
+
+            if (result instanceof LinkedTreeMap) {
+                String jsonResult = gson.toJson(result); 
+                loginResult = gson.fromJson(jsonResult, PlayerDto.class); 
+            }   
+            PlayerDto finalLoginResult = loginResult;
+            Platform.runLater(()->{
+                    if (finalLoginResult!=null) {
+                            new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Login ;)", ButtonType.OK).showAndWait();
+                            navigator.goToPage(stage, "/tictactoeclient/HomeScreen.fxml");
+                    }else{
+                        
+                            new Alert(Alert.AlertType.ERROR, "Player Not Found Please Register", ButtonType.OK).showAndWait();
+
                     }
                     
                 });
