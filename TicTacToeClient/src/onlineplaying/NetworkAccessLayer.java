@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.Stage;
 import tictactoeclient.Listener;
 import utilities.Codes;
 
@@ -51,6 +52,10 @@ public abstract class NetworkAccessLayer
                             {
                                 registerationResponse(responseData);
                             }
+                            else if(code == Codes.CHANGE_PASSWORD_CODE)
+                            {
+                                editProfileRespond(responseData);
+                            }
                         }
                     } 
                     catch (IOException ex) 
@@ -85,5 +90,17 @@ public abstract class NetworkAccessLayer
              myRef.onServerResponse(false);
         }
       
+    }
+    public static void editProfileRespond(ArrayList responseData)
+    {
+        double editProfileResult = (double) responseData.get(1);
+        if (editProfileResult == 1) 
+        {
+            myRef.onServerResponse(true);
+        }
+        else
+        {
+             myRef.onServerResponse(false);
+        }
     }
 }

@@ -9,9 +9,11 @@ import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -19,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
 
@@ -27,7 +30,7 @@ import utilities.Codes;
  *
  * @author HANY
  */
-public class EditProfileController implements Initializable {
+public class EditProfileController implements Initializable ,Listener{
     Navigator navigator; 
     Gson gson;
     PlayerDto player;
@@ -80,7 +83,7 @@ public class EditProfileController implements Initializable {
         requestArrayList.add(Codes.CHANGE_PASSWORD_CODE);
         requestArrayList.add(gson.toJson(player));
         String jsonEditProfileRequest = gson.toJson(requestArrayList);
-        TicTacToeClient.connectionHandler.sendRequest(jsonEditProfileRequest);
+        NetworkAccessLayer.sendRequest(jsonEditProfileRequest, this);
         System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
@@ -119,6 +122,27 @@ public class EditProfileController implements Initializable {
        }
         
 
+    }
+
+    @Override
+    public void onServerResponse(boolean success) {
+        if (success)
+        {
+            System.out.println("Updated");
+            Platform.runLater(()->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
+            alert.showAndWait();
+            });
+           
+        }
+        else
+        {
+            System.err.println("NotUPdataed");
+            Platform.runLater(()->{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
+            alert.showAndWait();
+            });
+        }
     }
 
 
