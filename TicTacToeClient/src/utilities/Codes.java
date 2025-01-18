@@ -15,4 +15,10 @@ public class Codes {
     public static final int LOGIN_CODE = 2;
     public static final int CHANGE_PASSWORD_CODE = 3;
     
+    
+    
+    public static int SEND_INVITATION_CODE = 7;
+    public static int RECIEVE_INVITATION_CODE = 8;
+    
+    
 }
