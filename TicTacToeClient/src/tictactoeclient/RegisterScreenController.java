@@ -80,7 +80,7 @@ public class RegisterScreenController implements Initializable {
         // create an array to save the code of registeration and the player object then convert the array to a json string
         ArrayList requestArr = new ArrayList();
         requestArr.add(Codes.REGESTER_CODE);
-        //convert the player object to be string to add it to the array
+        //convert the player object to be string to add it to the array [1,{username:'ali',name:''}]
         requestArr.add(gson.toJson(player));
         //now we have array of strings contain code and object, 
 

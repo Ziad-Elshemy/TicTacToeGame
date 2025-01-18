@@ -122,6 +122,8 @@ public class HomeScreenController implements Initializable {
     private ImageView muteImg;
     @FXML
     private Button inviteBtn;
+    @FXML
+    private Button inviteBtn2;
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
@@ -207,6 +209,11 @@ public class HomeScreenController implements Initializable {
         
         navigator.goToPage(event, "LoginScreen.fxml");
 
+    }
+
+    @FXML
+    private void onInviteButtonClicked2(ActionEvent event) {
+        navigator.addAlert("FXMLInvitationAlert.fxml","Invitaion Request");
     }
     
 }

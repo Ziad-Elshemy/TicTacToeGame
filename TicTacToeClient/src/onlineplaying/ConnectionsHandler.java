@@ -54,13 +54,18 @@ public class ConnectionsHandler {
                     public void run() {
                         try {
                             while (true) {                                
-                                String json = ear.readLine();
+                                String json = ear.readLine();//[1,1]
                                 System.out.println(""+json);
                                 responseData = gson.fromJson(json, ArrayList.class);
                                 
                                 double code = (double) responseData.get(0);
                                 if(code == Codes.REGESTER_CODE){
                                     registerationResponse(stage);
+                                }else if(code == 100){
+                                    Platform.runLater(()->{
+                                        navigator.addAlert("/tictactoeclient/FXMLInvitationAlert.fxml","Invitaion Request");
+                                    });
+                                    
                                 }
                             }
                         } catch (IOException ex) {
