@@ -5,7 +5,9 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
 /**
  * FXML Controller class
@@ -24,6 +28,9 @@ import javafx.scene.text.Text;
  * @author HANY
  */
 public class EditProfileController implements Initializable {
+    Navigator navigator; 
+    Gson gson;
+    PlayerDto player;
 
     @FXML
     private Circle avatar;
@@ -45,11 +52,10 @@ public class EditProfileController implements Initializable {
     private Button cancelButton;
     @FXML
     private TextField passWordField;
-    
     @FXML
     private ImageView muteImg;
-    
-    Navigator navigator; 
+    @FXML
+    private Button muteBtn;
 
     /**
      * Initializes the controller class.
@@ -57,10 +63,25 @@ public class EditProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         navigator=new Navigator();
+        gson = new Gson();
+        player = new PlayerDto();
+        
+        
+        username.setText("hany");
+        score.setText("20");
     }    
 
     @FXML
     private void onSubmitUpdateClicked(ActionEvent event) {
+        //System.out.println("Submit Update Button Clicked");
+        player.setUserName(userNameField.getText());
+        player.setPassword(passWordField.getText());        
+        ArrayList requestArrayList = new ArrayList();
+        requestArrayList.add(Codes.CHANGE_PASSWORD_CODE);
+        requestArrayList.add(gson.toJson(player));
+        String jsonEditProfileRequest = gson.toJson(requestArrayList);
+        TicTacToeClient.connectionHandler.sendRequest(jsonEditProfileRequest);
+        System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
     @FXML
@@ -69,6 +90,7 @@ public class EditProfileController implements Initializable {
 
     @FXML
     private void onCancelButtonClicked(ActionEvent event) {
+        navigator.goToPage(event, "HomeScreen.fxml");
     }
     
     @FXML

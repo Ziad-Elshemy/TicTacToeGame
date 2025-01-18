@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import tictactoeclient.Navigator;
 import utilities.Codes;
@@ -62,6 +63,10 @@ public class ConnectionsHandler {
                                 if(code == Codes.REGESTER_CODE){
                                     registerationResponse(stage);
                                 }
+                                else if(code == Codes.CHANGE_PASSWORD_CODE)
+                                {
+                                    editProfileRespond(stage);
+                                }
                             }
                         } catch (IOException ex) {
                             Logger.getLogger(ConnectionsHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,7 +102,7 @@ public class ConnectionsHandler {
                             navigator.goToPage(stage, "/tictactoeclient/LoginScreen.fxml");
                     }else if (registerationResult == 0) {
                         System.out.println("please change you username");
-                    }else{
+                    }else {
                         
                     }
                     
@@ -107,5 +112,32 @@ public class ConnectionsHandler {
         }).start();
     }
     
-    
+    public void editProfileRespond(Stage stage)
+    {
+        new Thread(() -> {
+            synchronized(lock){
+                while(responseData.isEmpty()){
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ConnectionsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                double editResult = (double) responseData.get(1);
+                Platform.runLater(() -> {
+                    if(editResult == 1){
+                        System.out.println("Password Updated Successfully");
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
+                        alert.showAndWait();
+                    } else if(editResult == 0){
+                        System.out.println("UserName Not Found");
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
+                        alert.showAndWait();
+                    }
+                });
+            }
+        }).start();
+        
+    }
 }
