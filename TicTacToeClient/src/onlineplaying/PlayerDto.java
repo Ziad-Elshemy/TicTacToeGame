@@ -18,6 +18,7 @@ public class PlayerDto {
     private boolean isPlaying;
     private int score;
 
+    public PlayerDto(){};
     public PlayerDto (String un , String n , String pass , boolean  isO , boolean isP , int s)
     {
         userName=un;
