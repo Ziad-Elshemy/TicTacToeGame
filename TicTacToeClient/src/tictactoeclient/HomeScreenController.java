@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import onlineplaying.ConnectionsHandler;
+import onlineplaying.NetworkAccessLayer;
 
 /**
  * FXML Controller class

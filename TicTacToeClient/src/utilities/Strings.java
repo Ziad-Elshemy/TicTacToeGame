@@ -15,13 +15,5 @@ public class Strings {
     public static String loserVideoPath="src/videos/loser.mp4";
     public static String drawVideoPath="src/videos/d.mp4";
     public static String music="src/videos/m.mp3";
-
-
-    
-
-    
-    
-
-    
     
 }
