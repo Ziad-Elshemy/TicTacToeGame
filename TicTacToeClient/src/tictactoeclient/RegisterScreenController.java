@@ -8,30 +8,35 @@ import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import onlineplaying.ConnectionsHandler;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
+import onlineplaying.NetworkAccessLayer;
 
 /**
  * FXML Controller class
  *
  * @author abdullahraed
  */
-public class RegisterScreenController implements Initializable {
-    
-    Navigator navigator;
-    Gson gson;
-    PlayerDto player;
 
+public class RegisterScreenController implements Initializable,Listener {
+    ActionEvent myEvent;
+    Navigator navigator;
+    Gson gsonFile;
+    PlayerDto player;
+    Alert myAlert;
+    String username;
+    String name;
+    String password;
     private Pane normalPane;
     @FXML
     private TextField usernameTextField;
@@ -51,14 +56,17 @@ public class RegisterScreenController implements Initializable {
     private TextField nameTextField;
     @FXML
     private Label nameLabel;
+    @FXML
+    private Button backButton;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        gson = new Gson();
-        player = new PlayerDto();
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        myAlert=new Alert(Alert.AlertType.INFORMATION);
+        gsonFile = new Gson();
         navigator = new Navigator();
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
     }    
@@ -66,34 +74,56 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private void onRegisterClick(ActionEvent event) 
     {
+        myEvent=event;
         System.out.println("Register Button Clicked");
-        //navigator.goToPage(event, "HomeScreen.fxml");
-        
-//        //test to send data 
-//        Stage stage = (Stage)registerButton.getScene().getWindow();
-//        new ConnectionsHandler(stage);
-        
-        player.setUserName(usernameTextField.getText());
-        player.setName(nameTextField.getText());
-        player.setPassword(passwordTextField.getText());
-        
-        // create an array to save the code of registeration and the player object then convert the array to a json string
-        ArrayList requestArr = new ArrayList();
-        requestArr.add(Codes.REGESTER_CODE);
-        //convert the player object to be string to add it to the array
-        requestArr.add(gson.toJson(player));
-        //now we have array of strings contain code and object, 
-
-        //so we need to convert all the array to string to send it to the server
-        String jsonRegisterationRequest = gson.toJson(requestArr);
-        
-        // now we need to send this string to the server using the sendRequest function
-        TicTacToeClient.connectionHandler.sendRequest(jsonRegisterationRequest);
-        System.out.println("the sendRequest data is: "+jsonRegisterationRequest);
-        
-        
-        
-        
-        
+        if( usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty() || nameTextField.getText().isEmpty() )
+        {
+            myAlert.setContentText("Please fill all the given Fields to commplete your Registeration");
+            myAlert.showAndWait();
+        }
+        else
+        {
+            username=usernameTextField.getText();
+            name=nameTextField.getText();
+            password=passwordTextField.getText();
+            player = new PlayerDto(username, name, password, false, false, 0);
+            // create an array to save the code of registeration and the player object then convert the array to a json string
+            ArrayList requestArr = new ArrayList();
+            requestArr.add(Codes.REGESTER_CODE);
+            //convert the player object to be string to add it to the array
+            requestArr.add(gsonFile.toJson(player));
+            //now we have array of strings contain code and object, 
+            //so we need to convert all the array to string to send it to the server
+            String jsonRegisterationRequest = gsonFile.toJson(requestArr);
+            // now we need to send this string to the server using the sendRequest function
+            NetworkAccessLayer.sendRequest(jsonRegisterationRequest,this);
+        }
+    }
+ 
+    @FXML
+    private void onBackButton(ActionEvent event) 
+    {
+        System.out.println("back button clicked");
+        Platform.runLater(()->{
+              navigator.goToPage(event, "LoginScreen.fxml");
+        });
+    }
+    
+    public void onServerResponse(boolean success )
+    {
+        if(success)
+         {
+             Platform.runLater(()->{
+                 navigator.goToPage(myEvent, "LoginScreen.fxml");
+             });
+         }
+         else
+         {
+              Platform.runLater(()->{
+                 myAlert = new Alert(Alert.AlertType.INFORMATION);
+                 myAlert.setContentText("Dublicate Username please choose another one");
+                 myAlert.showAndWait();
+              });
+         }
     }
 }

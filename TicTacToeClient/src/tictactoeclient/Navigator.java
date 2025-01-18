@@ -10,8 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -50,6 +52,29 @@ public class Navigator {
             
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void addAlert(String targetPage,String pageTitle){
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
+            Parent root = loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle(pageTitle);
+            popupStage.setScene(new Scene(root));
+
+            //to prevent the user to interact with the background stage
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+
+    //        popupStage.setOnCloseRequest(event->{
+    //            System.out.println("Invitation Rejected by X icon");
+    //        });
+
+            //showAndWait to prevent the user to interact with the background stage
+            popupStage.showAndWait(); 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
