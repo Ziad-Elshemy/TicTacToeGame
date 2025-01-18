@@ -42,7 +42,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="passwordTextField" layoutX="165.0" layoutY="174.0" style="-fx-background-radius: 20;" />
-                        <Button fx:id="registerButton" layoutX="212.0" layoutY="222.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+                        <Button fx:id="registerButton" layoutX="192.0" layoutY="222.0" mnemonicParsing="false" onAction="#onRegisterClick" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="18.0" />
                            </font>
@@ -54,6 +54,15 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Button fx:id="backButton" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="126.0" prefWidth="143.0" style="-fx-background-color: transparent;" text="back" textFill="TRANSPARENT">
+                     <graphic>
+                        <ImageView fitHeight="90.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/previous.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
