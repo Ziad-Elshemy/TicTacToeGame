@@ -18,6 +18,15 @@ public class PlayerDto {
     private boolean isPlaying;
     private int score;
 
+    public PlayerDto (String un , String n , String pass , boolean  isO , boolean isP , int s)
+    {
+        userName=un;
+        name=n;
+        Password=pass;
+        isOnline=isO;
+        isPlaying=isP;
+        score=s;
+    }
     public String getUserName() {
         return userName;
     }

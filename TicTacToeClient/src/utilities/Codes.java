@@ -11,8 +11,8 @@ package utilities;
  */
 public class Codes {
     
-    public static int REGESTER_CODE = 1;
-    public static int LOGIN_CODE = 2;
-    public static int CHANGE_PASSWORD_CODE = 3;
+    public static final int REGESTER_CODE = 1;
+    public static final int LOGIN_CODE = 2;
+    public static final int CHANGE_PASSWORD_CODE = 3;
     
 }
