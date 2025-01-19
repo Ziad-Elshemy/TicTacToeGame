@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 50; -fx-background-color: #1C5468; -fx-border-color: #008000; -fx-border-radius: 50; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.FXMLInvitationAlertController">
+   <children>
+      <Button fx:id="acceptBtn" layoutX="324.0" layoutY="293.0" onAction="#acceptBtnAction" prefHeight="56.0" style="-fx-background-color: #83C5C0; -fx-text-fill: white; -fx-font-size: 24px; -fx-pref-width: 180; -fx-background-radius: 15; -fx-font-weight: bold;" text="Accept" />
+      <Button fx:id="rejectBtn" layoutX="97.0" layoutY="293.0" onAction="#rejectBtnAction" prefHeight="56.0" prefWidth="173.0" style="-fx-background-color: #CC8282; -fx-text-fill: white; -fx-font-size: 24px; -fx-pref-width: 180; -fx-background-radius: 15; -fx-font-weight: bold;" text="Reject" />
+      <Label layoutX="153.0" layoutY="19.0" style="-fx-font-size: 34px; -fx-text-fill: #00AD37; -fx-font-weight: bold;" text="Invitation Request" />
+      <Label layoutX="47.0" layoutY="82.0" style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: regular;" text="An invitation request from" />
+      <Label fx:id="senderLabel" layoutX="381.0" layoutY="82.0" style="-fx-font-size: 28px; -fx-text-fill: #FFA62B; -fx-font-weight: bold;" text="Ziad Elshemy" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="256.0" layoutY="150.0" prefHeight="101.0" prefWidth="89.0" progress="0.0" />
+   </children>
+</AnchorPane>

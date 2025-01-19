@@ -18,6 +18,17 @@ public class PlayerDto {
     private boolean isPlaying;
     private int score;
 
+    public PlayerDto(){};
+
+    public PlayerDto(String userName, String name, String password, boolean isOnline, boolean isPlaying, int score) {
+        this.userName = userName;
+        this.name = name;
+        this.password = password;
+        this.isOnline = isOnline;
+        this.isPlaying = isPlaying;
+        this.score = score;
+    }
+  
     public String getUserName() {
         return userName;
     }

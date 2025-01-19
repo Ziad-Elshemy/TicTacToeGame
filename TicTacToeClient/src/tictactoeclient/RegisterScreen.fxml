@@ -25,7 +25,7 @@
                   <Pane fx:id="innerPane" layoutX="413.0" layoutY="297.0" prefHeight="413.0" prefWidth="573.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;">
                      <children>
                         <TextField fx:id="usernameTextField" layoutX="160.0" layoutY="91.0" prefHeight="42.0" prefWidth="261.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" />
-                        <Label fx:id="usernameLabel" layoutX="21.0" layoutY="99.0" style="-fx-font: Fredoke One;" text="Username" textFill="WHITE">
+                        <Label fx:id="usernameLabel" layoutX="21.0" layoutY="99.0"  text="Username" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold" size="24.0" />
                            </font>
@@ -43,6 +43,7 @@
                         </Label>
                         <TextField fx:id="passwordTextField" layoutX="161.0" layoutY="231.0" prefHeight="42.0" prefWidth="261.0" style="-fx-background-radius: 20;" />
                         <Button fx:id="registerButton" layoutX="179.0" layoutY="303.0" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="42.0" prefWidth="225.0" style="-fx-background-radius: 10; -fx-background-color: #82c0cc;" text="Register" textFill="WHITE">
+
                            <font>
                               <Font name="Arial Bold Italic" size="18.0" />
                            </font>
@@ -67,6 +68,20 @@
                         </Button>
                      </children>
                   </Pane>
+                  <Button fx:id="backButton" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="126.0" prefWidth="143.0" style="-fx-background-color: transparent;" text="back" textFill="TRANSPARENT">
+                     <graphic>
+                        <ImageView fitHeight="90.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/previous.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label fx:id="serverOfflineText" layoutX="335.0" layoutY="735.0" prefHeight="71.0" prefWidth="760.0" textAlignment="CENTER" textFill="#dad1d1">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
