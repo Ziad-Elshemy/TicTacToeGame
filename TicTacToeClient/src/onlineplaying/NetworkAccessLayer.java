@@ -44,7 +44,7 @@ public abstract class NetworkAccessLayer
                         while (true) 
                         {                                
                             String serverResponse = fromServer.readLine();
-                            System.out.println("server respone dta is :"+serverResponse);
+                            System.out.println("server respone dta is :"+serverResponse.getClass());
                             //Convert string coming from the server to ArrayList
                             ArrayList responseData = gsonFile.fromJson(serverResponse, ArrayList.class);
                             double code = (double) responseData.get(0);
@@ -56,6 +56,11 @@ public abstract class NetworkAccessLayer
                             {
                                 editProfileRespond(responseData);
                             }
+                            else if(code == Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)
+                            {
+                                selectDatatForEditProfileRespond(responseData);
+                            }
+                            
                         }
                     } 
                     catch (IOException ex) 
@@ -75,7 +80,7 @@ public abstract class NetworkAccessLayer
         //client request is an Arraylist contain code and the information , converted to string using Gson class
         toServer.println(clientRequest);
         myRef=ref;
-        System.out.println("from sendRequest");
+        System.out.println("from sendRequest fun.");
     }
     
     public static void registerationResponse(ArrayList responseData)
@@ -83,11 +88,11 @@ public abstract class NetworkAccessLayer
         double registerationResult = (double) responseData.get(1);
         if (registerationResult == 1) 
         {
-            myRef.onServerResponse(true);
+            myRef.onServerResponse(true,responseData);
         }
         else
         {
-             myRef.onServerResponse(false);
+             myRef.onServerResponse(false,responseData);
         }
       
     }
@@ -96,11 +101,30 @@ public abstract class NetworkAccessLayer
         double editProfileResult = (double) responseData.get(1);
         if (editProfileResult == 1) 
         {
-            myRef.onServerResponse(true);
+            myRef.onServerResponse(true,responseData);
         }
         else
         {
-             myRef.onServerResponse(false);
+             myRef.onServerResponse(false,responseData);
+        }
+    }
+    public static void selectDatatForEditProfileRespond(ArrayList responseData)
+    {
+        System.out.println("selectDatatForEditProfileRespond: "+responseData.get(1));
+        //to convert from linkedTreeMap to PlayerDto
+        PlayerDto player = gsonFile.fromJson(responseData.get(1).toString(), PlayerDto.class);
+        System.out.println("player : "+responseData);
+
+        if (responseData !=null) 
+        {
+            myRef.onServerResponse(true,responseData);
+            System.out.println("select For Edit True");
+           // System.out.println("OnNetworkAccess SelectForEdit : "+player.getName());
+        }
+        else
+        {
+             myRef.onServerResponse(false,responseData);
+             System.err.println("select For Edit FALSE");
         }
     }
 }

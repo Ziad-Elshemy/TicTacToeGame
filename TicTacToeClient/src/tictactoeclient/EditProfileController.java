@@ -68,10 +68,6 @@ public class EditProfileController implements Initializable ,Listener{
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
-        
-        
-        username.setText("hany");
-        score.setText("20");
     }    
 
     @FXML
@@ -125,9 +121,12 @@ public class EditProfileController implements Initializable ,Listener{
     }
 
     @Override
-    public void onServerResponse(boolean success) {
+    public void onServerResponse(boolean success,ArrayList raquestData) {
+        System.err.println("EtitProfile ServerResponse :"+raquestData);
         if (success)
         {
+            //player = gson.fromJson(raquestData.get(1).toString(), PlayerDto.class);
+            //System.out.println("ON EditPage : "+player.getName());
             System.out.println("Updated");
             Platform.runLater(()->{
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
@@ -144,7 +143,16 @@ public class EditProfileController implements Initializable ,Listener{
             });
         }
     }
+    public void setData(PlayerDto player)
+    {
+        
+        String score1 = String.valueOf(player.getScore()); // primitive int
+        username.setText(player.getName());
+        score.setText(score1);
+        userNameField.setText(player.getUserName());
+       System.out.println("Fun to Set Name :"+player.getScore());
+    }
 
-
+    
     
 }

@@ -109,7 +109,7 @@ public class RegisterScreenController implements Initializable,Listener {
         });
     }
     
-    public void onServerResponse(boolean success )
+    public void onServerResponse(boolean success ,ArrayList data)
     {
         if(success)
          {
