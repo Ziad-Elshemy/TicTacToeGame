@@ -65,6 +65,7 @@ public class EditProfileController implements Initializable ,Listener{
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        NetworkAccessLayer.setRef(this);
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
@@ -83,7 +84,7 @@ public class EditProfileController implements Initializable ,Listener{
         requestArrayList.add(Codes.CHANGE_PASSWORD_CODE);
         requestArrayList.add(gson.toJson(player));
         String jsonEditProfileRequest = gson.toJson(requestArrayList);
-        NetworkAccessLayer.sendRequest(jsonEditProfileRequest, this);
+        NetworkAccessLayer.sendRequest(jsonEditProfileRequest);
         System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
@@ -108,16 +109,16 @@ public class EditProfileController implements Initializable ,Listener{
     void onMuteBtnClicked(ActionEvent event){
         
         
-       if( TicTacToeClient.isMuted){
+       if(TicTacToeClient.isMuted){
         TicTacToeClient.mediaPlayer.play();
         muteImg.setImage(new Image("file:src/Images/volume.png")); 
-         TicTacToeClient.isMuted=false;
+        TicTacToeClient.isMuted=false;
         
         }
        else {
         TicTacToeClient.mediaPlayer.pause();
         muteImg.setImage(new Image("file:src/Images/mute.png"));
-         TicTacToeClient.isMuted=true;
+        TicTacToeClient.isMuted=true;
        
        }
         
@@ -125,7 +126,7 @@ public class EditProfileController implements Initializable ,Listener{
     }
 
     @Override
-    public void onServerResponse(boolean success) {
+    public void onServerResponse(boolean success, ArrayList responseData) {
         if (success)
         {
             System.out.println("Updated");

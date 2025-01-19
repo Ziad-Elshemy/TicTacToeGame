@@ -5,7 +5,9 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,14 +21,18 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
 /**
  * FXML Controller class
  *
  * @author esraa.m.mosaad
  */
-public class HomeScreenController implements Initializable {
+public class HomeScreenController implements Initializable,Listener {
     
+    Gson gsonFile;
+    PlayerDto player;
     
      @FXML
     private Circle avatar;
@@ -124,6 +130,8 @@ public class HomeScreenController implements Initializable {
     private Button inviteBtn;
     @FXML
     private Button inviteBtn2;
+    @FXML
+    private Button inviteBtn3;
 
     @FXML
     void onEditProfileButtonClicked(ActionEvent event) {
@@ -168,8 +176,11 @@ public class HomeScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        gsonFile = new Gson();
+        player = new PlayerDto();
         navigator=new Navigator();
+        //noooooooooooooooooooooooooooteeeeeeeeee
+        NetworkAccessLayer.setRef(this);
         if( !TicTacToeClient.isMuted){
            
          muteImg.setImage(new Image("file:src/Images/volume.png")); 
@@ -213,7 +224,34 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void onInviteButtonClicked2(ActionEvent event) {
-        navigator.addAlert("FXMLInvitationAlert.fxml","Invitaion Request");
+        navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request","Ghazal Elshemy");
+    }
+
+    @FXML
+    private void onInviteButtonClicked3(ActionEvent event) {
+        player.setUserName("ziad2");
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.SEND_INVITATION_CODE);
+        System.out.println("hi "+ player.getUserName());
+        requestArr.add(gsonFile.toJson(player));
+        System.out.println("hi ya"+ player.getUserName());
+        String jsonRegisterationRequest = gsonFile.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+        Platform.runLater(()->{
+            navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
+        });
+        
+        
+    }
+
+    @Override
+    public void onServerResponse(boolean success, ArrayList responseData) {
+        System.out.println("testttt "+ responseData.toString());
+        System.out.println("show the invitation");
+        Platform.runLater(()->{
+            navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",responseData.get(1).toString());
+        });
+         
     }
     
 }

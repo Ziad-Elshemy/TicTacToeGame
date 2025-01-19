@@ -54,11 +54,14 @@ public class Navigator {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void addAlert(String targetPage,String pageTitle){
+    public void luanchInvitation(String targetPage,String pageTitle,String sender){
         
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Parent root = loader.load();
+            
+            FXMLInvitationAlertController controller = loader.getController();
+            controller.setSenderLabel(sender);
 
             Stage popupStage = new Stage();
             popupStage.setTitle(pageTitle);
@@ -77,4 +80,28 @@ public class Navigator {
             e.printStackTrace();
         }
     }
+    
+    public void luanchWaiting(String targetPage,String pageTitle,String reciever){
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
+            Parent root = loader.load();
+            
+            FXMLWaitingAlertController controller = loader.getController();
+            controller.setRecieverLabel(reciever);
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle(pageTitle);
+            popupStage.setScene(new Scene(root));
+
+            //to prevent the user to interact with the background stage
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+
+            //showAndWait to prevent the user to interact with the background stage
+            popupStage.showAndWait(); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
