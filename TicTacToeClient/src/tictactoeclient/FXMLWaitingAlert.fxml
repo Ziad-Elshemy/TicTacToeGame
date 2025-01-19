@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 50; -fx-background-color: #1C5468; -fx-border-color: #008000; -fx-border-radius: 50; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.FXMLWaitingAlertController">
+   <children>
+      <Label layoutX="183.0" layoutY="21.0" style="-fx-font-size: 34px; -fx-text-fill: #00AD37; -fx-font-weight: bold;" text="Invitation Sent" />
+      <Label layoutX="65.0" layoutY="120.0" style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: regular;" text="Waiting for reply from" />
+      <Label fx:id="recieverLabel" layoutX="363.0" layoutY="120.0" style="-fx-font-size: 28px; -fx-text-fill: #FFA62B; -fx-font-weight: bold;" text="Ziad Elshemy" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="256.0" layoutY="220.0" prefHeight="101.0" prefWidth="89.0" progress="0.0" />
+   </children>
+</AnchorPane>
