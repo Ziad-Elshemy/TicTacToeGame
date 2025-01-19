@@ -106,7 +106,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         alarmMediaPlayer.pause();
         TicTacToeClient.mediaPlayer.play();
         stage.close();
-        navigator.goToPage(TicTacToeClient.mainStage, "FXMLGameScreen.fxml");
+        navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
     }
 
     @FXML
@@ -176,7 +176,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
             System.out.println("hi from invitation alarm data: " + responseData.toString());
             Platform.runLater(()->{
                 closeAlert();
-                //navigator.goToPage(TicTacToeClient.mainStage, "FXMLGameScreen.fxml");
+                //navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
                  System.out.println("go to online game");
              });
         }else{
