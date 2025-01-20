@@ -53,7 +53,7 @@ public class PlayerDto {
         this.password = Password;
     }
 
-    public boolean isIsOnline() {
+    public boolean getIsOnline() {
         return isOnline;
     }
 
@@ -61,7 +61,7 @@ public class PlayerDto {
         this.isOnline = isOnline;
     }
 
-    public boolean isIsPlaying() {
+    public boolean getIsPlaying() {
         return isPlaying;
     }
 
@@ -77,6 +77,18 @@ public class PlayerDto {
         this.score = score;
     }
     
+    
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", isOnline=" + isOnline +
+                ", isPlaying=" + isPlaying +
+                ", score=" + score +
+                '}';
+    }
 
    
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import tictactoeclient.HomeScreenController;
 import tictactoeclient.Listener;
 import utilities.Codes;
 
@@ -26,11 +27,14 @@ public abstract class NetworkAccessLayer{
     public static Socket mySocket;
     public static DataInputStream fromServer;
     public static PrintStream toServer;
-    private static PlayerDto playerData ;
+    public static PlayerDto playerData ; 
     private static final Gson gsonFile = new Gson();
     public static Listener myRef;
+    public static Listener ref;
+
     public static boolean isServerOffline;
     public static Thread thread;
+    public static ArrayList<PlayerDto> onlinePlayers;
     
     
     
@@ -63,6 +67,13 @@ public abstract class NetworkAccessLayer{
                             else if(code == Codes.LOGIN_CODE){
                                     LoginResponse(responseData);
                             
+                            }else if(code == Codes.GET_ONLINE_PLAYERS){
+                                
+                                
+                                getOnlinePlayersResponse(responseData); 
+                            
+                            
+                            
                             }
 
                             }
@@ -70,7 +81,7 @@ public abstract class NetworkAccessLayer{
                     } 
                     catch (IOException ex) 
                     {
-                        Logger.getLogger(NetworkAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+                        isServerOffline=true;
                     }
                 }
             };  
@@ -156,4 +167,41 @@ public abstract class NetworkAccessLayer{
                 });
            
     }
+    
+    public static void getOnlinePlayersResponse(ArrayList responseData) {
+        
+      Platform.runLater(()->{
+        ArrayList response = (ArrayList) responseData.get(1);
+        onlinePlayers = new ArrayList<>();
+
+        for (Object obj : response) {
+            if (obj instanceof LinkedTreeMap) {
+                String jsonResult = gsonFile.toJson(obj);
+                try {
+                    PlayerDto player = gsonFile.fromJson(jsonResult, PlayerDto.class);
+                    onlinePlayers.add(player);
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+        }
+        Platform.runLater(()->{
+            
+         if(ref!=null){
+       
+            if (!onlinePlayers.isEmpty()) {
+                  System.out.println("Online players: " + onlinePlayers);
+                  ref.onOnlinePlayersUpdate(onlinePlayers);
+
+            } else {
+                ref.onOnlinePlayersUpdate(null);
+
+            }
+        }
+        });
+       });
+
+}
+    
+
 }

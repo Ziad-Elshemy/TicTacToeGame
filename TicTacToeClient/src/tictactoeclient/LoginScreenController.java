@@ -157,6 +157,8 @@ public class LoginScreenController implements Initializable , Listener{
 
             player.setUserName(usernameField.getText());
             player.setPassword(passwordField.getText());
+            player.setIsOnline(true);
+            player.setIsPlaying(true); 
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.LOGIN_CODE);
             requestArr.add(gson.toJson(player));
@@ -209,6 +211,8 @@ public class LoginScreenController implements Initializable , Listener{
         
         
     }
+
+   
 
   
     

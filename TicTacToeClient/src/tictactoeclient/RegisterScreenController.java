@@ -129,7 +129,7 @@ public class RegisterScreenController implements Initializable,Listener {
             username=usernameTextField.getText();
             name=nameTextField.getText();
             password=passwordTextField.getText();
-            player = new PlayerDto(username, name, password, false, false, 0);
+            player = new PlayerDto(username, name, password, true, false, 0);
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.REGESTER_CODE);
             requestArr.add(gsonFile.toJson(player));
@@ -149,7 +149,6 @@ public class RegisterScreenController implements Initializable,Listener {
     @FXML
     private void onBackButton(ActionEvent event) 
     {
-        System.out.println("back button clicked");
         Platform.runLater(()->{
               navigator.goToPage(event, "LoginScreen.fxml");
         });
@@ -159,7 +158,6 @@ public class RegisterScreenController implements Initializable,Listener {
     {
         if(success)
          {
-             System.out.println("helloo sucessss");
              Platform.runLater(()->{
                  navigator.goToPage(myEvent, "LoginScreen.fxml");
              });
@@ -180,6 +178,8 @@ public class RegisterScreenController implements Initializable,Listener {
         navigator.goToPage(event, "LoginScreen.fxml");
 
     }
+
+   
     
  
 }
