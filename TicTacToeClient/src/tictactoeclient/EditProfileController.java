@@ -75,7 +75,7 @@ public class EditProfileController implements Initializable ,Listener{
 
     @FXML
     private void onSubmitUpdateClicked(ActionEvent event) {
-        //System.out.println("Submit Update Button Clicked");
+        NetworkAccessLayer.setRef(this);
         player.setUserName(userNameField.getText());
         player.setPassword(passWordField.getText());        
         ArrayList requestArrayList = new ArrayList();

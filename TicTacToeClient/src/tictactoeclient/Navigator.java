@@ -75,7 +75,7 @@ public class Navigator {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void addAlert(String targetPage,String pageTitle){
+   
     public void luanchInvitation(String targetPage,String pageTitle,String sender){
         
         try {
@@ -126,5 +126,4 @@ public class Navigator {
         }
     }
     
-}
 }

@@ -136,13 +136,13 @@ public class HomeScreenController implements Initializable ,Listener {
     
     
     void onEditProfileButtonClicked(ActionEvent event) {
-        
+        NetworkAccessLayer.setRef(this);
         eventforEdit = event;
         ArrayList requestList = new ArrayList();
         requestList.add(Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE);
         requestList.add("hanySamy");
         String jsonSelectForEdit =gson.toJson(requestList);
-        NetworkAccessLayer.sendRequest(jsonSelectForEdit, this);
+        NetworkAccessLayer.sendRequest(jsonSelectForEdit);
         
       
     }
@@ -180,7 +180,7 @@ public class HomeScreenController implements Initializable ,Listener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gsonFile = new Gson();
+        gson = new Gson();
         player = new PlayerDto();
         navigator=new Navigator();
         gson = new Gson();
@@ -245,9 +245,9 @@ public class HomeScreenController implements Initializable ,Listener {
         ArrayList requestArr = new ArrayList();
         requestArr.add(Codes.SEND_INVITATION_CODE);
         System.out.println("hi "+ player.getUserName());
-        requestArr.add(gsonFile.toJson(player));
+        requestArr.add(gson.toJson(player));
         System.out.println("hi ya"+ player.getUserName());
-        String jsonRegisterationRequest = gsonFile.toJson(requestArr);
+        String jsonRegisterationRequest = gson.toJson(requestArr);
         NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         Platform.runLater(()->{
             navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
@@ -258,21 +258,35 @@ public class HomeScreenController implements Initializable ,Listener {
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
+        if((double)responseData.get(0)==(Codes.SEND_INVITATION_CODE)&&success)
+        {
         System.out.println("testttt "+ responseData.toString());
         System.out.println("show the invitation");
         Platform.runLater(()->{
             navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",responseData.get(1).toString());
         });
-         
+        }
+        else if((double)responseData.get(0)==(Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)&&success)
+        {
+        player = gson.fromJson(responseData.get(1).toString(), PlayerDto.class);
+        System.out.println("Home player: "+player.getUserName());
+        Platform.runLater(()->{
+         navigator.goToPage(eventforEdit, "FXMLEditProfile.fxml",player);
+        });
+        }
+        else {
+            System.err.println("Wrong In Home Screen" +responseData.get(0)+" "+Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE);
+        }
+        
     }
 
-    @Override
+  /*  @Override
     public void onServerResponse(boolean success, ArrayList data) {
         player = gson.fromJson(data.get(1).toString(), PlayerDto.class);
         System.out.println("Home player: "+player.getUserName());
         Platform.runLater(()->{
          navigator.goToPage(eventforEdit, "FXMLEditProfile.fxml",player);
         });
-    }
+    }*/
     
 }
