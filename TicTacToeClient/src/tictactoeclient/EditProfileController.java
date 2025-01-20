@@ -59,6 +59,8 @@ public class EditProfileController implements Initializable ,Listener{
     private ImageView muteImg;
     @FXML
     private Button muteBtn;
+    @FXML
+    private Text passwordLable;
 
     /**
      * Initializes the controller class.

@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
@@ -100,7 +101,11 @@ public class GameScreenController implements Initializable {
     @FXML
     private Button RecordBtn;
     @FXML
-    private Button playrecordBtn;
+    private Button allRecordsBtn;
+    @FXML
+    private VBox recordFilesListBox;
+    @FXML
+    private Label file1Lable;
 
     /**
      * Initializes the controller class.
@@ -187,7 +192,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile();  ////add record to file
+                 tracker.saveToFile("src/games/");  ////add record to file
                  isRecording = false; ///
             }
             //disableBoard();
@@ -205,7 +210,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile();  ////add record to file
+                 tracker.saveToFile("src/games/");  ////add record to file
                  isRecording = false; ///
             }
             //disableBoard();
@@ -227,7 +232,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile();  ////add record to file
+                 tracker.saveToFile("src/games/");  ////add record to file
                  isRecording = false; ///
             }
             //disableBoard();
@@ -467,26 +472,65 @@ public class GameScreenController implements Initializable {
     private void RecordBtnAction(ActionEvent event) {
         tracker.clearMoves();
         isRecording = true;
+        RecordBtn.setText("Recording");
     }
 
-    @FXML
     private void playrecordBtnAction(ActionEvent event) {
         if(!tracker.getMoves().isEmpty())
         {
              initializeBoardState();
              disableBoard();
-             startReplayGame();
+            /// startReplayGame();
              RecordBtn.setDisable(false);
         }
         
     }
 
- private void startReplayGame()
+    @FXML
+    private void onallRecordsBtnAction(ActionEvent event) {  
+        recordFilesListBox.getChildren().clear();
+        ShowFiles();
+        
+    }
+    
+    
+    private void ShowFiles ()
+    {
+        File directory = new File("src/games");
+        File[] files = directory.listFiles();
+        
+        //files = RecordsList.getRecordsFiles();
+        if(files != null)
+        {
+            
+            //file1Lable.setText(files[0].getName());
+            
+            for(File file :files)
+            {
+                counter++;
+                //System.out.println("File "+counter+ " : " +file.getName());
+                Label lable = new Label(file.getName());
+                lable.setOnMouseClicked((e)->{
+                    //System.out.println("On Clicked"+file.getName());
+                    initializeBoardState();
+                    disableBoard();
+                    RecordBtn.setDisable(false);
+                    startReplayGame(file.getName());
+                });
+                Platform.runLater(()->{
+                recordFilesListBox.getChildren().add(lable);
+                    
+                });
+            }
+        }
+    }
+ private void startReplayGame(String fileName)
  {
-      ArrayList<GameTracker.Move> moves = RecordFile.readFromFile();
-      GameReplay gamereplay = new GameReplay();
-     gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
+    GameReplay gamereplay = new GameReplay();
+    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+    RecordBtn.setText("Record");
+    RecordBtn.setDisable(true);
  }
-
 
 }
