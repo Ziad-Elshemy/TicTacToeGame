@@ -16,10 +16,8 @@ public class Codes {
     public static final int CHANGE_PASSWORD_CODE = 3;
     public static final int SELECT_DATA_FOR_EDIT_PROFILE_CODE = 4;
     
-    
-    
     public static int SEND_INVITATION_CODE = 7;
-    public static int RECIEVE_INVITATION_CODE = 8;
+    public static int INVITATION_REPLY_CODE = 8;
     
     
 }

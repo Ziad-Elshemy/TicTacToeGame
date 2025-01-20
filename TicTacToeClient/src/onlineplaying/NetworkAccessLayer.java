@@ -44,7 +44,7 @@ public abstract class NetworkAccessLayer
                         while (true) 
                         {                                
                             String serverResponse = fromServer.readLine();
-                            System.out.println("server respone dta is :"+serverResponse.getClass());
+                            System.out.println("server respone data is :"+serverResponse);
                             //Convert string coming from the server to ArrayList
                             ArrayList responseData = gsonFile.fromJson(serverResponse, ArrayList.class);
                             double code = (double) responseData.get(0);
@@ -54,6 +54,7 @@ public abstract class NetworkAccessLayer
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
+                                System.out.println("the edit response data: "+ responseData);
                                 editProfileRespond(responseData);
                             }
                             else if(code == Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)
@@ -61,6 +62,21 @@ public abstract class NetworkAccessLayer
                                 selectDatatForEditProfileRespond(responseData);
                             }
                             
+                            else if(code == Codes.SEND_INVITATION_CODE)
+                            {
+                                String playerData = (String) responseData.get(1);
+                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                System.out.println("the invite response data: "+ responseData);
+                                recieveInvitationResponse(responseData);
+                            }
+                            else if(code == Codes.INVITATION_REPLY_CODE)
+                            {
+                                double isAccepted = (double) responseData.get(1);
+                                String playerData = (String) responseData.get(2);
+                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                System.out.println("the invite response data: "+ responseData);
+                                recieveReplyOnInvitationResponse(responseData);
+                            }
                         }
                     } 
                     catch (IOException ex) 
@@ -75,12 +91,19 @@ public abstract class NetworkAccessLayer
         }
     }
     
-    public static void sendRequest(String clientRequest , Listener ref)
+    // noooooooooooooooooooooooooooooooooooooooooooteeeeeeeeeeeeeeeeeeeee
+    public static void setRef(Listener ref){
+        myRef = ref;
+    }
+    
+    public static void sendRequest(String clientRequest)
     {
         //client request is an Arraylist contain code and the information , converted to string using Gson class
+        //myRef=ref;
+        
         toServer.println(clientRequest);
-        myRef=ref;
-        System.out.println("from sendRequest fun.");
+        
+        System.out.println("from sendRequest function");
     }
     
     public static void registerationResponse(ArrayList responseData)
@@ -126,5 +149,23 @@ public abstract class NetworkAccessLayer
              myRef.onServerResponse(false,responseData);
              System.err.println("select For Edit FALSE");
         }
+    }
+    
+    public static void recieveInvitationResponse(ArrayList responseData){
+        myRef.onServerResponse(true, responseData);
+        
+    }
+    
+    public static void recieveReplyOnInvitationResponse(ArrayList responseData){
+        double isAccepted = (double) responseData.get(1);
+        if (isAccepted == 1) 
+        {
+            myRef.onServerResponse(true,responseData);
+        }
+        else
+        {
+             myRef.onServerResponse(false,responseData);
+        }
+        
     }
 }

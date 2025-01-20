@@ -25,8 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
-import static tictactoeclient.TicTacToeClient.mediaPlayer;
-import utilities.Codes;
+import static tictactoeclient.FXMLInvitationAlertController.alarmMediaPlayer;
 import utilities.Strings;
 
 /**
@@ -34,27 +33,21 @@ import utilities.Strings;
  *
  * @author Ziad-Elshemy
  */
-public class FXMLInvitationAlertController implements Initializable,Listener {
+public class FXMLWaitingAlertController implements Initializable,Listener {
     
     Gson gson;
-    PlayerDto senderPlayer;
+    PlayerDto recieverPlayer;
     Navigator navigator;
 
     @FXML
-    private Button acceptBtn;
-    @FXML
-    private Button rejectBtn;
-    @FXML
-    private Label senderLabel;
-    @FXML
     private ProgressIndicator progressIndicator;
+    @FXML
+    private Label recieverLabel;
     
     Timeline timeline;
     private  Media media;
     static  MediaPlayer alarmMediaPlayer;
     Stage stage;
-    
-    //Stage stage;
 
     /**
      * Initializes the controller class.
@@ -64,12 +57,12 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         // TODO
         NetworkAccessLayer.setRef(this);
         gson = new Gson();
-        senderPlayer = new PlayerDto();
+        recieverPlayer = new PlayerDto();
         navigator = new Navigator();
         
         
         Platform.runLater(()->{
-            stage = (Stage)acceptBtn.getScene().getWindow();
+            stage = (Stage)recieverLabel.getScene().getWindow();
             stage.setOnCloseRequest(event->{
                 System.out.println("Invitation Rejected by X icon");
                 timeline.stop();
@@ -79,53 +72,12 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
             startProgressIndicator(stage);
             initMedia();
         });
-        
-        
-        
-    }
+    }    
     
-    public void setSenderLabel(String senderName){
-        senderLabel.setText(senderName);
+    public void setRecieverLabel(String recieverName){
+        recieverLabel.setText(recieverName);
     }
 
-    @FXML
-    private void acceptBtnAction(ActionEvent event) {
-        
-        senderPlayer.setUserName(senderLabel.getText());
-        ArrayList requestArr = new ArrayList();
-        requestArr.add(Codes.INVITATION_REPLY_CODE);
-        requestArr.add(1); // for accept
-        requestArr.add(gson.toJson(senderPlayer));
-        String jsonRegisterationRequest = gson.toJson(requestArr);
-        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
-        
-        //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Accepted");
-        System.out.println("you have Accepted Invitation from "+senderPlayer.getUserName());
-        Stage stage = (Stage)acceptBtn.getScene().getWindow();
-        timeline.stop();
-        alarmMediaPlayer.pause();
-        TicTacToeClient.mediaPlayer.play();
-        stage.close();
-        navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
-    }
-
-    @FXML
-    private void rejectBtnAction(ActionEvent event) {
-        
-        senderPlayer.setUserName("ziad1");
-        ArrayList requestArr = new ArrayList();
-        requestArr.add(Codes.INVITATION_REPLY_CODE);
-        requestArr.add(0); // for reject
-        requestArr.add(gson.toJson(senderPlayer));
-        String jsonRegisterationRequest = gson.toJson(requestArr);
-        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
-        
-        //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Rejected");
-        System.out.println("you have Rejected Invitation from "+senderPlayer.getUserName());
-        Stage stage = (Stage)acceptBtn.getScene().getWindow();
-        closeAlert();
-        navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
-    }
     
     private void startProgressIndicator(Stage stage) {
         
@@ -167,20 +119,18 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         stage.close();
     }
 
-    
-    // i need to test here
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
+        System.out.println("hi from waiting alarm data: " + responseData.toString());
+        System.out.println("please wait until accept from player : " + responseData.get(2).toString());
         if(success){
-            System.out.println("Accepted");
-            System.out.println("hi from invitation alarm data: " + responseData.toString());
             Platform.runLater(()->{
+                navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
                 closeAlert();
-                //navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
-                 System.out.println("go to online game");
-             });
+            });
+            
         }else{
-            System.out.println("Rejeted");
+            
         }
     }
     

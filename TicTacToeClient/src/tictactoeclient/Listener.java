@@ -14,6 +14,6 @@ import javafx.event.ActionEvent;
  */
 public interface Listener {
     
-    void onServerResponse(boolean success,ArrayList data);
+    void onServerResponse(boolean success, ArrayList responseData);
             
 }

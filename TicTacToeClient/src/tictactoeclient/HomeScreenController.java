@@ -129,6 +129,8 @@ public class HomeScreenController implements Initializable ,Listener {
     @FXML
     private Button inviteBtn2;
      ActionEvent eventforEdit;
+    @FXML
+    private Button inviteBtn3;
 
     @FXML
     
@@ -178,11 +180,14 @@ public class HomeScreenController implements Initializable ,Listener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        gsonFile = new Gson();
+        player = new PlayerDto();
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
         
+        //noooooooooooooooooooooooooooteeeeeeeeee
+        NetworkAccessLayer.setRef(this);
         if( !TicTacToeClient.isMuted){
            
          muteImg.setImage(new Image("file:src/Images/volume.png")); 
@@ -231,7 +236,34 @@ public class HomeScreenController implements Initializable ,Listener {
 
     @FXML
     private void onInviteButtonClicked2(ActionEvent event) {
-        navigator.addAlert("FXMLInvitationAlert.fxml","Invitaion Request");
+        navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request","Ghazal Elshemy");
+    }
+
+    @FXML
+    private void onInviteButtonClicked3(ActionEvent event) {
+        player.setUserName("ziad2");
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.SEND_INVITATION_CODE);
+        System.out.println("hi "+ player.getUserName());
+        requestArr.add(gsonFile.toJson(player));
+        System.out.println("hi ya"+ player.getUserName());
+        String jsonRegisterationRequest = gsonFile.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+        Platform.runLater(()->{
+            navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
+        });
+        
+        
+    }
+
+    @Override
+    public void onServerResponse(boolean success, ArrayList responseData) {
+        System.out.println("testttt "+ responseData.toString());
+        System.out.println("show the invitation");
+        Platform.runLater(()->{
+            navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",responseData.get(1).toString());
+        });
+         
     }
 
     @Override

@@ -28,6 +28,7 @@ import utilities.Strings;
  */
 public class TicTacToeClient extends Application {
     
+    public static Stage mainStage;
     private  Media media;
     static  MediaPlayer mediaPlayer;
     private  MediaView music;
@@ -35,13 +36,13 @@ public class TicTacToeClient extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        
+        mainStage = stage;
          isMuted=false;
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
         //music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.volumeProperty().set(0.05);
+        mediaPlayer.volumeProperty().set(0.01);
         mediaPlayer.play();
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);
