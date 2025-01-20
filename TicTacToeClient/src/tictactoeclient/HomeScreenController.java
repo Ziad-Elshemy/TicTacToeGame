@@ -5,7 +5,9 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,16 +21,21 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
 /**
  * FXML Controller class
  *
  * @author esraa.m.mosaad
  */
-public class HomeScreenController implements Initializable {
+public class HomeScreenController implements Initializable ,Listener {
     
+    Gson gson;
+    PlayerDto player;
+    Navigator navigator;
     
-     @FXML
+    @FXML
     private Circle avatar;
 
     @FXML
@@ -67,9 +74,6 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Text score11;
-
-
-
     @FXML
     private Button editProfileButton;
 
@@ -83,7 +87,7 @@ public class HomeScreenController implements Initializable {
     private Button localTwoPlayersButton;
     @FXML
     private Circle avatarOne;
-    Navigator navigator;
+    
     @FXML
     private AnchorPane userCard;
     @FXML
@@ -124,12 +128,23 @@ public class HomeScreenController implements Initializable {
     private Button inviteBtn;
     @FXML
     private Button inviteBtn2;
+     ActionEvent eventforEdit;
+    @FXML
+    private Button inviteBtn3;
 
     @FXML
+    
+    
     void onEditProfileButtonClicked(ActionEvent event) {
+        NetworkAccessLayer.setRef(this);
+        eventforEdit = event;
+        ArrayList requestList = new ArrayList();
+        requestList.add(Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE);
+        requestList.add("hanySamy");
+        String jsonSelectForEdit =gson.toJson(requestList);
+        NetworkAccessLayer.sendRequest(jsonSelectForEdit);
         
-        navigator.goToPage(event, "FXMLEditProfile.fxml");
-
+      
     }
 
      @FXML
@@ -139,9 +154,6 @@ public class HomeScreenController implements Initializable {
         
         
     }
-    
-   
-
     @FXML
     void onLocalTwoPlayersButtonClicked(ActionEvent event) {
         
@@ -168,8 +180,14 @@ public class HomeScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        gson = new Gson();
+        player = new PlayerDto();
         navigator=new Navigator();
+        gson = new Gson();
+        player = new PlayerDto();
+        
+        //noooooooooooooooooooooooooooteeeeeeeeee
+        NetworkAccessLayer.setRef(this);
         if( !TicTacToeClient.isMuted){
            
          muteImg.setImage(new Image("file:src/Images/volume.png")); 
@@ -181,6 +199,11 @@ public class HomeScreenController implements Initializable {
          muteImg.setImage(new Image("file:src/Images/mute.png"));
        
        }
+        
+        
+        
+        
+
     }    
 
      
@@ -213,7 +236,57 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void onInviteButtonClicked2(ActionEvent event) {
-        navigator.addAlert("FXMLInvitationAlert.fxml","Invitaion Request");
+        navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request","Ghazal Elshemy");
     }
+
+    @FXML
+    private void onInviteButtonClicked3(ActionEvent event) {
+        player.setUserName("ziad2");
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.SEND_INVITATION_CODE);
+        System.out.println("hi "+ player.getUserName());
+        requestArr.add(gson.toJson(player));
+        System.out.println("hi ya"+ player.getUserName());
+        String jsonRegisterationRequest = gson.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+        Platform.runLater(()->{
+            navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
+        });
+        
+        
+    }
+
+    @Override
+    public void onServerResponse(boolean success, ArrayList responseData) {
+        if((double)responseData.get(0)==(Codes.SEND_INVITATION_CODE)&&success)
+        {
+        System.out.println("testttt "+ responseData.toString());
+        System.out.println("show the invitation");
+        Platform.runLater(()->{
+            navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",responseData.get(1).toString());
+        });
+        }
+        else if((double)responseData.get(0)==(Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)&&success)
+        {
+        player = gson.fromJson(responseData.get(1).toString(), PlayerDto.class);
+        System.out.println("Home player: "+player.getUserName());
+        Platform.runLater(()->{
+         navigator.goToPage(eventforEdit, "FXMLEditProfile.fxml",player);
+        });
+        }
+        else {
+            System.err.println("Wrong In Home Screen" +responseData.get(0)+" "+Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE);
+        }
+        
+    }
+
+  /*  @Override
+    public void onServerResponse(boolean success, ArrayList data) {
+        player = gson.fromJson(data.get(1).toString(), PlayerDto.class);
+        System.out.println("Home player: "+player.getUserName());
+        Platform.runLater(()->{
+         navigator.goToPage(eventforEdit, "FXMLEditProfile.fxml",player);
+        });
+    }*/
     
 }

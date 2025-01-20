@@ -5,6 +5,7 @@
  */
 package tictactoeclient;
 
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 
 /**
@@ -13,6 +14,6 @@ import javafx.event.ActionEvent;
  */
 public interface Listener {
     
-    void onServerResponse(boolean success);
+    void onServerResponse(boolean success, ArrayList responseData);
             
 }

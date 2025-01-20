@@ -73,6 +73,7 @@ public class RegisterScreenController implements Initializable,Listener {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        NetworkAccessLayer.setRef(this);
         myAlert=new Alert(Alert.AlertType.INFORMATION);
         gsonFile = new Gson();
         navigator = new Navigator();
@@ -104,7 +105,7 @@ public class RegisterScreenController implements Initializable,Listener {
             //so we need to convert all the array to string to send it to the server
             String jsonRegisterationRequest = gsonFile.toJson(requestArr);
             // now we need to send this string to the server using the sendRequest function
-            NetworkAccessLayer.sendRequest(jsonRegisterationRequest,this);
+            NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         }
     }
  
@@ -117,10 +118,12 @@ public class RegisterScreenController implements Initializable,Listener {
         });
     }
     
-    public void onServerResponse(boolean success )
+    @Override
+    public void onServerResponse(boolean success, ArrayList responseData)
     {
         if(success)
          {
+
            Platform.runLater(()->{
                 try {
                     Stage newStage = new Stage();
@@ -136,6 +139,9 @@ public class RegisterScreenController implements Initializable,Listener {
             }
            });
             
+
+             System.out.println("Test the array data" + responseData.toString());
+
              Platform.runLater(()->{
                  navigator.goToPage(myEvent, "LoginScreen.fxml");
                 });

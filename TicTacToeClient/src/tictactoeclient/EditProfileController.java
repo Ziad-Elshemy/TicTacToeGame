@@ -59,31 +59,30 @@ public class EditProfileController implements Initializable ,Listener{
     private ImageView muteImg;
     @FXML
     private Button muteBtn;
+    @FXML
+    private Text passwordLable;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        NetworkAccessLayer.setRef(this);
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
-        
-        
-        username.setText("hany");
-        score.setText("20");
     }    
 
     @FXML
     private void onSubmitUpdateClicked(ActionEvent event) {
-        //System.out.println("Submit Update Button Clicked");
+        NetworkAccessLayer.setRef(this);
         player.setUserName(userNameField.getText());
         player.setPassword(passWordField.getText());        
         ArrayList requestArrayList = new ArrayList();
         requestArrayList.add(Codes.CHANGE_PASSWORD_CODE);
         requestArrayList.add(gson.toJson(player));
         String jsonEditProfileRequest = gson.toJson(requestArrayList);
-        NetworkAccessLayer.sendRequest(jsonEditProfileRequest, this);
+        NetworkAccessLayer.sendRequest(jsonEditProfileRequest);
         System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
@@ -108,16 +107,16 @@ public class EditProfileController implements Initializable ,Listener{
     void onMuteBtnClicked(ActionEvent event){
         
         
-       if( TicTacToeClient.isMuted){
+       if(TicTacToeClient.isMuted){
         TicTacToeClient.mediaPlayer.play();
         muteImg.setImage(new Image("file:src/Images/volume.png")); 
-         TicTacToeClient.isMuted=false;
+        TicTacToeClient.isMuted=false;
         
         }
        else {
         TicTacToeClient.mediaPlayer.pause();
         muteImg.setImage(new Image("file:src/Images/mute.png"));
-         TicTacToeClient.isMuted=true;
+        TicTacToeClient.isMuted=true;
        
        }
         
@@ -125,9 +124,11 @@ public class EditProfileController implements Initializable ,Listener{
     }
 
     @Override
-    public void onServerResponse(boolean success) {
+    public void onServerResponse(boolean success, ArrayList responseData) {
         if (success)
         {
+            //player = gson.fromJson(raquestData.get(1).toString(), PlayerDto.class);
+            //System.out.println("ON EditPage : "+player.getName());
             System.out.println("Updated");
             Platform.runLater(()->{
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
@@ -144,7 +145,16 @@ public class EditProfileController implements Initializable ,Listener{
             });
         }
     }
+    public void setData(PlayerDto player)
+    {
+        
+        String score1 = String.valueOf(player.getScore()); // primitive int
+        username.setText(player.getName());
+        score.setText(score1);
+        userNameField.setText(player.getUserName());
+       System.out.println("Fun to Set Name :"+player.getScore());
+    }
 
-
+    
     
 }

@@ -15,7 +15,8 @@ import tictactoeclient.GameTracker.Move;
  */
 public class GameReplay {
 
-      void replayGame(ArrayList<Move> moves,Button btn1,Button btn2,Button btn3,Button btn4,Button btn5,Button btn6,Button btn7,Button btn8 ,Button btn9) {
+      void replayGame(ArrayList<Move> moves,Button btn1,Button btn2,Button btn3,Button btn4,Button btn5,Button btn6,Button btn7,Button btn8 ,Button btn9)
+      {
       
       
     new Thread(() -> {

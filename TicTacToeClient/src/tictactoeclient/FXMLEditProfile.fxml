@@ -45,8 +45,14 @@
                                                 <Font name="Arial" size="18.0" />
                                              </font>
                                           </Text>
+                                          <TextField fx:id="passWordField" layoutX="161.0" layoutY="300.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="PasssWord" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
                                           <Text fx:id="score" fill="#0000009f" layoutX="310.0" layoutY="174.90234375" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" wrappingWidth="72.47314453125" AnchorPane.bottomAnchor="420.3330078125" />
-                                          <TextField fx:id="userNameField" layoutX="161.0" layoutY="206.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="Username" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
+                                          <Text fx:id="passwordLable" fill="#433e3e" layoutX="163.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER" wrappingWidth="97.0595703125">
+                                             <font>
+                                                <Font name="Arial" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="userNameField" editable="false" layoutX="161.0" layoutY="206.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="Username" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
                                           <Button fx:id="submitUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="395.0" mnemonicParsing="false" onAction="#onSubmitUpdateClicked" prefHeight="24.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #c9f9ff); -fx-background-radius: 8;" text="Submit Update" textFill="WHITESMOKE">
                                              <font>
                                                 <Font name="Calibri Bold" size="22.0" />
@@ -62,7 +68,6 @@
                                                 <Font name="Calibri Bold" size="22.0" />
                                              </font>
                                           </Button>
-                                          <TextField fx:id="passWordField" layoutX="161.0" layoutY="282.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="PasssWord" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
                                        </children>
                                        <effect>
                                           <DropShadow color="#ddd1d1" />

@@ -32,14 +32,14 @@ public class RecordFile {
     static String localDate = getDate();
     
     
-     public static void addToFile(ArrayList<Move> moves) {
+     public static void addToFile(ArrayList<Move> moves,String path) {
         String fileName = localDate;  // Use current date and time as file name
-        File file = new File("src/games/" + fileName);
+        File file = new File(path + fileName); //src/games/
 
         try (FileOutputStream fileOutput = new FileOutputStream(file);
-             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
+            ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
 
-            System.out.println("MOVES in RecordFile class: " + moves.toString());
+           // System.out.println("MOVES in RecordFile class: " + moves.toString());
             objectOutput.writeObject(moves);  // Write the list of moves to the file
 
         } catch (FileNotFoundException ex) {
@@ -48,15 +48,14 @@ public class RecordFile {
             ex.printStackTrace();
         }
     }
-    public static ArrayList<Move> readFromFile() {
+    public static ArrayList<Move> readFromFile(String FileName) {
         ArrayList<Move> moves = null;
-        System.out.println("Current Date ="+localDate);
-        File file=new File( "src/games/"+localDate);
+        //System.out.println("Current Date ="+localDate);
+        File file=new File(FileName); //"src/games/"
         try (
               
-             FileInputStream fileInputStream = new FileInputStream(file);
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             moves = (ArrayList<Move>) objectInputStream.readObject(); // read ArrayList of moves
 
         
@@ -70,7 +69,7 @@ public class RecordFile {
 
         return moves;
     }
-    private static String getDate()
+            private static String getDate()
     {
       Date  myDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");

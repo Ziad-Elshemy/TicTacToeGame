@@ -9,6 +9,7 @@ package onlineplaying;
  *
  * @author Ziad-Elshemy
  */
+
 public class PlayerDto {
     
     private String userName;

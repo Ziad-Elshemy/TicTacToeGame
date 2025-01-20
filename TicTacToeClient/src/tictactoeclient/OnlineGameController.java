@@ -43,7 +43,7 @@ import utilities.Strings;
  *
  * @author Ziad-Elshemy
  */
-public class GameScreenController implements Initializable {
+public class OnlineGameController implements Initializable {
     
     int counter;
     int playerXScore;
