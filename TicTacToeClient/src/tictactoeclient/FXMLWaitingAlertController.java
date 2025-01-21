@@ -130,7 +130,10 @@ public class FXMLWaitingAlertController implements Initializable,Listener {
             });
             
         }else{
-            
+            Platform.runLater(()->{
+                navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
+                closeAlert();
+            });   
         }
     }
     
