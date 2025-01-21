@@ -29,7 +29,7 @@ import onlineplaying.NetworkAccessLayer;
  */
 
 public class RegisterScreenController implements Initializable,Listener {
-    ActionEvent myEvent;
+ ActionEvent myEvent;
     Navigator navigator;
     Gson gsonFile;
     PlayerDto player;
@@ -56,8 +56,22 @@ public class RegisterScreenController implements Initializable,Listener {
     private TextField nameTextField;
     @FXML
     private Label nameLabel;
+    
+    @FXML
+    private Label usernameError;
+
+    @FXML
+    private Label nameError;
+
+    @FXML
+    private Label passwordError;
+    
     @FXML
     private Button backButton;
+    
+    @FXML
+    private Label serverOfflineText;
+
 
     /**
      * Initializes the controller class.
@@ -70,20 +84,41 @@ public class RegisterScreenController implements Initializable,Listener {
         gsonFile = new Gson();
         navigator = new Navigator();
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
+        usernameError.setText("");
+        nameError.setText("");
+        passwordError.setText("");         
+        if(NetworkAccessLayer.isServerOffline){
+           
+            usernameTextField.setDisable(true);
+            nameTextField.setDisable(true); 
+            passwordTextField.setDisable(true);
+            serverOfflineText.setText("Server Is Offline Now Try Again Later Or You Can Play Offline");
+        
+        }
     }    
 
     @FXML
-    private void onRegisterClick(ActionEvent event) 
-    {
+    private void onRegisterClick(ActionEvent event){
+        if(!NetworkAccessLayer.isServerOffline){
+        
         myEvent=event;
-        System.out.println("Register Button Clicked");
-        if( usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty() || nameTextField.getText().isEmpty() )
-        {
-            myAlert.setContentText("Please fill all the given Fields to commplete your Registeration");
-            myAlert.showAndWait();
+        
+        if(usernameTextField.getText().isEmpty()){
+            usernameError.setText("Please Enter Your Username");
+            usernameTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
         }
-        else
-        {
+        
+        if(nameTextField.getText().isEmpty()){
+            nameError.setText("Please Enter Your Name"); 
+            nameTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+         
+        if(passwordTextField.getText().isEmpty()){
+            passwordError.setText("Please Enter Your Password");
+            passwordTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+        if(!usernameTextField.getText().isEmpty()&&!nameTextField.getText().isEmpty()&&!passwordTextField.getText().isEmpty()){
             username=usernameTextField.getText();
             name=nameTextField.getText();
             password=passwordTextField.getText();
@@ -99,6 +134,7 @@ public class RegisterScreenController implements Initializable,Listener {
             // now we need to send this string to the server using the sendRequest function
             NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         }
+    }
     }
  
     @FXML
@@ -128,5 +164,12 @@ public class RegisterScreenController implements Initializable,Listener {
                  myAlert.showAndWait();
               });
          }
+    }
+    
+    @FXML
+    void onLoginBtnClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "LoginScreen.fxml");
+
     }
 }

@@ -6,7 +6,7 @@
 package tictactoeclient;
 
 import java.util.ArrayList;
-import javafx.event.ActionEvent;
+import onlineplaying.PlayerDto;
 
 /**
  *
@@ -15,5 +15,9 @@ import javafx.event.ActionEvent;
 public interface Listener {
     
     void onServerResponse(boolean success, ArrayList responseData);
+    default void onOnlinePlayersUpdate(ArrayList<PlayerDto> onlinePlayers){
+    
+    
+    }
             
 }
