@@ -106,7 +106,11 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         alarmMediaPlayer.pause();
         TicTacToeClient.mediaPlayer.play();
         stage.close();
-        navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+        Platform.runLater(()->{
+            navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+        });
+        
+        System.out.println("can't reach here?");
     }
 
     @FXML
