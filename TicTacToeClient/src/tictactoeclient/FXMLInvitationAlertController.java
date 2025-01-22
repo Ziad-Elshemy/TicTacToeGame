@@ -92,6 +92,8 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
     private void acceptBtnAction(ActionEvent event) {
         
         senderPlayer.setUserName(senderLabel.getText());
+        
+        
         ArrayList requestArr = new ArrayList();
         requestArr.add(Codes.INVITATION_REPLY_CODE);
         requestArr.add(1); // for accept
@@ -180,8 +182,8 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
             System.out.println("hi from invitation alarm data: " + responseData.toString());
             Platform.runLater(()->{
                 closeAlert();
-                //navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
-                 System.out.println("go to online game");
+                navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+                
              });
         }else{
             System.out.println("Rejeted");

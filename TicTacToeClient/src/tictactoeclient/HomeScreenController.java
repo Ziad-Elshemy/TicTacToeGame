@@ -36,8 +36,8 @@ import utilities.Codes;
 public class HomeScreenController implements Initializable ,Listener {
     
     Gson gson;
-    PlayerDto player;
     Navigator navigator;
+    PlayerDto player;
 
     
     @FXML
@@ -118,8 +118,8 @@ public class HomeScreenController implements Initializable ,Listener {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        player=new PlayerDto();
         gson = new Gson();
-        player = new PlayerDto();
         navigator=new Navigator();
         NetworkAccessLayer.setRef(this);    
         NetworkAccessLayer.ref=this;
@@ -275,6 +275,20 @@ public class HomeScreenController implements Initializable ,Listener {
         inviteBtn.setFont(new Font("Arial Bold", 15.0));
         
         inviteBtn.setOnAction((event)->{
+            
+            
+            System.out.println(player.getUserName());
+            
+                
+                ArrayList requestArr = new ArrayList();
+                requestArr.add(Codes.SEND_INVITATION_CODE);
+                requestArr.add(gson.toJson(player));
+                String jsonRegisterationRequest = gson.toJson(requestArr);
+                NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+                Platform.runLater(()->{
+                    navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
+
+                        });
         
         
         
@@ -316,26 +330,7 @@ public class HomeScreenController implements Initializable ,Listener {
     } 
  
          
-    @FXML
-    private void onInviteButtonClicked3(ActionEvent event) {
-        player.setUserName("ziad2");
-        ArrayList requestArr = new ArrayList();
-        requestArr.add(Codes.SEND_INVITATION_CODE);
-        System.out.println("hi "+ player.getUserName());
-        requestArr.add(gson.toJson(player));
-        System.out.println("hi ya"+ player.getUserName());
-        String jsonRegisterationRequest = gson.toJson(requestArr);
-        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
-        Platform.runLater(()->{
-            navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
-                
-                
-        
-                
-                });
-                
-                
-  }
+
 
  
     @Override
