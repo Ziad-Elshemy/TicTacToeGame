@@ -162,7 +162,6 @@ public class LoginScreenController implements Initializable , Listener{
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.LOGIN_CODE);
             requestArr.add(gson.toJson(player));
-            System.out.println(requestArr.get(0).getClass().getName());  
             String jsonLoginRequest = gson.toJson(requestArr);
             NetworkAccessLayer.sendRequest(jsonLoginRequest);
             System.out.println("the sendRequest data is: "+jsonLoginRequest);
