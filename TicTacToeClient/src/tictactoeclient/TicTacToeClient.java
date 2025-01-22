@@ -37,7 +37,7 @@ public class TicTacToeClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         mainStage = stage;
-         isMuted=false;
+        isMuted=false;
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
         //music=new MediaView(mediaPlayer);
@@ -47,6 +47,7 @@ public class TicTacToeClient extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
          NetworkAccessLayer.startConnectionHandling();
          stage.setOnCloseRequest((e)->{

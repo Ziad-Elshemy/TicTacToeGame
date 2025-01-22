@@ -125,7 +125,7 @@ public class FXMLWaitingAlertController implements Initializable,Listener {
         System.out.println("please wait until accept from player : " + responseData.get(2).toString());
         if(success){
             Platform.runLater(()->{
-                navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",responseData.get(2).toString(),"X");
                 closeAlert();
             });
             

@@ -77,6 +77,13 @@ public abstract class NetworkAccessLayer
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveReplyOnInvitationResponse(responseData);
                             }
+                            else if(code == Codes.SEND_PLAY_ON_BOARD_CODE)
+                            {
+                                
+                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                System.out.println("the SEND_PLAY_ON_BOARD_CODE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
                         }
                     } 
                     catch (IOException ex) 
@@ -159,6 +166,20 @@ public abstract class NetworkAccessLayer
     public static void recieveReplyOnInvitationResponse(ArrayList responseData){
         double isAccepted = (double) responseData.get(1);
         if (isAccepted == 1) 
+        {
+            myRef.onServerResponse(true,responseData);
+        }
+        else
+        {
+             myRef.onServerResponse(false,responseData);
+        }
+        
+    }
+    
+    public static void recievePlayOnBoardResponse(ArrayList responseData){
+        double isAccepted = (double) responseData.get(0);
+        System.out.println("recievePlayOnBoardResponse: "+ responseData.toString());
+        if (isAccepted == 5) 
         {
             myRef.onServerResponse(true,responseData);
         }

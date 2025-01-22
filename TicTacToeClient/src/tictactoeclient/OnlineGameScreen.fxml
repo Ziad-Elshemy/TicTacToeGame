@@ -22,7 +22,7 @@
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#009ead" height="860.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1430.0" />
       <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#16697a" height="630.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="422.0" />
       <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#02c5d7" height="286.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="286.0" />
-      <GridPane>
+      <GridPane fx:id="gridPaneId">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="584.0" minWidth="10.0" prefWidth="581.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="0.0" prefWidth="91.0" />
