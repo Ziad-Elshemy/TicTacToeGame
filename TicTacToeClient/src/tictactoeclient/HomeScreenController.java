@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -81,13 +82,7 @@ public class HomeScreenController implements Initializable,Listener {
 
     }
 
-     @FXML
-    void onInviteButtonClicked(ActionEvent event) {
-         
-        navigator.goToPage(event,"FXMLGameScreen.fxml");
-        
-        
-    }
+ 
     
    
 
@@ -260,7 +255,6 @@ public class HomeScreenController implements Initializable,Listener {
         inviteBtn.setLayoutX(190.0);
         inviteBtn.setLayoutY(0.0);
         inviteBtn.setMnemonicParsing(false);
-        inviteBtn.setOnAction(this::onInviteButtonClicked);
         inviteBtn.setPrefHeight(35.0);
         inviteBtn.setPrefWidth(83.0);
         inviteBtn.setStyle("-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;");
@@ -268,6 +262,12 @@ public class HomeScreenController implements Initializable,Listener {
         inviteBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fffafa"));
         inviteBtn.setFont(new Font("Arial Bold", 15.0));
         
+        inviteBtn.setOnAction((event)->{
+        
+        
+        
+        
+        });
         
         userCard.getChildren().add(avatarOne);
         userCard.getChildren().add(userImageOne);
