@@ -16,6 +16,7 @@ public interface Listener {
     
     void onServerResponse(boolean success, ArrayList responseData);
     default void onOnlinePlayersUpdate(ArrayList<PlayerDto> onlinePlayers){
+        
     
     
     }

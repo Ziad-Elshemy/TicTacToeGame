@@ -57,12 +57,19 @@ public abstract class NetworkAccessLayer
                             if(code == Codes.REGESTER_CODE)
                             {
                                 registerationResponse(responseData);
+
+                                
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
                                 System.out.println("the edit response data: "+ responseData);
                                 editProfileRespond(responseData);
                             }
+                            else if(code == Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)
+                            {
+                                selectDatatForEditProfileRespond(responseData);
+                            }
+                            
                             else if(code == Codes.SEND_INVITATION_CODE)
                             {
                                 String playerData = (String) responseData.get(1);
@@ -80,7 +87,10 @@ public abstract class NetworkAccessLayer
                             }else if(code == Codes.LOGIN_CODE){
                                     LoginResponse(responseData);
                             
-                            }else if(code == Codes.GET_ONLINE_PLAYERS){
+                            } 
+                            
+                            
+                            if(code == Codes.GET_ONLINE_PLAYERS){
                                 
                                 
                                 getOnlinePlayersResponse(responseData); 
@@ -94,6 +104,8 @@ public abstract class NetworkAccessLayer
                     catch (IOException ex) 
                     {
                          isServerOffline=true;
+                         
+                         System.out.println(ex.toString());
                     }
                 }
             };  
@@ -101,6 +113,7 @@ public abstract class NetworkAccessLayer
         } catch (IOException ex) {
             
                         isServerOffline=true;
+                        System.out.println(ex.toString());
 
         }
     }
@@ -138,6 +151,25 @@ public abstract class NetworkAccessLayer
         else
         {
              myRef.onServerResponse(false,responseData);
+        }
+    }
+    public static void selectDatatForEditProfileRespond(ArrayList responseData)
+    {
+        System.out.println("selectDatatForEditProfileRespond: "+responseData.get(1));
+        //to convert from linkedTreeMap to PlayerDto
+        PlayerDto player = gsonFile.fromJson(responseData.get(1).toString(), PlayerDto.class);
+        System.out.println("player : "+responseData);
+
+        if (responseData !=null) 
+        {
+            myRef.onServerResponse(true,responseData);
+            System.out.println("select For Edit True");
+           // System.out.println("OnNetworkAccess SelectForEdit : "+player.getName());
+        }
+        else
+        {
+             myRef.onServerResponse(false,responseData);
+             System.err.println("select For Edit FALSE");
         }
     }
     
@@ -187,6 +219,8 @@ public abstract class NetworkAccessLayer
     public static void getOnlinePlayersResponse(ArrayList responseData) {
         
       Platform.runLater(()->{
+          
+          
         ArrayList response = (ArrayList) responseData.get(1);
         onlinePlayers = new ArrayList<>();
 
@@ -204,12 +238,16 @@ public abstract class NetworkAccessLayer
         Platform.runLater(()->{
             
          if(ref!=null){
+             
+             System.out.println("================================================2");
        
             if (!onlinePlayers.isEmpty()) {
                   System.out.println("Online players: " + onlinePlayers);
                   ref.onOnlinePlayersUpdate(onlinePlayers);
 
             } else {
+               System.out.println("================================================null");
+
                 ref.onOnlinePlayersUpdate(null);
 
             }

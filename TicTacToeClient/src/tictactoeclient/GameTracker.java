@@ -53,9 +53,9 @@ public class GameTracker implements Serializable{
         moves.clear();
     }
     //sava to file
-    public void saveToFile(){
-        System.out.println("MOVES is GameRecod" + moves.toString());
-        RecordFile.addToFile(moves);
+    public void saveToFile(String path){
+        ///System.out.println("MOVES is GameRecod" + moves.toString());
+        RecordFile.addToFile(moves,path);
 
     }
 }
