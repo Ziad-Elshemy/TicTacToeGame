@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +19,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static tictactoeclient.LoginScreenController.stageOfNames;
 import utilities.Strings;
 
 /**
@@ -79,6 +84,12 @@ public class VsComputerSceneController implements Initializable {
     @FXML
     private Button mediumButton;
     
+    @FXML
+    ImageView userImage;
+
+    @FXML
+     Text username;
+    
     Navigator navigator;
     static int [][]board = new int[][]{{0,0,0},{0,0,0},{0,0,0}};
     private Button[] myButtons ;
@@ -96,14 +107,38 @@ public class VsComputerSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         navigator = new Navigator();
-          myButtons = new Button[]{ btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9};
-          computerWinCounter=0;
-          drawCounter=0;
-          humanWinCounter=0;
-          hideGameStatus();
-    }    
+        
+        userImage.setImage(null);
+        username.setText("Human"); 
+        navigator=new Navigator();
+        myButtons = new Button[]{ btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9};
+        computerWinCounter=0;
+        drawCounter=0;
+        humanWinCounter=0;
+        hideGameStatus();
+        
+        Platform.runLater(()->{
+            
+            
+        try {
+       
+            
+            Parent root = FXMLLoader.load(getClass().getResource("EnterNamesScreen.fxml"));
+            stageOfNames = new Stage();
+            Scene scene = new Scene(root);
+            stageOfNames.setScene(scene);
+            stageOfNames.initModality(Modality.WINDOW_MODAL);
+            stageOfNames.showAndWait();
+            if(EnterNamesScreenController.gender!=null && EnterNamesScreenController.username!=null){
+            userImage.setImage(EnterNamesScreenController.gender.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+            username.setText(EnterNamesScreenController.username); }
 
+        } catch (IOException ex) {
+            Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        });
+    }    
     @FXML
     private void onPlayerClick(ActionEvent event) 
     {
@@ -124,7 +159,9 @@ public class VsComputerSceneController implements Initializable {
     }
 
     @FXML
-    private void onExitButton(ActionEvent event) {
+    void onExitButton(ActionEvent event) {
+     
+      
         navigator.goToPage(event, "LoginScreen.fxml");
     }
 
@@ -364,14 +401,14 @@ public class VsComputerSceneController implements Initializable {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     showGameStatus();
-                    gameOverToast.setText("Human Wins !!!");
-                    humanWinCounter+=5;
+                    gameOverToast.setText(username.getText()+" Wins !!!");
+                    humanWinCounter+=5; 
                     humanScoreButton.setText(Integer.toString(humanWinCounter));
                 }
                 else if(checkDraw())
                 {
                     try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -387,7 +424,7 @@ public class VsComputerSceneController implements Initializable {
                     if(checkForWinner())
                     {
                         try {
-                        showVideo(Strings.loserVideoPath,"You are Winner");
+                        showVideo(Strings.loserVideoPath,"You are Loser");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -400,7 +437,7 @@ public class VsComputerSceneController implements Initializable {
                     else if(checkDraw())
                     {
                         try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -433,14 +470,14 @@ public class VsComputerSceneController implements Initializable {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     showGameStatus();
-                    gameOverToast.setText("Human Wins !!!");
+                    gameOverToast.setText(username.getText()+" Wins !!!");
                     humanWinCounter+=5;
                     humanScoreButton.setText(Integer.toString(humanWinCounter));
                 }
                 else if(checkDraw())
                 {
                     try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -467,7 +504,7 @@ public class VsComputerSceneController implements Initializable {
                     else if(checkDraw())
                     {
                          try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -574,12 +611,12 @@ public class VsComputerSceneController implements Initializable {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                  showGameStatus();
-                gameOverToast.setText("Human Wins !!!");
+                gameOverToast.setText(username.getText()+" Wins !!!");
                 humanWinCounter += 5;
                 humanScoreButton.setText(Integer.toString(humanWinCounter));
             } else if (checkDraw()) {
                  try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -597,7 +634,7 @@ public class VsComputerSceneController implements Initializable {
 
                 if (checkForWinner()) {
                      try {
-                        showVideo(Strings.loserVideoPath,"You are Winner");
+                        showVideo(Strings.loserVideoPath,"You are Loser");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -607,7 +644,7 @@ public class VsComputerSceneController implements Initializable {
                     computerScoreButton.setText(Integer.toString(computerWinCounter));
                 } else if (checkDraw()) {
                      try {
-                        showVideo(Strings.drawVideoPath,"You are Winner");
+                        showVideo(Strings.drawVideoPath,"Draw !!");
                     } catch (IOException ex) {
                         Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
                     }

@@ -8,20 +8,54 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.GameScreenController">
    <children>
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#009ead" height="860.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1430.0" />
       <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#16697a" height="630.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="422.0" />
       <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#02c5d7" height="286.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="286.0" />
+      <AnchorPane fx:id="onExitButton" prefHeight="465.0" prefWidth="311.0">
+         <children>
+            <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="327.0" layoutY="229.0" radius="69.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" AnchorPane.topAnchor="160.0" />
+            <ImageView fx:id="playerOneImage" fitHeight="85.0" fitWidth="72.0" layoutX="292.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/girl.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="playerOneUsername" fill="WHITE" layoutX="243.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="username1" fill="#ffa62b" layoutX="243.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VS" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+               <font>
+                  <Font name="Arial Bold" size="48.0" />
+               </font>
+            </Text>
+            <Circle fx:id="avatar1" fill="DODGERBLUE" layoutX="328.0" layoutY="509.0" radius="69.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" />
+            <Text fx:id="playerTwoUsername" fill="WHITE" layoutX="244.0" layoutY="614.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Computer" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="playerTwoImage" fitHeight="85.0" fitWidth="72.0" layoutX="294.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/pc.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       <GridPane>
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="584.0" minWidth="10.0" prefWidth="581.0" />
@@ -146,9 +180,9 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="exitBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitBtnAction" prefHeight="69.0" prefWidth="197.0" style="-fx-background-color: linear-gradient(to left, white 0%, red 99%);" text="EXIT" textAlignment="CENTER">
+            <Button fx:id="exitBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitBtnAction" prefHeight="44.0" prefWidth="116.0" style="-fx-background-color: red; -fx-background-radius: 15;" text="EXIT" textAlignment="CENTER" textFill="#fcf7f7">
                <font>
-                  <Font name="Arial Bold" size="25.0" />
+                  <Font name="Bauhaus 93" size="30.0" />
                </font>
                <GridPane.margin>
                   <Insets left="30.0" />

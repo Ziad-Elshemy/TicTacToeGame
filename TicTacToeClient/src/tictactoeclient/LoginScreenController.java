@@ -1,35 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import onlineplaying.NetworkAccessLayer;
+import onlineplaying.PlayerDto;
+import utilities.Codes;
 
-/**
- * FXML Controller class
- *
- * @author youse
- */
-public class LoginScreenController implements Initializable {
+
+public class LoginScreenController implements Initializable , Listener{
     
     Navigator navigator;
+    Gson gson;
+    PlayerDto player;
+    ActionEvent myEvent;
+    static Stage stageOfNames;
+
+
 
     @FXML
     private TextField usernameField;
@@ -57,26 +67,38 @@ public class LoginScreenController implements Initializable {
     @FXML
     private ImageView muteImg;
     
+    @FXML
+    private Label passwordError;
+    
+    @FXML
+    private Label usernameError;
+    
+    @FXML
+    private Label serverOfflineText;
+
+    @FXML
+    private Button reconnectButton;
+
+    
+
    
     
     
     
     @FXML
     void onMuteBtnClicked(ActionEvent event){
-        
-        
-        
-       
-        
+
        if( TicTacToeClient.isMuted){
-        TicTacToeClient.mediaPlayer.play();
-        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+           
+         TicTacToeClient.mediaPlayer.play();
+         muteImg.setImage(new Image("file:src/Images/volume.png")); 
          TicTacToeClient.isMuted=false;
         
         }
        else {
-        TicTacToeClient.mediaPlayer.pause();
-        muteImg.setImage(new Image("file:src/Images/mute.png"));
+           
+         TicTacToeClient.mediaPlayer.pause();
+         muteImg.setImage(new Image("file:src/Images/mute.png"));
          TicTacToeClient.isMuted=true;
        
        }
@@ -86,18 +108,18 @@ public class LoginScreenController implements Initializable {
     
     }
 
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-         // Center the VBox when the window is first loaded
+        
+        gson = new Gson();
+        player = new PlayerDto();
         navigator = new Navigator();
         centerVBox();
-       
-        
-             
+        usernameError.setText("");
+        passwordError.setText(""); 
+        NetworkAccessLayer.setRef(this);
+
        if( !TicTacToeClient.isMuted){
            
          muteImg.setImage(new Image("file:src/Images/volume.png")); 
@@ -108,10 +130,21 @@ public class LoginScreenController implements Initializable {
          muteImg.setImage(new Image("file:src/Images/mute.png"));
        
        }
-
-        // Add listeners to handle resizing dynamically
-//        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerVBox());
-//        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerVBox());
+       
+        if(NetworkAccessLayer.isServerOffline){
+           
+            usernameField.setDisable(true);
+            passwordField.setDisable(true);
+            loginButton.setDisable(true);
+            registerButton.setDisable(true);
+            serverOfflineText.setText("  Server Is Offline Now Try Again Later Or You Can Play Offline");
+        
+        }
+        else{
+            reconnectButton.setDisable(true);
+        }
+            if(NetworkAccessLayer.serverIP == null && NetworkAccessLayer.local == false)
+                navigator.popUpStage("ConnectToServerScreen.fxml");
     }
 
     private void centerVBox() {
@@ -120,15 +153,40 @@ public class LoginScreenController implements Initializable {
         double vboxWidth = mainVBox.getWidth();
         double vboxHeight = mainVBox.getHeight();
 
-        // Center the VBox dynamically
-       //AnchorPane.setTopAnchor(mainVBox, (height - vboxHeight) / 2);
-       //AnchorPane.setLeftAnchor(mainVBox, (width - vboxWidth) / 2);
     
     }    
 
     @FXML
     private void gologin(ActionEvent event) {
-        navigator.goToPage(event, "HomeScreen.fxml");
+        
+        myEvent=event;
+        
+        if(usernameField.getText().isEmpty()){
+            usernameError.setText("Please Enter Your Username");
+            usernameField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+       
+         
+        if(passwordField.getText().isEmpty()){
+            passwordError.setText("Please Enter Your Password");
+            passwordField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+        if(!usernameField.getText().isEmpty()&&!passwordField.getText().isEmpty()){
+
+
+            player.setUserName(usernameField.getText());
+            player.setPassword(passwordField.getText());
+            player.setIsOnline(true);
+            ArrayList requestArr = new ArrayList();
+            requestArr.add(Codes.LOGIN_CODE);
+            requestArr.add(gson.toJson(player));
+            String jsonLoginRequest = gson.toJson(requestArr);
+            NetworkAccessLayer.sendRequest(jsonLoginRequest);
+            System.out.println("the sendRequest data is: "+jsonLoginRequest);
+        
+         }
         
     }
 
@@ -141,12 +199,50 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void localGameBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "FXMLGameScreen.fxml");
+        
+        navigator.goToPage(event, "FXMLGameScreen.fxml"); 
     }
 
     @FXML
     private void onPcButton(ActionEvent event) {
-        navigator.goToPage(event, "VsComputerScene.fxml");
+                  
+ 
+        
+         navigator.goToPage(event, "VsComputerScene.fxml");
+
+        
     }
+
+    @Override
+    public void onServerResponse(boolean success,ArrayList responseData) {
+        
+        if(success)
+         {
+             Platform.runLater(()->{
+                 new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Login ;)", ButtonType.OK).showAndWait();
+                  navigator.goToPage(myEvent, "HomeScreen.fxml");
+
+             });
+         }
+         else
+         {
+              Platform.runLater(()->{
+                  new Alert(Alert.AlertType.ERROR, "Player Not Found Please Register", ButtonType.OK).showAndWait();
+              });
+         }
+        
+        
+        
+        
+    }
+
+    @FXML
+    private void onReconnectButon(ActionEvent event) {
+        navigator.popUpStage("ConnectToServerScreen.fxml");
+    }
+
+   
+
+  
     
 }

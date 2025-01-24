@@ -66,6 +66,8 @@ public class EditProfileController implements Initializable ,Listener{
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
         NetworkAccessLayer.setRef(this);
         navigator=new Navigator();
         gson = new Gson();
