@@ -64,11 +64,7 @@ public abstract class NetworkAccessLayer
                                // System.out.println("the edit response data: "+ responseData);
                                 editProfileRespond(responseData);
                             }
-                            else if(code == Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)
-                            {
-                                selectDatatForEditProfileRespond(responseData);
-                            }
-                            
+
                             else if(code == Codes.SEND_INVITATION_CODE)
                             {
                                // String playerData = (String) responseData.get(1);
@@ -149,26 +145,7 @@ public abstract class NetworkAccessLayer
              myRef.onServerResponse(false,responseData);
         }
     }
-    public static void selectDatatForEditProfileRespond(ArrayList responseData)
-    {
-        System.out.println("selectDatatForEditProfileRespond: "+responseData.get(1));
-        //to convert from linkedTreeMap to PlayerDto
-        PlayerDto player = gsonFile.fromJson(responseData.get(1).toString(), PlayerDto.class);
-        System.out.println("player : "+responseData);
 
-        if (responseData !=null) 
-        {
-            myRef.onServerResponse(true,responseData);
-            System.out.println("select For Edit True");
-            System.out.println("OnNetworkAccess SelectForEdit : "+player.getName());
-        }
-        else
-        {
-             myRef.onServerResponse(false,responseData);
-             System.err.println("select For Edit FALSE");
-        }
-    }
-    
     public static void recieveInvitationResponse(ArrayList responseData){
         myRef.onServerResponse(true, responseData);
         

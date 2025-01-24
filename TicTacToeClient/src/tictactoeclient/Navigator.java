@@ -151,64 +151,7 @@ public class Navigator {
             
       
     }
-    
-    public void goToPage(ActionEvent event,String targetPage,PlayerDto player){
-        
-        try {
-            System.out.println("You clicked me!");
-            //label.setText("Hello World!");
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
-            Scene page1Scene = new Scene(loader.load());
-            EditProfileController editController = loader.getController();
-            editController.setData(player);
-            // Get current stage and set new scene (Page 1) 
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(page1Scene);
-            stage.show();
-            
-            stage.setOnCloseRequest((e)->{
-            
-             
-                 
-                if(NetworkAccessLayer.mySocket!=null){
-                    
-                   ArrayList arr=new ArrayList();
-                   arr.add(Codes.LOGOUT_CODE);
 
-                   System.out.println(arr);
-
-                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
-                   
-                   
-                   Platform.runLater(()->{
-                       
-                       try {
-                           NetworkAccessLayer.thread.stop();
-                           
-                           NetworkAccessLayer.mySocket.close();
-                       } catch (IOException ex) {
-                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-                       }
-                   
-                   
-                   
-                   }); 
-                    
-                    
-           
-                   
-                 
-                 }
-                 Platform.exit();
-             
-         });
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-   
     public void luanchInvitation(String targetPage,String pageTitle,PlayerDto sender){
         
         try {

@@ -72,6 +72,11 @@ public class EditProfileController implements Initializable ,Listener{
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
+        
+        String score1 = String.valueOf(NetworkAccessLayer.playerData.getScore()); // primitive int
+        username.setText(NetworkAccessLayer.playerData.getName());
+        score.setText(score1);
+        userNameField.setText(NetworkAccessLayer.playerData.getUserName());
     }    
 
     @FXML
@@ -145,15 +150,6 @@ public class EditProfileController implements Initializable ,Listener{
             alert.showAndWait();
             });
         }
-    }
-    public void setData(PlayerDto player)
-    {
-        
-        String score1 = String.valueOf(player.getScore()); // primitive int
-        username.setText(player.getName());
-        score.setText(score1);
-        userNameField.setText(player.getUserName());
-       System.out.println("Fun to Set Name :"+player.getScore());
     }
 
     
