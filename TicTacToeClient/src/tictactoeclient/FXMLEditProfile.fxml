@@ -33,25 +33,20 @@
                                  <children>
                                     <AnchorPane prefHeight="599.0" prefWidth="659.0">
                                        <children>
-                                          <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="347.0" layoutY="72.0" radius="49.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" AnchorPane.topAnchor="23.0" />
-                                          <ImageView fx:id="userImage" fitHeight="63.0" fitWidth="57.0" layoutX="321.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                                          <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="360.0" layoutY="72.0" radius="57.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" AnchorPane.topAnchor="15.0" />
+                                          <ImageView fx:id="userImage" fitHeight="75.0" fitWidth="69.0" layoutX="329.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../Images/girl.png" />
                                              </image>
                                           </ImageView>
-                                          <Circle fx:id="avatar1" fill="DODGERBLUE" layoutX="374.0" layoutY="113.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                          <Text fx:id="username" layoutX="288.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="116.0595703125">
+                                          <Circle fx:id="avatar1" fill="DODGERBLUE" layoutX="392.0" layoutY="119.0" radius="6.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
+                                          <Text fx:id="username" layoutX="302.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="116.0595703125">
                                              <font>
                                                 <Font name="Arial" size="18.0" />
                                              </font>
                                           </Text>
-                                          <TextField fx:id="passWordField" layoutX="161.0" layoutY="300.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="PasssWord" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
-                                          <Text fx:id="score" fill="#0000009f" layoutX="310.0" layoutY="174.90234375" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" wrappingWidth="72.47314453125" AnchorPane.bottomAnchor="420.3330078125" />
-                                          <Text fx:id="passwordLable" fill="#433e3e" layoutX="163.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER" wrappingWidth="97.0595703125">
-                                             <font>
-                                                <Font name="Arial" size="18.0" />
-                                             </font>
-                                          </Text>
+                                          <TextField fx:id="passWordField" layoutX="161.0" layoutY="300.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="Password" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
+                                          <Text fx:id="score" fill="#0000009f" layoutX="324.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" wrappingWidth="72.47314453125" AnchorPane.bottomAnchor="421.0" />
                                           <TextField fx:id="userNameField" editable="false" layoutX="161.0" layoutY="206.0" opacity="0.99" prefHeight="50.0" prefWidth="372.0" promptText="Username" style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #82C0CC; -fx-border-radius: 8;" />
                                           <Button fx:id="submitUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="395.0" mnemonicParsing="false" onAction="#onSubmitUpdateClicked" prefHeight="24.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #c9f9ff); -fx-background-radius: 8;" text="Submit Update" textFill="WHITESMOKE">
                                              <font>

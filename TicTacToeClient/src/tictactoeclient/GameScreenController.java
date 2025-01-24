@@ -28,14 +28,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static sun.plugin2.os.windows.Windows.ReadFile;
-import tictactoeclient.GameTracker.Move;
 import utilities.Strings;
 
 /**
@@ -106,12 +107,32 @@ public class GameScreenController implements Initializable {
     private VBox recordFilesListBox;
     @FXML
     private Label file1Lable;
+    
+    @FXML
+    private ImageView playerTwoImage;
+
+    @FXML
+    private Text playerTwoUsername;
+    
+    @FXML
+    private ImageView playerOneImage;
+
+    @FXML
+    private Text playerOneUsername;
+    
+    static Stage stageOfNames;
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        playerOneImage.setImage(null);
+        playerOneUsername.setText("X Player");
+        playerTwoImage.setImage(null); 
+        playerTwoUsername.setText("O Player");
         // TODO
         //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
         tracker = new GameTracker();  // record
@@ -124,6 +145,38 @@ public class GameScreenController implements Initializable {
         disableBoard();
         counter = 0;
         isRecording = false; //record
+        
+                
+        Platform.runLater(()->{
+            
+            
+        try {
+
+            Parent root = FXMLLoader.load(getClass().getResource("EnterNamesForTwoPlayers.fxml"));
+            stageOfNames = new Stage();
+            Scene scene = new Scene(root);
+            stageOfNames.setScene(scene);
+            stageOfNames.initModality(Modality.WINDOW_MODAL);
+            stageOfNames.showAndWait();
+            if(EnterNamesForTwoPlayersController.genderOne!=null && EnterNamesForTwoPlayersController.nameOne!=null){
+                playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+                playerOneUsername.setText(EnterNamesForTwoPlayersController.nameOne); 
+            
+            }
+            
+            if(EnterNamesForTwoPlayersController.genderTwo!=null && EnterNamesForTwoPlayersController.nameTwo!=null){
+                playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+                playerTwoUsername.setText(EnterNamesForTwoPlayersController.nameTwo);
+            
+            
+            
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        });
     }    
 
 
@@ -159,13 +212,13 @@ public class GameScreenController implements Initializable {
             playerSympol = "X";
             button.setText(playerSympol);
             button.setTextFill(Colors.X_TEXT);
-            playerTurnBtn.setText("O-TURN");
+            playerTurnBtn.setText(!playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Turn":"O-TURN");
             playerTurnBtn.setStyle("-fx-background-color: #FFA62B");
         }else{
             playerSympol = "O";
             button.setText(playerSympol);
             button.setTextFill(Colors.O_TEXT);
-            playerTurnBtn.setText("X-TURN");
+            playerTurnBtn.setText(!playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Turn":"X-TURN");
             playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         }
         counter++;
@@ -188,7 +241,7 @@ public class GameScreenController implements Initializable {
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
-            String text = "Player X win";
+            String text = !playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Win":"Player X win";
             showGameOverToast(text);
             if(isRecording)
             {
@@ -198,7 +251,7 @@ public class GameScreenController implements Initializable {
             //disableBoard();
             counter=0;
 
-            showVideo(Strings.winnerVideoPath,"X - Winner");
+            showVideo(Strings.winnerVideoPath, !playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Win":"Player X win");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
         }else if(checkWinner("O")){
             playerOScore+=1;
@@ -206,7 +259,7 @@ public class GameScreenController implements Initializable {
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
-            String text = "Player O win";
+            String text = !playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Win":"Player O win";
             showGameOverToast(text);
             if(isRecording)
             {
@@ -216,7 +269,7 @@ public class GameScreenController implements Initializable {
             //disableBoard();
             counter=0;
             // check for draw
-            showVideo(Strings.winnerVideoPath,"O - Winner");
+            showVideo(Strings.winnerVideoPath, !playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Win":"Player O win");
             //showVideo(Strings.loserVideoPath, "X - loser");
         }else if(counter == 9){
             //playerXScore+=5;

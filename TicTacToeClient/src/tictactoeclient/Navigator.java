@@ -5,9 +5,12 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,14 +18,29 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
+import utilities.Codes;
 
 /**
  *
  * @author Ziad-Elshemy
  */
 public class Navigator {
+    Gson gsonFile;
+
+    public Navigator() {
+        
+       gsonFile=new Gson();
+    }
+    
+    
+    
+    
     public void goToPage(ActionEvent event,String targetPage){
+        
+        
+        
         
         try {
             System.out.println("You clicked me!");
@@ -34,6 +52,44 @@ public class Navigator {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(page1Scene);
             stage.show();
+            stage.setOnCloseRequest((e)->{
+            
+             
+                 
+                if(NetworkAccessLayer.mySocket!=null){
+                    
+                   ArrayList arr=new ArrayList();
+                   arr.add(Codes.LOGOUT_CODE);
+
+                   System.out.println(arr);
+
+                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
+                   
+                   
+                   Platform.runLater(()->{
+                       
+                       try {
+                           NetworkAccessLayer.thread.stop();
+                           
+                           NetworkAccessLayer.mySocket.close();
+                       } catch (IOException ex) {
+                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   
+                   
+                   
+                   }); 
+                    
+                    
+           
+                   
+                 
+                 }
+                 Platform.exit();
+             
+         });
+            
+
             
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -41,6 +97,7 @@ public class Navigator {
     }
     public void goToPage(Stage stage, String targetPage){
         
+    
         try {
             System.out.println("You clicked me!");
             //label.setText("Hello World!");
@@ -51,9 +108,48 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
             
+            
+            stage.setOnCloseRequest((e)->{
+                
+                
+                
+                if(NetworkAccessLayer.mySocket!=null){
+                    
+                    ArrayList arr=new ArrayList();
+                    arr.add(Codes.LOGOUT_CODE); 
+                    
+                    System.out.println(arr);
+                    
+                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
+                    
+                    
+                    Platform.runLater(()->{
+                        
+                        try {
+                            NetworkAccessLayer.thread.stop();
+                            
+                            NetworkAccessLayer.mySocket.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        
+                        
+                    });
+                    
+                    
+                    
+                    
+                    
+                }
+                Platform.exit();
+                
+            });
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+      
     }
     
     public void goToPage(ActionEvent event,String targetPage,PlayerDto player){
@@ -71,12 +167,49 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
             
+            stage.setOnCloseRequest((e)->{
+            
+             
+                 
+                if(NetworkAccessLayer.mySocket!=null){
+                    
+                   ArrayList arr=new ArrayList();
+                   arr.add(Codes.LOGOUT_CODE);
+
+                   System.out.println(arr);
+
+                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
+                   
+                   
+                   Platform.runLater(()->{
+                       
+                       try {
+                           NetworkAccessLayer.thread.stop();
+                           
+                           NetworkAccessLayer.mySocket.close();
+                       } catch (IOException ex) {
+                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   
+                   
+                   
+                   }); 
+                    
+                    
+           
+                   
+                 
+                 }
+                 Platform.exit();
+             
+         });
+            
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    
-    public void luanchInvitation(String targetPage,String pageTitle,String sender){
+    public void luanchInvitation(String targetPage,String pageTitle,PlayerDto sender){
         
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
