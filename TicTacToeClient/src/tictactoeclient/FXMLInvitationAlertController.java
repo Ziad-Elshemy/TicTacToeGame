@@ -100,7 +100,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         
         //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Accepted");
-        System.out.println("you have Accepted Invitation from "+senderPlayer.getUserName());
+        System.out.println("you have Accepted Invitation from  "+senderPlayer.getUserName());
         Stage stage = (Stage)acceptBtn.getScene().getWindow();
         timeline.stop();
         alarmMediaPlayer.pause();
