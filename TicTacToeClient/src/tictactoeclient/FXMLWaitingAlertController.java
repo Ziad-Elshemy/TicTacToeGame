@@ -122,7 +122,6 @@ public class FXMLWaitingAlertController implements Initializable,Listener {
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
         System.out.println("hi from waiting alarm data: " + responseData.toString());
-        System.out.println("please wait until accept from player : " + responseData.get(2).toString());
         if(success){
             Platform.runLater(()->{
                 navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");

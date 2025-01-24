@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
-import tictactoeclient.HomeScreenController;
 import tictactoeclient.Listener;
 import utilities.Codes;
 
@@ -35,11 +32,13 @@ public abstract class NetworkAccessLayer
     public static boolean isServerOffline;
     public static Thread thread;
     public static ArrayList<PlayerDto> onlinePlayers;
+    public static String serverIP  ;
+    public static boolean local = false  ;
     
     public static void startConnectionHandling( )
     {
         try{
-            mySocket = new Socket("127.0.0.1", 5005);
+            mySocket = new Socket(serverIP, 5005);
             fromServer = new DataInputStream(mySocket.getInputStream());
             toServer = new PrintStream(mySocket.getOutputStream());
             thread = new Thread(){
@@ -72,16 +71,14 @@ public abstract class NetworkAccessLayer
                             
                             else if(code == Codes.SEND_INVITATION_CODE)
                             {
-                                String playerData = (String) responseData.get(1);
-                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                               // String playerData = (String) responseData.get(1);
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveInvitationResponse(responseData);
                             }
                             else if(code == Codes.INVITATION_REPLY_CODE)
                             {
                                 double isAccepted = (double) responseData.get(1);
-                                String playerData = (String) responseData.get(2);
-                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                //String playerData = (String) responseData.get(2);
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveReplyOnInvitationResponse(responseData);
                             }else if(code == Codes.LOGIN_CODE){
@@ -104,7 +101,6 @@ public abstract class NetworkAccessLayer
                     catch (IOException ex) 
                     {
                          isServerOffline=true;
-                         
                          System.out.println(ex.toString());
                     }
                 }
@@ -180,7 +176,7 @@ public abstract class NetworkAccessLayer
     
     public static void recieveReplyOnInvitationResponse(ArrayList responseData){
         double isAccepted = (double) responseData.get(1);
-        if (isAccepted == 1) 
+        if (isAccepted == 1.0) 
         {
             myRef.onServerResponse(true,responseData);
         }
@@ -239,14 +235,12 @@ public abstract class NetworkAccessLayer
             
          if(ref!=null){
              
-             System.out.println("================================================2");
        
             if (!onlinePlayers.isEmpty()) {
                   System.out.println("Online players: " + onlinePlayers);
                   ref.onOnlinePlayersUpdate(onlinePlayers);
 
             } else {
-               System.out.println("================================================null");
 
                 ref.onOnlinePlayersUpdate(null);
 

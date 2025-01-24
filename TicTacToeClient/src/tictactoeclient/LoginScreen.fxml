@@ -58,6 +58,7 @@
                         <Image url="@../Images/logo.png" />
                      </image>
                   </ImageView>
+                  <Button fx:id="reconnectButton" layoutY="7.0" onAction="#onReconnectButon" prefHeight="44.0" style="-fx-background-color: #005792; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 125; -fx-background-radius: 15;" text="Reconnect" />
                </children>
             </AnchorPane>
          </children>
