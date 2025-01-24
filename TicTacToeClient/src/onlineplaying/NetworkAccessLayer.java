@@ -32,11 +32,13 @@ public abstract class NetworkAccessLayer
     public static boolean isServerOffline;
     public static Thread thread;
     public static ArrayList<PlayerDto> onlinePlayers;
+    public static String serverIP  ;
+    public static boolean local = false  ;
     
     public static void startConnectionHandling( )
     {
         try{
-            mySocket = new Socket("127.0.0.1", 5005);
+            mySocket = new Socket(serverIP, 5005);
             fromServer = new DataInputStream(mySocket.getInputStream());
             toServer = new PrintStream(mySocket.getOutputStream());
             thread = new Thread(){
@@ -99,7 +101,6 @@ public abstract class NetworkAccessLayer
                     catch (IOException ex) 
                     {
                          isServerOffline=true;
-                         
                          System.out.println(ex.toString());
                     }
                 }

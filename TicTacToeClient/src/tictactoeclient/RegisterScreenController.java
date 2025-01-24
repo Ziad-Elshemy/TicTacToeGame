@@ -188,18 +188,7 @@ public class RegisterScreenController implements Initializable,Listener {
          {
 
            Platform.runLater(()->{
-                try {
-                    Stage newStage = new Stage();
-                    newStage.initModality(Modality.APPLICATION_MODAL);
-                    Parent root = FXMLLoader.load(getClass().getResource("CompleteRegisterationScreen.fxml"));
-                    Scene scene = new Scene(root);
-                    newStage.setScene(scene);
-                    newStage.show();
-                    
-            }
-            catch (IOException ex){
-                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                navigator.popUpStage("CompleteRegisterationScreen.fxml");
            });
             
 
@@ -225,6 +214,9 @@ public class RegisterScreenController implements Initializable,Listener {
         navigator.goToPage(event, "LoginScreen.fxml");
 
     }
+
+   
+
     
     @FXML
     void onDropDownListChecked(ActionEvent event) {
@@ -233,4 +225,5 @@ public class RegisterScreenController implements Initializable,Listener {
         System.out.println(gender);
 
     }
+
 }

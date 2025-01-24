@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -22,7 +23,7 @@ public class CompleteRegisterationScreenController implements Initializable {
 
     @FXML
     private Button okayButton;
-
+    
     /**
      * Initializes the controller class.
      */
