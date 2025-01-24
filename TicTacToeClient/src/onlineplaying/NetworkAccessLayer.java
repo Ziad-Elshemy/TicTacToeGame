@@ -97,7 +97,10 @@ public abstract class NetworkAccessLayer
                             
                             } 
                             
-                            
+                            else if(code == Codes.DELETE_ACCOUNT_CODE)
+                            {
+                                deleteAccountResponse(responseData);
+                            }
                             if(code == Codes.GET_ONLINE_PLAYERS){
                                 
                                 
@@ -257,4 +260,16 @@ public abstract class NetworkAccessLayer
        });
 
 }
+    public static void deleteAccountResponse(ArrayList responseData)
+    {
+        double deleteResult = (double) responseData.get(1);
+        if(deleteResult==1)
+        {
+            System.out.println("Network Access Lyer Delet"+deleteResult);
+            myRef.onServerResponse(true, responseData);
+        }
+        else {
+            myRef.onServerResponse(false, responseData);
+        }
+    }
 }

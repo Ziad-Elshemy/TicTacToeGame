@@ -22,6 +22,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
+import org.w3c.dom.events.Event;
 import utilities.Codes;
 
 /**
@@ -33,6 +34,8 @@ public class EditProfileController implements Initializable ,Listener{
     Navigator navigator; 
     Gson gson;
     PlayerDto player;
+    Alert alert;
+    ActionEvent eventForEdit;
 
     @FXML
     private Circle avatar;
@@ -59,7 +62,7 @@ public class EditProfileController implements Initializable ,Listener{
     @FXML
     private Button muteBtn;
     @FXML
-    private Text passwordLable;
+    private Button deletAccountButton;
 
     /**
      * Initializes the controller class.
@@ -132,24 +135,61 @@ public class EditProfileController implements Initializable ,Listener{
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
-        if (success)
+        System.out.println("Responce on Edit Page"+responseData);
+        if ((double)responseData.get(0) ==Codes.CHANGE_PASSWORD_CODE && success)
         {
             
             System.out.println("Updated");
             Platform.runLater(()->{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
+             alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
             alert.showAndWait();
             });
            
         }
-        else
+        else if ((double)responseData.get(0)==Codes.CHANGE_PASSWORD_CODE && !success)
         {
             System.err.println("NotUPdataed");
             Platform.runLater(()->{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
+            alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
             alert.showAndWait();
             });
         }
+        else if((double)responseData.get(0)==(double)Codes.DELETE_ACCOUNT_CODE && success)
+        {  System.out.println("NAvigate To Login");
+            Platform.runLater(()->{
+            navigator.goToPage(eventForEdit, "LoginScreen.fxml");
+              
+           });
+            
+        }
+        
+        else if((double)responseData.get(0)==Codes.DELETE_ACCOUNT_CODE && !success)
+        {
+            
+            Platform.runLater(()->{
+                 Alert myAlert = new Alert(Alert.AlertType.INFORMATION);
+                 myAlert.setContentText("Can't Delete Your Account");
+                 myAlert.showAndWait();
+              });
+        }
+        
+        
+    }
+
+    @FXML
+    private void onDeletAccountButtonClicked(ActionEvent event) {
+        
+       // NetworkAccessLayer.setRef(this);
+        eventForEdit = event;
+        player.setUserName(userNameField.getText());
+        ArrayList requestArrayList = new ArrayList();
+        requestArrayList.add(Codes.DELETE_ACCOUNT_CODE);
+        requestArrayList.add(gson.toJson(player));
+        String jsonDeleteAccountRequest = gson.toJson(requestArrayList);
+        NetworkAccessLayer.sendRequest(jsonDeleteAccountRequest);
+        
+       // navigator.goToPage(eventForEdit, "LoginScreen.fxml");
+        
     }
 
     

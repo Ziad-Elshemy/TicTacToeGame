@@ -30,9 +30,9 @@ public class RecordFile {
     static String localDate = getDate();
     
     
-     public static void addToFile(ArrayList<Move> moves,String path) {
+     public static void addToFile(ArrayList<Move> moves,String path,String AgainestPlayerNae) {
         String fileName = localDate;  // Use current date and time as file name
-        File file = new File(path + fileName); //src/games/
+        File file = new File(path + fileName +AgainestPlayerNae); //src/games/
 
         try (FileOutputStream fileOutput = new FileOutputStream(file);
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
@@ -68,7 +68,7 @@ public class RecordFile {
             private static String getDate()
     {
       Date  myDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
         
         return dateFormat.format(myDate);
     }

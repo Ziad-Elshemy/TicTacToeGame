@@ -92,6 +92,7 @@ public class OnlineGamesRecordsController implements Initializable {
             
             for(File file :files)
             {
+                //System.out.println("file :::"+file.getName());
                 Label lable = new Label(file.getName());
                 lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
                lable.setOnMouseEntered((e)->{
@@ -113,10 +114,11 @@ public class OnlineGamesRecordsController implements Initializable {
                 });
             }
         }
+        else {System.out.println("Error On File Loading");}
     }
  private void startReplayGame(String fileName)
  {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
+    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/onlineGames/"+fileName);
     GameReplay gamereplay = new GameReplay();
     gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
 

@@ -267,7 +267,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -285,7 +285,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -307,7 +307,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -596,7 +596,7 @@ public class OnlineGameController implements Initializable,Listener {
     
     private void ShowFiles ()
     {
-        File directory = new File("src/games");
+        File directory = new File("src/onlineGames");
         File[] files = directory.listFiles();
         
         //files = RecordsList.getRecordsFiles();
@@ -626,7 +626,7 @@ public class OnlineGameController implements Initializable,Listener {
     }
  private void startReplayGame(String fileName)
  {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
+    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/onlineGames/"+fileName);
     GameReplay gamereplay = new GameReplay();
     gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
     RecordBtn.setText("Record");
@@ -645,6 +645,10 @@ public class OnlineGameController implements Initializable,Listener {
             String button_id = (String)responseData.get(3);
             System.out.println("the Sympol : " + button_sympol);
             System.out.println("the button_id : " + button_id.toString());
+            if(isRecording)
+            {
+                tracker.recordMove(button_id, button_sympol.charAt(0));
+            }
             GridPane gridPane = (GridPane) rootPane.lookup("#gridPaneId");
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof Button) {
@@ -673,8 +677,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
-                                            isRecording = false; ///
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -692,7 +695,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -744,7 +747,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/");  ////add record to file
+                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();
