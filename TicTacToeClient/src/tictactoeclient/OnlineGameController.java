@@ -118,6 +118,10 @@ public class OnlineGameController implements Initializable,Listener {
     Gson gson;
     @FXML
     private GridPane gridPaneId;
+    @FXML
+    private Label playerXNameLabel;
+    @FXML
+    private Label playerONameLabel;
 
     /**
      * Initializes the controller class.
@@ -139,7 +143,8 @@ public class OnlineGameController implements Initializable,Listener {
         enableBoard();
         isGameEnded = false;
         playerTurnBtn.setVisible(true);
-        newGameBtn.setVisible(false);
+        newGameBtn.setText("Play Again");
+        newGameBtn.setVisible(false); 
         playerTurnBtn.setText("X-TURN");
         playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         initializeBoardState();
@@ -160,6 +165,11 @@ public class OnlineGameController implements Initializable,Listener {
     public void setMySympol(String sympol){
         this.mySympol = sympol;
         System.out.println("My Sympol is: "+mySympol);
+        if(counter==0 && mySympol.equals("O")){
+            disableMouseClick();
+        }else{
+            enableMouseClick();
+        }
     }
 
     @FXML
@@ -169,6 +179,11 @@ public class OnlineGameController implements Initializable,Listener {
 
     @FXML
     private void newGameBtnAction(ActionEvent event) {
+        if(counter==0 && mySympol.equals("O")){
+            disableMouseClick();
+        }else{
+            enableMouseClick();
+        }
         enableBoard();
         isGameEnded = false;
         playerTurnBtn.setVisible(true);
@@ -179,6 +194,13 @@ public class OnlineGameController implements Initializable,Listener {
         
         RecordBtn.setDisable(false);////record
         tracker.clearMoves();
+        
+        //send to the other player
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.PLAY_AGAIN_CODE);
+        requestArr.add(enemyUserName);
+        String jsonRegisterationRequest = gson.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
     }
 
 
@@ -235,13 +257,13 @@ public class OnlineGameController implements Initializable,Listener {
         
         writePlayerSymolInArray(button, playerSympol);
         
-        if(checkWinner("X")){
+        if(checkWinner("X","-fx-background-color: #008000")){
             playerXScore+=1;
             playerXScoreBtn.setText(""+playerXScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
-            String text = "Player X win";
+            String text = "Winner";
             showGameOverToast(text);
             if(isRecording)
             {
@@ -253,13 +275,13 @@ public class OnlineGameController implements Initializable,Listener {
 
             showVideo(Strings.winnerVideoPath,"X - Winner");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
-        }else if(checkWinner("O")){
+        }else if(checkWinner("O","-fx-background-color: #008000")){
             playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
-            String text = "Player O win";
+            String text = "Winner";
             showGameOverToast(text);
             if(isRecording)
             {
@@ -468,7 +490,7 @@ public class OnlineGameController implements Initializable,Listener {
     //["X","x","X",
     // "o","X","o",
     // "X","o","X"]
-    private boolean checkWinner(String playerSympol) {
+    private boolean checkWinner(String playerSympol,String color) {
         for(int i=0; i<9; i+=3){
             // check for rows winner
             if(boardState.get(i).toString().equals(playerSympol)&&
@@ -476,19 +498,19 @@ public class OnlineGameController implements Initializable,Listener {
                boardState.get(i+2).toString().equals(playerSympol)){
                 System.out.println("winner by rows");
                 if(i==0){
-                    btn1.setStyle("-fx-background-color: #008000");
-                    btn2.setStyle("-fx-background-color: #008000");
-                    btn3.setStyle("-fx-background-color: #008000");
+                    btn1.setStyle(color);
+                    btn2.setStyle(color);
+                    btn3.setStyle(color);
                 }
                 if(i==3){
-                    btn4.setStyle("-fx-background-color: #008000");
-                    btn5.setStyle("-fx-background-color: #008000");
-                    btn6.setStyle("-fx-background-color: #008000");
+                    btn4.setStyle(color);
+                    btn5.setStyle(color);
+                    btn6.setStyle(color);
                 }
                 if(i==6){
-                    btn7.setStyle("-fx-background-color: #008000");
-                    btn8.setStyle("-fx-background-color: #008000");
-                    btn9.setStyle("-fx-background-color: #008000");
+                    btn7.setStyle(color);
+                    btn8.setStyle(color);
+                    btn9.setStyle(color);
                 }
                 isGameEnded = true;
                 return true;
@@ -503,19 +525,19 @@ public class OnlineGameController implements Initializable,Listener {
                 
                 System.out.println("winner by columns");
                 if(i==0){
-                    btn1.setStyle("-fx-background-color: #008000");
-                    btn4.setStyle("-fx-background-color: #008000");
-                    btn7.setStyle("-fx-background-color: #008000");
+                    btn1.setStyle(color);
+                    btn4.setStyle(color);
+                    btn7.setStyle(color);
                 }
                 if(i==1){
-                    btn2.setStyle("-fx-background-color: #008000");
-                    btn5.setStyle("-fx-background-color: #008000");
-                    btn8.setStyle("-fx-background-color: #008000");
+                    btn2.setStyle(color);
+                    btn5.setStyle(color);
+                    btn8.setStyle(color);
                 }
                 if(i==2){
-                    btn3.setStyle("-fx-background-color: #008000");
-                    btn6.setStyle("-fx-background-color: #008000");
-                    btn9.setStyle("-fx-background-color: #008000");
+                    btn3.setStyle(color);
+                    btn6.setStyle(color);
+                    btn9.setStyle(color);
                 }
                 isGameEnded = true;
                 return true;
@@ -526,9 +548,9 @@ public class OnlineGameController implements Initializable,Listener {
            boardState.get(4).toString().equals(playerSympol)&&
            boardState.get(8).toString().equals(playerSympol)){
             System.out.println("winner by diagonals");
-            btn1.setStyle("-fx-background-color: #008000");
-            btn5.setStyle("-fx-background-color: #008000");
-            btn9.setStyle("-fx-background-color: #008000");
+            btn1.setStyle(color);
+            btn5.setStyle(color);
+            btn9.setStyle(color);
             isGameEnded = true;
             return true;
         }
@@ -537,9 +559,9 @@ public class OnlineGameController implements Initializable,Listener {
            boardState.get(4).toString().equals(playerSympol)&&
            boardState.get(6).toString().equals(playerSympol)){
             System.out.println("winner by diagonals");
-            btn3.setStyle("-fx-background-color: #008000");
-            btn5.setStyle("-fx-background-color: #008000");
-            btn7.setStyle("-fx-background-color: #008000");
+            btn3.setStyle(color);
+            btn5.setStyle(color);
+            btn7.setStyle(color);
             isGameEnded = true;
             return true;
         }
@@ -613,16 +635,16 @@ public class OnlineGameController implements Initializable,Listener {
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
-        enableMouseClick();
-        System.out.println("hi from onlineGame response data: " + responseData.toString());
-        System.out.println("sympol to be added : " + responseData.get(2).toString());
-        String button_sympol = (String)responseData.get(2);
-        String button_id = (String)responseData.get(3);
-        String button_id2 = "btn5";
-        System.out.println("the Sympol : " + button_sympol);
-        System.out.println("the button_id : " + button_id.toString());
-        System.out.println("the button_id : " + button_id2);
-        if(success){
+        
+        if((double)responseData.get(0)==(Codes.SEND_PLAY_ON_BOARD_CODE)&&success){
+            RecordBtn.setDisable(true);
+            enableMouseClick();
+            System.out.println("hi from onlineGame response data: " + responseData.toString());
+            System.out.println("sympol to be added : " + responseData.get(2).toString());
+            String button_sympol = (String)responseData.get(2);
+            String button_id = (String)responseData.get(3);
+            System.out.println("the Sympol : " + button_sympol);
+            System.out.println("the button_id : " + button_id.toString());
             GridPane gridPane = (GridPane) rootPane.lookup("#gridPaneId");
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof Button) {
@@ -630,55 +652,84 @@ public class OnlineGameController implements Initializable,Listener {
                     //System.out.println("button id: " + button.getId());
                     if (button.getId().equals(""+button_id)) {
                         Platform.runLater(()->{
+                            if(button_sympol.equals("O")){
+                                button.setTextFill(Colors.O_TEXT);
+                            }else{
+                                button.setTextFill(Colors.X_TEXT);
+                            }
                             button.setText(button_sympol);
                             writePlayerSymolInArray(button, button_sympol);
                             counter++;
-                            checkWinner(button_sympol);
-                            if(checkWinner(button_sympol)){
+                            checkWinner(button_sympol,"-fx-background-color: #ff6060");
+                            if(checkWinner(button_sympol,"-fx-background-color: #ff6060")){
                                 try {
-                                    playerXScore+=1;
-                                    playerXScoreBtn.setText(""+playerXScore);
-                                    //initializeBoardState();
-                                    playerTurnBtn.setVisible(false);
-                                    newGameBtn.setVisible(true);
-                                    String text = "Player X win";
-                                    showGameOverToast(text);
-                                    if(isRecording)
-                                    {
-                                        tracker.saveToFile("src/games/");  ////add record to file
-                                        isRecording = false; ///
+                                    if(button_sympol.equals("X")){
+                                        playerXScore+=1;
+                                        playerXScoreBtn.setText(""+playerXScore);
+                                        //initializeBoardState();
+                                        playerTurnBtn.setVisible(false);
+                                        newGameBtn.setVisible(true);
+                                        String text = "Loser";
+                                        showGameOverToast(text);
+                                        if(isRecording)
+                                        {
+                                            tracker.saveToFile("src/games/");  ////add record to file
+                                            isRecording = false; ///
+                                        }
+                                        //disableBoard();
+                                        counter=0;
+
+                                        showVideo(Strings.loserVideoPath,"X - Winner");
                                     }
-                                    //disableBoard();
-                                    counter=0;
+                                    // o is the winner
+                                    else{
+                                        playerOScore+=1;
+                                        playerOScoreBtn.setText(""+playerOScore);
+                                        //initializeBoardState();
+                                        playerTurnBtn.setVisible(false);
+                                        newGameBtn.setVisible(true);
+                                        String text = "Loser";
+                                        showGameOverToast(text);
+                                        if(isRecording)
+                                        {
+                                            tracker.saveToFile("src/games/");  ////add record to file
+                                            isRecording = false; ///
+                                        }
+                                        //disableBoard();
+                                        counter=0;
+
+                                        showVideo(Strings.loserVideoPath,"O - Winner");
+                                    }
                                     
-                                    showVideo(Strings.winnerVideoPath,"X - Winner");
                                     //showVideo(Strings.loserVideoPath, "O - loser"); 
                                 } catch (IOException ex) {
                                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                            }else if(checkWinner("O")){
-                                try {
-                                    playerOScore+=1;
-                                    playerOScoreBtn.setText(""+playerOScore);
-                                    //initializeBoardState();
-                                    playerTurnBtn.setVisible(false);
-                                    newGameBtn.setVisible(true);
-                                    String text = "Player O win";
-                                    showGameOverToast(text);
-                                    if(isRecording)
-                                    {
-                                        tracker.saveToFile("src/games/");  ////add record to file
-                                        isRecording = false; ///
-                                    }
-                                    //disableBoard();
-                                    counter=0;
-                                    // check for draw
-                                    showVideo(Strings.winnerVideoPath,"O - Winner");
-                                    //showVideo(Strings.loserVideoPath, "X - loser");
-                                } catch (IOException ex) {
-                                    Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }else if(counter == 9){
+                            }
+//                            else if(checkWinner("O","-fx-background-color: #ff6060")){
+//                                try {
+//                                    playerOScore+=1;
+//                                    playerOScoreBtn.setText(""+playerOScore);
+//                                    //initializeBoardState();
+//                                    playerTurnBtn.setVisible(false);
+//                                    newGameBtn.setVisible(true);
+//                                    String text = "Loser";
+//                                    showGameOverToast(text);
+//                                    if(isRecording)
+//                                    {
+//                                        tracker.saveToFile("src/games/");  ////add record to file
+//                                        isRecording = false; ///
+//                                    }
+//                                    //disableBoard();
+//                                    counter=0;
+//                                    // check for draw
+//                                    showVideo(Strings.winnerVideoPath,"O - Winner");
+//                                    //showVideo(Strings.loserVideoPath, "X - loser");
+//                                } catch (IOException ex) {
+//                                    Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+//                                }
+//                            }
+                                else if(counter == 9){
                                 try {
                                     //playerXScore+=5;
                                     //playerOScore+=5;
@@ -711,8 +762,25 @@ public class OnlineGameController implements Initializable,Listener {
             
             
             
-        }else{
-               
+        }else if((double)responseData.get(0)==(Codes.PLAY_AGAIN_CODE)&&success){
+            Platform.runLater(()->{
+                if(counter==0 && mySympol.equals("O")){
+                disableMouseClick();
+                }else{
+                    enableMouseClick();
+                }
+                enableBoard();
+                isGameEnded = false;
+                playerTurnBtn.setVisible(true);
+                newGameBtn.setVisible(false);
+                playerTurnBtn.setText("X-TURN");
+                playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
+                initializeBoardState();
+
+                RecordBtn.setDisable(false);////record
+                tracker.clearMoves();
+            });
+            
         }
     }
 

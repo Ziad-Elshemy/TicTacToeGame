@@ -131,12 +131,12 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Button>
-            <Label alignment="BOTTOM_LEFT" text="player X" textFill="#83c5be" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="playerXNameLabel" alignment="BOTTOM_LEFT" text="player X" textFill="#83c5be" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="player O" textFill="#ffa62b" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="playerONameLabel" text="player O" textFill="#ffa62b" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

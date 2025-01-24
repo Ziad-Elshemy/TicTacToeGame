@@ -34,6 +34,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import onlineplaying.NetworkAccessLayer;
 import static sun.plugin2.os.windows.Windows.ReadFile;
 import tictactoeclient.GameTracker.Move;
 import utilities.Strings;
@@ -131,7 +132,6 @@ public class GameScreenController implements Initializable {
     private void exitBtnAction(ActionEvent event) {
         navigator.goToPage(event, "LoginScreen.fxml");
     }
-
     @FXML
     private void newGameBtnAction(ActionEvent event) {
         enableBoard();

@@ -18,6 +18,7 @@ public class Codes {
     public static int SEND_PLAY_ON_BOARD_CODE = 5;
     public static int SEND_INVITATION_CODE = 7;
     public static int INVITATION_REPLY_CODE = 8;
+    public static int PLAY_AGAIN_CODE = 9;
     
     
 }
