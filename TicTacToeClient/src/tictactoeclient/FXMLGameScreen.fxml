@@ -49,7 +49,7 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Text>
-            <ImageView fx:id="playerTwoImage" fitHeight="85.0" fitWidth="72.0" layoutX="294.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playerTwoImage" fitHeight="85.0" fitWidth="72.0" layoutX="291.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/pc.png" />
                </image>

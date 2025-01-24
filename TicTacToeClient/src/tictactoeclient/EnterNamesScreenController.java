@@ -97,13 +97,15 @@ public class EnterNamesScreenController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-        ArrayList gender=new ArrayList();
-        gender.add("Male");
-        gender.add("Female");
-        genderDropDownList.setItems(FXCollections.observableArrayList(gender));
+        ArrayList genderList=new ArrayList();
+        genderList.add("Male");
+        genderList.add("Female");
+        genderDropDownList.setItems(FXCollections.observableArrayList(genderList));
         
         nameError.setText("");
         genderError.setText(""); 
+        username="Human";
+        gender="";
     }
 
 }

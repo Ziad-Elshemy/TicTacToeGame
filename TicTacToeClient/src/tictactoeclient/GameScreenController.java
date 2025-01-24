@@ -159,17 +159,15 @@ public class GameScreenController implements Initializable {
             stageOfNames.initModality(Modality.WINDOW_MODAL);
             stageOfNames.showAndWait();
             if(EnterNamesForTwoPlayersController.genderOne!=null && EnterNamesForTwoPlayersController.nameOne!=null){
-                playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+                playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male")?new Image("file:src/Images/boy.png"):EnterNamesForTwoPlayersController.genderOne.isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
                 playerOneUsername.setText(EnterNamesForTwoPlayersController.nameOne); 
             
             }
             
             if(EnterNamesForTwoPlayersController.genderTwo!=null && EnterNamesForTwoPlayersController.nameTwo!=null){
-                playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+                playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male")?new Image("file:src/Images/boy.png"):EnterNamesForTwoPlayersController.genderOne.isEmpty()?new Image("file:src/Images/O.png"):new Image("file:src/Images/girl.png"));
                 playerTwoUsername.setText(EnterNamesForTwoPlayersController.nameTwo);
-            
-            
-            
+
             }
 
         } catch (IOException ex) {
@@ -303,7 +301,7 @@ public class GameScreenController implements Initializable {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(symbol);
         stage.show();
         

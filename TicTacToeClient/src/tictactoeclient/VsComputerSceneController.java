@@ -127,10 +127,10 @@ public class VsComputerSceneController implements Initializable {
             stageOfNames = new Stage();
             Scene scene = new Scene(root);
             stageOfNames.setScene(scene);
-            stageOfNames.initModality(Modality.WINDOW_MODAL);
+            stageOfNames.initModality(Modality.APPLICATION_MODAL);
             stageOfNames.showAndWait();
             if(EnterNamesScreenController.gender!=null && EnterNamesScreenController.username!=null){
-            userImage.setImage(EnterNamesScreenController.gender.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+            userImage.setImage(EnterNamesScreenController.gender.equals("Male")?new Image("file:src/Images/boy.png"):EnterNamesScreenController.gender.isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
             username.setText(EnterNamesScreenController.username); }
 
         } catch (IOException ex) {
