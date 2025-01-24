@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import onlineplaying.NetworkAccessLayer;
@@ -83,11 +82,12 @@ public class EditProfileController implements Initializable ,Listener{
         requestArrayList.add(gson.toJson(player));
         String jsonEditProfileRequest = gson.toJson(requestArrayList);
         NetworkAccessLayer.sendRequest(jsonEditProfileRequest);
-        System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
+        //System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
     @FXML
     private void onSeeYourRecordsButtonClicked(ActionEvent event) {
+        navigator.goToPage(event, "OnlineGamesRecords.fxml");
     }
 
     @FXML
@@ -127,8 +127,7 @@ public class EditProfileController implements Initializable ,Listener{
     public void onServerResponse(boolean success, ArrayList responseData) {
         if (success)
         {
-            //player = gson.fromJson(raquestData.get(1).toString(), PlayerDto.class);
-            //System.out.println("ON EditPage : "+player.getName());
+            
             System.out.println("Updated");
             Platform.runLater(()->{
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");

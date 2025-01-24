@@ -26,9 +26,7 @@ import tictactoeclient.GameTracker.Move;
  * @author HANY
  */
 public class RecordFile {
-    File file;
-    FileOutputStream fileOutput;
-    ObjectOutputStream objectOutput;
+    
     static String localDate = getDate();
     
     
@@ -38,8 +36,6 @@ public class RecordFile {
 
         try (FileOutputStream fileOutput = new FileOutputStream(file);
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
-
-           // System.out.println("MOVES in RecordFile class: " + moves.toString());
             objectOutput.writeObject(moves);  // Write the list of moves to the file
 
         } catch (FileNotFoundException ex) {
