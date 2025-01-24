@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -79,6 +81,14 @@ public class RegisterScreenController implements Initializable,Listener {
     
     @FXML
     private Label serverOfflineText;
+    
+    @FXML
+    private ComboBox<?> genderDropDownList;
+    
+    @FXML
+    private Label genderError;
+    
+    String gender;
 
 
     /**
@@ -87,6 +97,13 @@ public class RegisterScreenController implements Initializable,Listener {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
+        
+        ArrayList gender=new ArrayList();
+        gender.add("Male");
+        gender.add("Female");
+        genderDropDownList.setItems(FXCollections.observableArrayList(gender));
+               
         NetworkAccessLayer.setRef(this);
         myAlert=new Alert(Alert.AlertType.INFORMATION);
         gsonFile = new Gson();
@@ -94,7 +111,8 @@ public class RegisterScreenController implements Initializable,Listener {
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
         usernameError.setText("");
         nameError.setText("");
-        passwordError.setText("");         
+        passwordError.setText("");
+        genderError.setText(""); 
         if(NetworkAccessLayer.isServerOffline){
            
             usernameTextField.setDisable(true);
@@ -126,11 +144,20 @@ public class RegisterScreenController implements Initializable,Listener {
             passwordTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
         }
         
-        if(!usernameTextField.getText().isEmpty()&&!nameTextField.getText().isEmpty()&&!passwordTextField.getText().isEmpty()){
+        if(gender==null){
+            
+            
+           genderError.setText("Please Choose Gender ");
+        
+        
+        
+        }
+        
+        if(!usernameTextField.getText().isEmpty()&&!nameTextField.getText().isEmpty()&&!passwordTextField.getText().isEmpty()&&gender!=null){
             username=usernameTextField.getText();
             name=nameTextField.getText();
             password=passwordTextField.getText();
-            player = new PlayerDto(username, name, password, false, false, 0);
+            player = new PlayerDto(username, name, password, false, false, 0,gender);
             // create an array to save the code of registeration and the player object then convert the array to a json string
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.REGESTER_CODE);
@@ -196,6 +223,14 @@ public class RegisterScreenController implements Initializable,Listener {
     void onLoginBtnClicked(ActionEvent event) {
         
         navigator.goToPage(event, "LoginScreen.fxml");
+
+    }
+    
+    @FXML
+    void onDropDownListChecked(ActionEvent event) {
+        
+        gender=genderDropDownList.getValue().toString();
+        System.out.println(gender);
 
     }
 }

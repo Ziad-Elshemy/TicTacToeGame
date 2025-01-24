@@ -18,17 +18,23 @@ public class PlayerDto {
     private boolean isOnline;
     private boolean isPlaying;
     private int score;
+    private String gender;
 
     public PlayerDto(){};
 
-    public PlayerDto(String userName, String name, String password, boolean isOnline, boolean isPlaying, int score) {
+    public PlayerDto(String userName, String name, String password, boolean isOnline, boolean isPlaying, int score, String gender) {
         this.userName = userName;
         this.name = name;
         this.password = password;
         this.isOnline = isOnline;
         this.isPlaying = isPlaying;
         this.score = score;
+        this.gender = gender;
     }
+    
+    
+
+
   
     public String getUserName() {
         return userName;
@@ -77,6 +83,16 @@ public class PlayerDto {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    
+    
     
     
     @Override

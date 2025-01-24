@@ -8,22 +8,20 @@ package tictactoeclient;
 import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
@@ -77,6 +75,7 @@ public class HomeScreenController implements Initializable ,Listener {
     private ImageView muteImg;
     
     ActionEvent eventforEdit;
+    Alert alert;
 
 
     @FXML
@@ -104,7 +103,30 @@ public class HomeScreenController implements Initializable ,Listener {
 
     @FXML
     void onLogoutButtonClicked(ActionEvent event) {
-        navigator.goToPage(event,"LoginScreen.fxml");
+        
+        Platform.runLater(()->{
+            
+            
+          alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Logout?", ButtonType.YES,ButtonType.CANCEL);
+          alert.showAndWait();
+           if (alert.getResult() == ButtonType.YES) {
+                        
+                               
+                        ArrayList arr=new ArrayList();
+                        arr.add(Codes.LOGOUT_CODE);
+
+                        System.out.println(arr);
+
+                        NetworkAccessLayer.toServer.println(gson.toJson(arr)); 
+
+                       navigator.goToPage(event, "LoginScreen.fxml");
+
+                        
+            }
+        
+        
+        
+        });
     }
 
     @FXML
@@ -123,11 +145,12 @@ public class HomeScreenController implements Initializable ,Listener {
         navigator=new Navigator();
         NetworkAccessLayer.setRef(this);    
         NetworkAccessLayer.ref=this;
-
+        
         username.setText(NetworkAccessLayer.playerData.getUserName()); 
         score.setText("Score : "+NetworkAccessLayer.playerData.getScore()); 
+        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
         addUserCard(NetworkAccessLayer.onlinePlayers);
-        if( !TicTacToeClient.isMuted){
+        if( !TicTacToeClient.isMuted){ 
            
          muteImg.setImage(new Image("file:src/Images/volume.png")); 
         
@@ -169,33 +192,35 @@ public class HomeScreenController implements Initializable ,Listener {
     @FXML
     void onBackIconClicked(ActionEvent event) {
         
-        navigator.goToPage(event, "LoginScreen.fxml");
+        
+        Platform.runLater(()->{
+            
+            
+          alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Logout?", ButtonType.YES,ButtonType.CANCEL);
+          alert.showAndWait();
+           if (alert.getResult() == ButtonType.YES) {
+                        
+                               
+                        ArrayList arr=new ArrayList();
+                        arr.add(Codes.LOGOUT_CODE);
+
+                        System.out.println(arr);
+
+                        NetworkAccessLayer.toServer.println(gson.toJson(arr)); 
+
+                       navigator.goToPage(event, "LoginScreen.fxml");
+
+                        
+            }
+        
+        
+        
+        });
+
 
     }
     
     
-
-//    @FXML
-//    private void onInviteButtonClicked2(ActionEvent event) {
-//        navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request","Ghazal Elshemy");
-//    }
-//
-//    @FXML
-//    private void onInviteButtonClicked3(ActionEvent event) {
-//        player.setUserName("ziad2");
-//        ArrayList requestArr = new ArrayList();
-//        requestArr.add(Codes.SEND_INVITATION_CODE);
-//        System.out.println("hi "+ player.getUserName());
-//        requestArr.add(gsonFile.toJson(player));
-//        System.out.println("hi ya"+ player.getUserName());
-//        String jsonRegisterationRequest = gsonFile.toJson(requestArr);
-//        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
-//        Platform.runLater(()->{
-//            navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
-//        });
-//        
-//        
-//    }
 
  public void addUserCard(ArrayList<PlayerDto> onlinePlayers){
         
@@ -238,7 +263,7 @@ public class HomeScreenController implements Initializable ,Listener {
         userImageOne.setLayoutY(0.0);
         userImageOne.setPickOnBounds(true);
         userImageOne.setPreserveRatio(true);
-        userImageOne.setImage(new Image(getClass().getResource("/Images/boy.png").toExternalForm()));
+        userImageOne.setImage(new Image(getClass().getResource(player.getGender().equals("Male")?"/Images/boy.png":"/Images/girl.png").toExternalForm()));
 
         onlineCircleOne.setFill(javafx.scene.paint.Color.DODGERBLUE);
         onlineCircleOne.setLayoutX(52.0);
@@ -254,7 +279,7 @@ public class HomeScreenController implements Initializable ,Listener {
         usernameOne.setStrokeWidth(0.0);
         usernameOne.setText(player.getUserName()); 
         usernameOne.setWrappingWidth(116.0595703125);
-        usernameOne.setFont(new Font("Arial", 18.0));
+        usernameOne.setFont(new Font("Arial", 16.0));
 
         scoreOne.setFill(javafx.scene.paint.Color.valueOf("#0000009f"));
         scoreOne.setLayoutX(73.0);
@@ -269,17 +294,16 @@ public class HomeScreenController implements Initializable ,Listener {
         inviteBtn.setMnemonicParsing(false);
         inviteBtn.setPrefHeight(35.0);
         inviteBtn.setPrefWidth(83.0);
-        inviteBtn.setStyle("-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;");
-        inviteBtn.setText("Invite");
+        inviteBtn.setStyle("-fx-background-color: linear-gradient(to right,#82C0CC,#82C0CC,#FAF9F6); -fx-background-radius: 12;");
+        inviteBtn.setText(player.getIsPlaying()?"Playing":"Invite");
         inviteBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fffafa"));
-        inviteBtn.setFont(new Font("Arial Bold", 15.0));
+        inviteBtn.setFont(new Font("Arial Bold", 16.0));
         
+        inviteBtn.setMouseTransparent(player.getIsPlaying()?true:false);
+         
         inviteBtn.setOnAction((event)->{
             
-            
-            System.out.println(player.getUserName());
-            
-                
+
                 ArrayList requestArr = new ArrayList();
                 requestArr.add(Codes.SEND_INVITATION_CODE);
                 requestArr.add(gson.toJson(player));
@@ -289,9 +313,6 @@ public class HomeScreenController implements Initializable ,Listener {
                     navigator.luanchWaiting("FXMLWaitingAlert.fxml", "Invitaion Requestttt", player.getUserName());
 
                         });
-        
-        
-        
 
         });
         
@@ -339,8 +360,13 @@ public class HomeScreenController implements Initializable ,Listener {
         if((double)responseData.get(0)==(Codes.SEND_INVITATION_CODE)&&success){
         System.out.println("testttt "+ responseData.toString());
         System.out.println("show the invitation");
+        Object result=responseData.get(1);
+        PlayerDto player=null;
+        String jsonResult=gson.toJson(result);
+            
         Platform.runLater(()->{
-            navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",responseData.get(1).toString());
+          
+            navigator.luanchInvitation("FXMLInvitationAlert.fxml","Invitaion Request",gson.fromJson(jsonResult, PlayerDto.class));
         });
         }
         else if((double)responseData.get(0)==(Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)&&success)
