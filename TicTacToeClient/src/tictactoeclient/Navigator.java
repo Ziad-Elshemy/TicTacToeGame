@@ -170,6 +170,36 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
             
+            stage.setOnCloseRequest((e)->{
+                
+                controller.onClose();
+
+                if(NetworkAccessLayer.mySocket!=null){
+                    
+                   ArrayList arr=new ArrayList();
+                   arr.add(Codes.LOGOUT_CODE);
+
+                   System.out.println(arr);
+
+                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
+            
+                   Platform.runLater(()->{
+                       
+                       try {
+                           NetworkAccessLayer.thread.stop();
+                           
+                           NetworkAccessLayer.mySocket.close();
+                       } catch (IOException ex) {
+                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   
+                    }); 
+                    
+                }
+                Platform.exit();
+             
+            });
+            
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,9 +222,7 @@ public class Navigator {
             stage.show();
             
             stage.setOnCloseRequest((e)->{
-            
-             
-                 
+
                 if(NetworkAccessLayer.mySocket!=null){
                     
                    ArrayList arr=new ArrayList();
@@ -203,8 +231,7 @@ public class Navigator {
                    System.out.println(arr);
 
                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
-                   
-                   
+            
                    Platform.runLater(()->{
                        
                        try {
@@ -215,18 +242,12 @@ public class Navigator {
                            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
                        }
                    
-                   
-                   
-                   }); 
+                    }); 
                     
-                    
-           
-                   
-                 
-                 }
-                 Platform.exit();
+                }
+                Platform.exit();
              
-         });
+            });
             
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);

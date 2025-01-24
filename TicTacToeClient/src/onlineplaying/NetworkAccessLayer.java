@@ -96,6 +96,16 @@ public abstract class NetworkAccessLayer
                                 System.out.println("the PLAY_AGAIN_CODE response data: "+ responseData);
                                 recievePlayOnBoardResponse(responseData);
                             }
+                            else if(code == Codes.UPDATE_PLAYER_SCORE)
+                            {                                
+                                System.out.println("the UPDATE_PLAYER_SCORE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
+                            else if(code == Codes.LEAVE_GAME_CODE)
+                            {                                
+                                System.out.println("the LEAVE_GAME_CODE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
                             else if(code == Codes.LOGIN_CODE){
                                     LoginResponse(responseData);
                             
@@ -205,7 +215,7 @@ public abstract class NetworkAccessLayer
     public static void recievePlayOnBoardResponse(ArrayList responseData){
         double isAccepted = (double) responseData.get(0);
         System.out.println("recievePlayOnBoardResponse: "+ responseData.toString());
-        if (isAccepted == Codes.SEND_PLAY_ON_BOARD_CODE || isAccepted == Codes.PLAY_AGAIN_CODE)
+        if (isAccepted == Codes.SEND_PLAY_ON_BOARD_CODE || isAccepted == Codes.PLAY_AGAIN_CODE || isAccepted == Codes.UPDATE_PLAYER_SCORE || isAccepted == Codes.LEAVE_GAME_CODE)
         {
             myRef.onServerResponse(true,responseData);
         }
@@ -215,7 +225,7 @@ public abstract class NetworkAccessLayer
         }
         
     }
-    
+       
     public static void LoginResponse(ArrayList responseData) {
        
             
