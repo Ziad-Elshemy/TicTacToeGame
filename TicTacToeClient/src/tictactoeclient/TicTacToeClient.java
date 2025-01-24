@@ -47,7 +47,7 @@ public class TicTacToeClient extends Application {
         isMuted=false;
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
-        //music=new MediaView(mediaPlayer);
+        music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.volumeProperty().set(0.01);
         mediaPlayer.play();
@@ -55,8 +55,8 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-         NetworkAccessLayer.startConnectionHandling();
-         stage.setOnCloseRequest((e)->{
+        NetworkAccessLayer.startConnectionHandling();
+        stage.setOnCloseRequest((e)->{
             
              try {
                  

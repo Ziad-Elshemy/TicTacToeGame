@@ -1,13 +1,19 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,6 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
@@ -29,6 +37,8 @@ public class LoginScreenController implements Initializable , Listener{
     Gson gson;
     PlayerDto player;
     ActionEvent myEvent;
+    static Stage stageOfNames;
+
 
 
     @FXML
@@ -65,6 +75,7 @@ public class LoginScreenController implements Initializable , Listener{
     
     @FXML
     private Label serverOfflineText;
+    
    
     
     
@@ -158,7 +169,6 @@ public class LoginScreenController implements Initializable , Listener{
             player.setUserName(usernameField.getText());
             player.setPassword(passwordField.getText());
             player.setIsOnline(true);
-           // player.setIsPlaying(true); 
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.LOGIN_CODE);
             requestArr.add(gson.toJson(player));
@@ -180,13 +190,17 @@ public class LoginScreenController implements Initializable , Listener{
     @FXML
     private void localGameBtnAction(ActionEvent event) {
         
-        navigator.goToPage(event, "FXMLGameScreen.fxml");
+        navigator.goToPage(event, "FXMLGameScreen.fxml"); 
     }
 
     @FXML
     private void onPcButton(ActionEvent event) {
+                  
+ 
         
-        navigator.goToPage(event, "VsComputerScene.fxml");
+         navigator.goToPage(event, "VsComputerScene.fxml");
+
+        
     }
 
     @Override
@@ -196,7 +210,8 @@ public class LoginScreenController implements Initializable , Listener{
          {
              Platform.runLater(()->{
                  new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Login ;)", ButtonType.OK).showAndWait();
-                 navigator.goToPage(myEvent, "HomeScreen.fxml");
+                  navigator.goToPage(myEvent, "HomeScreen.fxml");
+
              });
          }
          else
