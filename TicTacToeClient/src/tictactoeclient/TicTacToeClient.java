@@ -55,7 +55,7 @@ public class TicTacToeClient extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-         NetworkAccessLayer.startConnectionHandling();
+         
          stage.setOnCloseRequest((e)->{
             
              try {

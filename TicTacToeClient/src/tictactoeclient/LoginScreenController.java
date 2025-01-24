@@ -65,6 +65,8 @@ public class LoginScreenController implements Initializable , Listener{
     
     @FXML
     private Label serverOfflineText;
+    @FXML
+    private Button reconnectButton;
    
     
     
@@ -119,11 +121,16 @@ public class LoginScreenController implements Initializable , Listener{
            
             usernameField.setDisable(true);
             passwordField.setDisable(true);
+            loginButton.setDisable(true);
+            registerButton.setDisable(true);
             serverOfflineText.setText("  Server Is Offline Now Try Again Later Or You Can Play Offline");
         
         }
-
-
+        else{
+            reconnectButton.setDisable(true);
+        }
+            if(NetworkAccessLayer.serverIP == null && NetworkAccessLayer.local == false)
+                navigator.popUpStage("ConnectToServerScreen.fxml");
     }
 
     private void centerVBox() {
@@ -209,6 +216,11 @@ public class LoginScreenController implements Initializable , Listener{
         
         
         
+    }
+
+    @FXML
+    private void onReconnectButon(ActionEvent event) {
+        navigator.popUpStage("ConnectToServerScreen.fxml");
     }
 
    

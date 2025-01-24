@@ -125,5 +125,18 @@ public class Navigator {
             e.printStackTrace();
         }
     }
-    
+    public void popUpStage(String sceneName)
+    {
+        try {
+                Stage newStage = new Stage();
+                newStage.initModality(Modality.APPLICATION_MODAL);
+                Parent root = FXMLLoader.load(getClass().getResource(sceneName));
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
+                newStage.show();
+            }
+            catch (IOException ex){
+                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.ConnectToServerScreenController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 50; -fx-background-color: #1C5468; -fx-border-color: #008000; -fx-border-radius: 50; -fx-border-width: 2;">
+         <children>
+            <Button fx:id="okayButton" layoutX="92.0" layoutY="295.0" onAction="#onOkayButton" prefHeight="56.0" style="-fx-background-color: #83C5C0; -fx-text-fill: white; -fx-font-size: 24px; -fx-pref-width: 180; -fx-background-radius: 15; -fx-font-weight: bold;" text="Okay" />
+            <Label layoutX="165.0" layoutY="83.0" prefHeight="56.0" prefWidth="270.0" style="-fx-font-size: 28px; -fx-background-radius: 15; -fx-background-color: #1C5468; -fx-text-fill: white; -fx-font-weight: regular;" text="Please Enter Server IP" />
+            <Button fx:id="cancelButton" layoutX="334.0" layoutY="295.0" onAction="#onCancelButton" prefHeight="56.0" style="-fx-background-color: #CC8282; -fx-text-fill: white; -fx-font-size: 24px; -fx-pref-width: 180; -fx-background-radius: 15; -fx-font-weight: bold;" text="Cancel" />
+            <TextField fx:id="ipTextArea" layoutX="92.0" layoutY="190.0" prefHeight="45.0" prefWidth="422.0" style="-fx-background-radius: 15;" />
+            <Label fx:id="checkLabel" layoutX="117.0" layoutY="243.0" prefHeight="40.0" prefWidth="372.0" style="-fx-font-size: 28px; -fx-background-radius: 15; -fx-background-color: #1C5468; -fx-text-fill: red; -fx-font-weight: regular;" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
