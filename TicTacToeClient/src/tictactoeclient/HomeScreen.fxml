@@ -25,160 +25,51 @@
                               <Image url="@../Images/logo.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="405.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Single Player" textFill="WHITE">
+                        <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="405.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Play With PC" textFill="WHITE">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="488.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Local Two Players" textFill="#fffbfb">
+                        <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="488.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Local Two Players" textFill="#fffbfb">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <VBox layoutX="877.0" layoutY="70.0" prefHeight="773.0" prefWidth="386.0" style="-fx-background-color: White; -fx-background-radius: 25;" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
-                           <children>
-                              <AnchorPane prefHeight="465.0" prefWidth="311.0">
+                        <ScrollPane layoutX="825.0" layoutY="70.0" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
+                           <content>
+                              <VBox fx:id="vBox" prefHeight="773.0" prefWidth="386.0" style="-fx-background-color: White; -fx-background-radius: 25;">
                                  <children>
-                                    <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="193.0" layoutY="74.0" radius="45.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" AnchorPane.topAnchor="29.0" />
-                                    <ImageView fx:id="userImage" fitHeight="63.0" fitWidth="57.0" layoutX="167.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Images/girl.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Circle fx:id="avatar1" fill="DODGERBLUE" layoutX="221.0" layoutY="106.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                    <Text fx:id="username" layoutX="135.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="116.0595703125">
-                                       <font>
-                                          <Font name="Arial" size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text fx:id="score" fill="#0000009f" layoutX="156.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" AnchorPane.bottomAnchor="325.2353515625" />
-                                    <Text fx:id="username2" layoutX="110.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Players" textAlignment="CENTER" wrappingWidth="166.0595703125" AnchorPane.bottomAnchor="268.76171875">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                    </Text>
-                                    <AnchorPane fx:id="userCard" layoutX="44.0" layoutY="233.0" prefHeight="86.0" prefWidth="297.0">
+                                    <AnchorPane prefHeight="465.0" prefWidth="311.0">
                                        <children>
-                                          <Circle fx:id="avatarOne" fill="DODGERBLUE" layoutX="33.0" layoutY="42.0" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" />
-                                          <ImageView fx:id="userImage1" fitHeight="41.0" fitWidth="44.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                                          <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="193.0" layoutY="76.0" radius="45.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" AnchorPane.topAnchor="31.0" />
+                                          <ImageView fx:id="userImage" fitHeight="63.0" fitWidth="57.0" layoutX="167.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../Images/boy.png" />
+                                                <Image url="@../Images/girl.png" />
                                              </image>
                                           </ImageView>
-                                          <Circle fx:id="avatar11" fill="DODGERBLUE" layoutX="52.0" layoutY="65.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                          <Text fx:id="username1" layoutX="74.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah" wrappingWidth="116.0595703125">
+                                          <Circle fx:id="onlineCircle" fill="DODGERBLUE" layoutX="220.0" layoutY="111.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
+                                          <Text fx:id="username" layoutX="127.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="138.0595703125">
+                                             <font>
+                                                <Font name="Arial" size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="106.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Players" textAlignment="CENTER" wrappingWidth="173.0595703125">
+                                             <font>
+                                                <Font name="Arial Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="score" fill="#000000a1" layoutX="135.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" wrappingWidth="116.0595703125">
                                              <font>
                                                 <Font name="Arial" size="18.0" />
                                              </font>
                                           </Text>
-                                          <Text fx:id="score1" fill="#0000009f" layoutX="73.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Button fx:id="inviteBtn" layoutX="190.0" layoutY="25.0" mnemonicParsing="false" onAction="#onInviteButtonClicked" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffafa">
-                                             <font>
-                                                <Font name="Arial Bold" size="15.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="userCard1" layoutX="44.0" layoutY="322.0" prefHeight="86.0" prefWidth="297.0">
-                                       <children>
-                                          <Circle fx:id="avatarOne1" fill="DODGERBLUE" layoutX="33.0" layoutY="42.0" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" />
-                                          <ImageView fx:id="userImage11" fitHeight="41.0" fitWidth="44.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Images/boy.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Circle fx:id="avatar111" fill="DODGERBLUE" layoutX="52.0" layoutY="65.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                          <Text fx:id="username11" layoutX="74.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hany" wrappingWidth="116.0595703125">
-                                             <font>
-                                                <Font name="Arial" size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Text fx:id="score11" fill="#0000009f" layoutX="73.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Button fx:id="inviteBtn2" layoutX="190.0" layoutY="25.0" mnemonicParsing="false" onAction="#onInviteButtonClicked2" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffafa">
-                                             <font>
-                                                <Font name="Arial Bold" size="15.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="userCard11" layoutX="45.0" layoutY="408.0" prefHeight="86.0" prefWidth="297.0">
-                                       <children>
-                                          <Circle fx:id="avatarOne11" fill="DODGERBLUE" layoutX="33.0" layoutY="42.0" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" />
-                                          <ImageView fx:id="userImage111" fitHeight="41.0" fitWidth="44.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Images/boy.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Circle fx:id="avatar1111" fill="DODGERBLUE" layoutX="52.0" layoutY="65.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                          <Text fx:id="username111" layoutX="74.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yousef" wrappingWidth="116.0595703125">
-                                             <font>
-                                                <Font name="Arial" size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Text fx:id="score111" fill="#0000009f" layoutX="73.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Button fx:id="inviteBtn3" layoutX="190.0" layoutY="25.0" mnemonicParsing="false" onAction="#onInviteButtonClicked3" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffafa">
-                                             <font>
-                                                <Font name="Arial Bold" size="15.0" />
-                                             </font>
-                                          </Button>
+                                          <AnchorPane fx:id="anchorPane" layoutX="3.0" layoutY="221.0" prefHeight="62.0" prefWidth="386.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="179.0" prefWidth="304.0">
-                                 <children>
-                                    <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="111.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
-                                       <font>
-                                          <Font name="Calibri Bold" size="18.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="170.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
-                                       <font>
-                                          <Font name="Calibri Bold" size="18.0" />
-                                       </font>
-                                    </Button>
-                                    <AnchorPane fx:id="userCard111" layoutX="45.0" prefHeight="86.0" prefWidth="297.0">
-                                       <children>
-                                          <Circle fx:id="avatarOne111" fill="DODGERBLUE" layoutX="33.0" layoutY="42.0" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: linear-gradient(#82C0CC, white);" />
-                                          <ImageView fx:id="userImage1111" fitHeight="41.0" fitWidth="44.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Images/boy.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Circle fx:id="avatar11111" fill="DODGERBLUE" layoutX="52.0" layoutY="65.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
-                                          <Text fx:id="username1111" layoutX="74.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ziad" wrappingWidth="116.0595703125">
-                                             <font>
-                                                <Font name="Arial" size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Text fx:id="score1111" fill="#0000009f" layoutX="73.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Button layoutX="190.0" layoutY="25.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, white); -fx-background-radius: 12;" text="Invite" textFill="#fffafa">
-                                             <font>
-                                                <Font name="Arial Bold" size="15.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </VBox>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
                         <Button fx:id="muteBtn" layoutX="61.0" layoutY="688.0" mnemonicParsing="false" onAction="#onMuteBtnClicked" prefHeight="58.0" prefWidth="71.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="TRANSPARENT">
                            <graphic>
                               <ImageView fx:id="muteImg" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -196,6 +87,16 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                        </Button>
+                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="627.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
+                           <font>
+                              <Font name="Calibri Bold" size="22.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="695.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
+                           <font>
+                              <Font name="Calibri Bold" size="22.0" />
+                           </font>
                         </Button>
                      </children>
                      <padding>

@@ -5,11 +5,14 @@
  */
 package tictactoeclient;
 
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
+import utilities.Codes;
 import utilities.Strings;
 
 
@@ -33,25 +37,47 @@ public class TicTacToeClient extends Application {
     static  MediaPlayer mediaPlayer;
     private  MediaView music;
     static boolean isMuted;
+    Gson gsonFile;
+
 
     @Override
     public void start(Stage stage) throws Exception {
+        gsonFile = new Gson();
         mainStage = stage;
-         isMuted=false;
+        isMuted=false;
         media = new Media(new File(Strings.music).toURI().toString());
         mediaPlayer =new MediaPlayer(media);
-        //music=new MediaView(mediaPlayer);
+        music=new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.volumeProperty().set(0.01);
         mediaPlayer.play();
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-         NetworkAccessLayer.startConnectionHandling();
-         stage.setOnCloseRequest((e)->{
+
+        stage.setOnCloseRequest((e)->{
+
              try {
-                 NetworkAccessLayer.mySocket.close();
+                 
+                if(NetworkAccessLayer.mySocket!=null){
+                    
+                    ArrayList arr=new ArrayList();
+                    arr.add(Codes.LOGOUT_CODE);
+
+                    System.out.println(arr);
+
+                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
+                    
+                    
+                   NetworkAccessLayer.thread.stop();
+              
+                   NetworkAccessLayer.mySocket.close();
+                   
+                 
+                 }
+                 Platform.exit();
              } catch (IOException ex) {
                  ex.printStackTrace();
              }

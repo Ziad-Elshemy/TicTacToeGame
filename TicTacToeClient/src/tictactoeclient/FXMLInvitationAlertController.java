@@ -84,14 +84,14 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         
     }
     
-    public void setSenderLabel(String senderName){
-        senderLabel.setText(senderName);
+    public void setSenderLabel(PlayerDto sender){
+        senderPlayer=sender;
+        senderLabel.setText(senderPlayer.getUserName());
     }
 
     @FXML
     private void acceptBtnAction(ActionEvent event) {
-        
-        senderPlayer.setUserName(senderLabel.getText());
+                
         ArrayList requestArr = new ArrayList();
         requestArr.add(Codes.INVITATION_REPLY_CODE);
         requestArr.add(1); // for accept
@@ -99,14 +99,18 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         String jsonRegisterationRequest = gson.toJson(requestArr);
         NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         
-        //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Accepted");
         System.out.println("you have Accepted Invitation from "+senderPlayer.getUserName());
         Stage stage = (Stage)acceptBtn.getScene().getWindow();
         timeline.stop();
         alarmMediaPlayer.pause();
         TicTacToeClient.mediaPlayer.play();
         stage.close();
-        navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+        Platform.runLater(()->{
+            System.out.println("naviigate the enemy: "+senderPlayer.getUserName());
+            navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer.getUserName(),"O");
+        });
+        
+        System.out.println("can't reach here?");
     }
 
     @FXML
@@ -176,8 +180,8 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
             System.out.println("hi from invitation alarm data: " + responseData.toString());
             Platform.runLater(()->{
                 closeAlert();
-                //navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
-                 System.out.println("go to online game");
+                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer.getUserName(),"O");
+                
              });
         }else{
             System.out.println("Rejeted");

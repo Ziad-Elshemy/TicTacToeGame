@@ -5,19 +5,29 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
 import onlineplaying.NetworkAccessLayer;
@@ -29,7 +39,7 @@ import onlineplaying.NetworkAccessLayer;
  */
 
 public class RegisterScreenController implements Initializable,Listener {
-    ActionEvent myEvent;
+ ActionEvent myEvent;
     Navigator navigator;
     Gson gsonFile;
     PlayerDto player;
@@ -56,8 +66,30 @@ public class RegisterScreenController implements Initializable,Listener {
     private TextField nameTextField;
     @FXML
     private Label nameLabel;
+    
+    @FXML
+    private Label usernameError;
+
+    @FXML
+    private Label nameError;
+
+    @FXML
+    private Label passwordError;
+    
     @FXML
     private Button backButton;
+    
+    @FXML
+    private Label serverOfflineText;
+    
+    @FXML
+    private ComboBox<?> genderDropDownList;
+    
+    @FXML
+    private Label genderError;
+    
+    String gender;
+
 
     /**
      * Initializes the controller class.
@@ -65,29 +97,67 @@ public class RegisterScreenController implements Initializable,Listener {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
+        
+        ArrayList gender=new ArrayList();
+        gender.add("Male");
+        gender.add("Female");
+        genderDropDownList.setItems(FXCollections.observableArrayList(gender));
+               
         NetworkAccessLayer.setRef(this);
         myAlert=new Alert(Alert.AlertType.INFORMATION);
         gsonFile = new Gson();
         navigator = new Navigator();
         registerButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%  100%, #82C0CC,#edf6f9);"+" "+"-fx-background-radius : 10;");
+        usernameError.setText("");
+        nameError.setText("");
+        passwordError.setText("");
+        genderError.setText(""); 
+        if(NetworkAccessLayer.isServerOffline){
+           
+            usernameTextField.setDisable(true);
+            nameTextField.setDisable(true); 
+            passwordTextField.setDisable(true);
+            serverOfflineText.setText("Server Is Offline Now Try Again Later Or You Can Play Offline");
+        
+        }
     }    
 
     @FXML
-    private void onRegisterClick(ActionEvent event) 
-    {
+    private void onRegisterClick(ActionEvent event){
+        if(!NetworkAccessLayer.isServerOffline){
+        
         myEvent=event;
-        System.out.println("Register Button Clicked");
-        if( usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty() || nameTextField.getText().isEmpty() )
-        {
-            myAlert.setContentText("Please fill all the given Fields to commplete your Registeration");
-            myAlert.showAndWait();
+        
+        if(usernameTextField.getText().isEmpty()){
+            usernameError.setText("Please Enter Your Username");
+            usernameTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
         }
-        else
-        {
+        
+        if(nameTextField.getText().isEmpty()){
+            nameError.setText("Please Enter Your Name"); 
+            nameTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+         
+        if(passwordTextField.getText().isEmpty()){
+            passwordError.setText("Please Enter Your Password");
+            passwordTextField.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-radius: 15; -fx-background-radius: 15;");
+        }
+        
+        if(gender==null){
+            
+            
+           genderError.setText("Please Choose Gender ");
+        
+        
+        
+        }
+        
+        if(!usernameTextField.getText().isEmpty()&&!nameTextField.getText().isEmpty()&&!passwordTextField.getText().isEmpty()&&gender!=null){
             username=usernameTextField.getText();
             name=nameTextField.getText();
             password=passwordTextField.getText();
-            player = new PlayerDto(username, name, password, false, false, 0);
+            player = new PlayerDto(username, name, password, false, false, 0,gender);
             // create an array to save the code of registeration and the player object then convert the array to a json string
             ArrayList requestArr = new ArrayList();
             requestArr.add(Codes.REGESTER_CODE);
@@ -99,6 +169,7 @@ public class RegisterScreenController implements Initializable,Listener {
             // now we need to send this string to the server using the sendRequest function
             NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
         }
+    }
     }
  
     @FXML
@@ -115,10 +186,17 @@ public class RegisterScreenController implements Initializable,Listener {
     {
         if(success)
          {
+
+           Platform.runLater(()->{
+                navigator.popUpStage("CompleteRegisterationScreen.fxml");
+           });
+            
+
              System.out.println("Test the array data" + responseData.toString());
+
              Platform.runLater(()->{
                  navigator.goToPage(myEvent, "LoginScreen.fxml");
-             });
+                });
          }
          else
          {
@@ -129,4 +207,23 @@ public class RegisterScreenController implements Initializable,Listener {
               });
          }
     }
+    
+    @FXML
+    void onLoginBtnClicked(ActionEvent event) {
+        
+        navigator.goToPage(event, "LoginScreen.fxml");
+
+    }
+
+   
+
+    
+    @FXML
+    void onDropDownListChecked(ActionEvent event) {
+        
+        gender=genderDropDownList.getValue().toString();
+        System.out.println(gender);
+
+    }
+
 }

@@ -9,25 +9,33 @@ package onlineplaying;
  *
  * @author Ziad-Elshemy
  */
+
 public class PlayerDto {
     
     private String userName;
     private String name;
-    private String Password;
+    private String password;
     private boolean isOnline;
     private boolean isPlaying;
     private int score;
+    private String gender;
 
     public PlayerDto(){};
-    public PlayerDto (String un , String n , String pass , boolean  isO , boolean isP , int s)
-    {
-        userName=un;
-        name=n;
-        Password=pass;
-        isOnline=isO;
-        isPlaying=isP;
-        score=s;
+
+    public PlayerDto(String userName, String name, String password, boolean isOnline, boolean isPlaying, int score, String gender) {
+        this.userName = userName;
+        this.name = name;
+        this.password = password;
+        this.isOnline = isOnline;
+        this.isPlaying = isPlaying;
+        this.score = score;
+        this.gender = gender;
     }
+    
+    
+
+
+  
     public String getUserName() {
         return userName;
     }
@@ -45,14 +53,14 @@ public class PlayerDto {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String Password) {
-        this.Password = Password;
+        this.password = Password;
     }
 
-    public boolean isIsOnline() {
+    public boolean getIsOnline() {
         return isOnline;
     }
 
@@ -60,7 +68,7 @@ public class PlayerDto {
         this.isOnline = isOnline;
     }
 
-    public boolean isIsPlaying() {
+    public boolean getIsPlaying() {
         return isPlaying;
     }
 
@@ -75,7 +83,29 @@ public class PlayerDto {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
     
     
     
+    
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", isOnline=" + isOnline +
+                ", isPlaying=" + isPlaying +
+                ", score=" + score +
+                '}';
+    }
+
+   
 }
