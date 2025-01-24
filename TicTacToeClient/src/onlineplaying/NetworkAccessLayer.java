@@ -32,11 +32,13 @@ public abstract class NetworkAccessLayer
     public static boolean isServerOffline;
     public static Thread thread;
     public static ArrayList<PlayerDto> onlinePlayers;
+    public static String serverIP  ;
+    public static boolean local = false  ;
     
     public static void startConnectionHandling( )
     {
         try{
-            mySocket = new Socket("127.0.0.1", 5005);
+            mySocket = new Socket(serverIP, 5005);
             fromServer = new DataInputStream(mySocket.getInputStream());
             toServer = new PrintStream(mySocket.getOutputStream());
             thread = new Thread(){
@@ -79,7 +81,22 @@ public abstract class NetworkAccessLayer
                                 //String playerData = (String) responseData.get(2);
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveReplyOnInvitationResponse(responseData);
-                            }else if(code == Codes.LOGIN_CODE){
+                            }
+                            else if(code == Codes.SEND_PLAY_ON_BOARD_CODE)
+                            {
+                                
+                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                System.out.println("the SEND_PLAY_ON_BOARD_CODE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
+                            else if(code == Codes.PLAY_AGAIN_CODE)
+                            {
+                                
+                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
+                                System.out.println("the PLAY_AGAIN_CODE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
+                            else if(code == Codes.LOGIN_CODE){
                                     LoginResponse(responseData);
                             
                             } 
@@ -99,7 +116,6 @@ public abstract class NetworkAccessLayer
                     catch (IOException ex) 
                     {
                          isServerOffline=true;
-                         
                          System.out.println(ex.toString());
                     }
                 }
@@ -185,6 +201,21 @@ public abstract class NetworkAccessLayer
         }
         
     }
+    
+    public static void recievePlayOnBoardResponse(ArrayList responseData){
+        double isAccepted = (double) responseData.get(0);
+        System.out.println("recievePlayOnBoardResponse: "+ responseData.toString());
+        if (isAccepted == Codes.SEND_PLAY_ON_BOARD_CODE || isAccepted == Codes.PLAY_AGAIN_CODE)
+        {
+            myRef.onServerResponse(true,responseData);
+        }
+        else
+        {
+             myRef.onServerResponse(false,responseData);
+        }
+        
+    }
+    
     public static void LoginResponse(ArrayList responseData) {
        
             

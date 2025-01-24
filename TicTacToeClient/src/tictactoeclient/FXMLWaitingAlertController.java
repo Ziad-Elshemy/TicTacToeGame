@@ -124,7 +124,7 @@ public class FXMLWaitingAlertController implements Initializable,Listener {
         System.out.println("hi from waiting alarm data: " + responseData.toString());
         if(success){
             Platform.runLater(()->{
-                navigator.goToPage(TicTacToeClient.mainStage, "OnlineGameScreen.fxml");
+                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",responseData.get(2).toString(),"X");
                 closeAlert();
             });
             

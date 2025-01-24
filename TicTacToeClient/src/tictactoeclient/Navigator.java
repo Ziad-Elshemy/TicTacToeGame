@@ -152,6 +152,30 @@ public class Navigator {
       
     }
     
+    public void luanchOnlineGame(Stage stage, String targetPage, String enemy_username, String Sympol){
+        
+        try {
+            System.out.println("You clicked me!");
+            //label.setText("Hello World!");
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
+            Scene page1Scene = new Scene(loader.load());
+            System.out.println("FXML loaded successfully");
+            
+            OnlineGameController controller = loader.getController();
+            controller.setEnemyUsername(enemy_username);
+            controller.setMySympol(Sympol);
+            
+            // Get current stage and set new scene (Page 1) 
+            stage.setScene(page1Scene);
+            stage.show();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     public void goToPage(ActionEvent event,String targetPage,PlayerDto player){
         
         try {
@@ -258,5 +282,18 @@ public class Navigator {
             e.printStackTrace();
         }
     }
-    
+    public void popUpStage(String sceneName)
+    {
+        try {
+                Stage newStage = new Stage();
+                newStage.initModality(Modality.APPLICATION_MODAL);
+                Parent root = FXMLLoader.load(getClass().getResource(sceneName));
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
+                newStage.show();
+            }
+            catch (IOException ex){
+                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 }
