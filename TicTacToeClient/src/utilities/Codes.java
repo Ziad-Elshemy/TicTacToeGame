@@ -17,6 +17,6 @@ public interface Codes {
     public static int GET_ONLINE_PLAYERS = 11;
     public static int GET_PLAYING_PLAYERS = 12;
     public static int LEAVE_GAME_CODE = 13;
-
+    public static int SERVER_CLOSE_CODE = 16;
 
 }

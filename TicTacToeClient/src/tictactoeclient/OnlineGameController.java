@@ -851,5 +851,18 @@ public class OnlineGameController implements Initializable,Listener {
 
             }
     }
-
+     @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           });
+       }
+    }
 }

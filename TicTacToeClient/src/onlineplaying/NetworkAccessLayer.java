@@ -110,6 +110,10 @@ public abstract class NetworkAccessLayer
                                     LoginResponse(responseData);
                             
                             } 
+                            else if (code == Codes.SERVER_CLOSE_CODE)
+                            {
+                                 serverCloseResponse();
+                            }
                             
                             
                             if(code == Codes.GET_ONLINE_PLAYERS){
@@ -290,4 +294,8 @@ public abstract class NetworkAccessLayer
        });
 
 }
+    public static void serverCloseResponse()
+    {
+        myRef.onServerCloseResponse(true);
+    }
 }

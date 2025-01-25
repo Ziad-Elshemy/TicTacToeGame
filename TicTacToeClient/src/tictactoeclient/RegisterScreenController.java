@@ -215,15 +215,27 @@ public class RegisterScreenController implements Initializable,Listener {
 
     }
 
-   
-
-    
     @FXML
     void onDropDownListChecked(ActionEvent event) {
         
         gender=genderDropDownList.getValue().toString();
         System.out.println(gender);
 
+    }
+
+    @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           });
+       }
     }
 
 }
