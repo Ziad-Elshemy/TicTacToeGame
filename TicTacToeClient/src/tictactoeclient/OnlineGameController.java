@@ -29,7 +29,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
@@ -63,6 +65,7 @@ public class OnlineGameController implements Initializable,Listener {
     GameTracker tracker; /// record
     boolean isRecording;   //// record
 
+    Alert alert;
     
     
     @FXML
@@ -170,7 +173,26 @@ public class OnlineGameController implements Initializable,Listener {
 
     @FXML
     private void exitBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "LoginScreen.fxml");
+        Platform.runLater(()->{
+            
+            
+            alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Leave?", ButtonType.YES,ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                               
+                ArrayList arr=new ArrayList();
+                arr.add(Codes.LEAVE_GAME_CODE);
+                System.out.println(arr);
+                NetworkAccessLayer.toServer.println(gson.toJson(arr)); 
+
+                navigator.goToPage(event, "HomeScreen.fxml");
+
+//                NetworkAccessLayer.playerData.setIsPlaying(false);           
+            }
+        
+        });
+        
+        
     }
 
     @FXML
@@ -271,6 +293,9 @@ public class OnlineGameController implements Initializable,Listener {
 
             showVideo(Strings.winnerVideoPath,"X - Winner");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
+            
+            updatePlayerScore();
+            
         }else if(checkWinner("O","-fx-background-color: #008000")){
             playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
@@ -289,6 +314,7 @@ public class OnlineGameController implements Initializable,Listener {
             // check for draw
             showVideo(Strings.winnerVideoPath,"O - Winner");
             //showVideo(Strings.loserVideoPath, "X - loser");
+            updatePlayerScore();
         }else if(counter == 9){
             //playerXScore+=5;
             //playerOScore+=5;
@@ -791,6 +817,48 @@ public class OnlineGameController implements Initializable,Listener {
             });
             
         }
+        else if((double)responseData.get(0)==(Codes.UPDATE_PLAYER_SCORE)&&success){
+            
+            System.out.println("The score updated successfully");
+            NetworkAccessLayer.playerData.setScore(NetworkAccessLayer.playerData.getScore()+1);
+        }
+        
+        else if((double)responseData.get(0)==(Codes.LEAVE_GAME_CODE)&&success){
+            
+            System.out.println("LEAVE_GAME_CODE successfully");
+            Platform.runLater(()->{
+                navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
+            });
+            
+        }
+        
+    }
+
+    private void updatePlayerScore() {
+                
+        ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.UPDATE_PLAYER_SCORE);
+        System.out.println("hi "+ NetworkAccessLayer.playerData.getScore());  
+        int newScore = NetworkAccessLayer.playerData.getScore() + 1;
+        requestArr.add(newScore);
+        
+        String jsonRegisterationRequest = gson.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+    }
+    
+    public void onClose(){
+        alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Leave?", ButtonType.YES,ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                               
+                ArrayList arr=new ArrayList();
+                arr.add(Codes.LEAVE_GAME_CODE);
+                System.out.println(arr);
+                NetworkAccessLayer.toServer.println(gson.toJson(arr)); 
+
+                navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
+
+            }
     }
 
 }
