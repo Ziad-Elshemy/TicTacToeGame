@@ -5,17 +5,11 @@
  */
 package tictactoeclient;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import utilities.Colors;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -41,6 +37,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import onlineplaying.NetworkAccessLayer;
 import utilities.Strings;
 
 /**
@@ -49,7 +46,7 @@ import utilities.Strings;
  * @author Ziad-Elshemy
  */
 public class GameScreenController implements Initializable {
-    
+
     int counter;
     int playerXScore;
     int playerOScore;
@@ -57,14 +54,11 @@ public class GameScreenController implements Initializable {
     boolean isGameEnded = false;
     Navigator navigator;
     ArrayList<String> boardState;
-    
+
     GameTracker tracker; /// record
     boolean isRecording;   //// record
     GameReplay gamereplay;
-    
 
-    
-    
     @FXML
     private Button btn1;
     @FXML
@@ -115,19 +109,19 @@ public class GameScreenController implements Initializable {
     private Label file1Lable;
     @FXML
     private ScrollPane scrollPane;
-    
+
     @FXML
     private ImageView playerTwoImage;
 
     @FXML
     private Text playerTwoUsername;
-    
+
     @FXML
     private ImageView playerOneImage;
 
     @FXML
     private Text playerOneUsername;
-    
+
     static Stage stageOfNames;
     @FXML
     private AnchorPane onExitButton;
@@ -137,22 +131,23 @@ public class GameScreenController implements Initializable {
     private Text username1;
     @FXML
     private Circle avatar1;
-    
+
+    Alert alert;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         playerOneImage.setImage(null);
         playerOneUsername.setText("X Player");
-        playerTwoImage.setImage(null); 
+        playerTwoImage.setImage(null);
         playerTwoUsername.setText("O Player");
         // TODO
         //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
         tracker = new GameTracker();  // record
-        
+
         navigator = new Navigator();
         playerXScore = 0;
         playerOScore = 0;
@@ -162,44 +157,50 @@ public class GameScreenController implements Initializable {
         counter = 0;
         isRecording = false; //record
         gamereplay = new GameReplay();
-        
-                
-        Platform.runLater(()->{
-            
-            
-        try {
 
-            Parent root = FXMLLoader.load(getClass().getResource("EnterNamesForTwoPlayers.fxml"));
-            stageOfNames = new Stage();
-            Scene scene = new Scene(root);
-            stageOfNames.setScene(scene);
-            stageOfNames.initModality(Modality.WINDOW_MODAL);
-            stageOfNames.showAndWait();
-            if(EnterNamesForTwoPlayersController.genderOne!=null && EnterNamesForTwoPlayersController.nameOne!=null){
-                playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
-                playerOneUsername.setText(EnterNamesForTwoPlayersController.nameOne); 
-            
-            }
-            
-            if(EnterNamesForTwoPlayersController.genderTwo!=null && EnterNamesForTwoPlayersController.nameTwo!=null){
-                playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
-                playerTwoUsername.setText(EnterNamesForTwoPlayersController.nameTwo);
-            
-            
-            
-            }
+        Platform.runLater(() -> {
 
-        } catch (IOException ex) {
-            Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+
+                Parent root = FXMLLoader.load(getClass().getResource("EnterNamesForTwoPlayers.fxml"));
+                stageOfNames = new Stage();
+                Scene scene = new Scene(root);
+                stageOfNames.setScene(scene);
+                stageOfNames.initModality(Modality.WINDOW_MODAL);
+                stageOfNames.showAndWait();
+                if (EnterNamesForTwoPlayersController.genderOne != null && EnterNamesForTwoPlayersController.nameOne != null) {
+                    playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male") ? new Image("file:src/Images/boy.png") : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image("file:src/Images/x.png") : new Image("file:src/Images/girl.png"));
+                    playerOneUsername.setText(EnterNamesForTwoPlayersController.nameOne);
+
+                }
+
+                if (EnterNamesForTwoPlayersController.genderTwo != null && EnterNamesForTwoPlayersController.nameTwo != null) {
+                    playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male") ? new Image("file:src/Images/boy.png") : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image("file:src/Images/O.png") : new Image("file:src/Images/girl.png"));
+                    playerTwoUsername.setText(EnterNamesForTwoPlayersController.nameTwo);
+
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
-    }    
-
+    }
 
     @FXML
     private void exitBtnAction(ActionEvent event) {
-        navigator.goToPage(event, "LoginScreen.fxml");
+
+        alert = new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Leave?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+        if (NetworkAccessLayer.playerData != null) {
+
+            navigator.goToPage(event, "HomeScreen.fxml");
+
+        } else {
+
+            navigator.goToPage(event, "LoginScreen.fxml");
+
+        }
     }
 
     @FXML
@@ -219,170 +220,159 @@ public class GameScreenController implements Initializable {
         gamereplay.stopThread();
     }
 
-
     @FXML
     private void onPlayerClick(ActionEvent event) throws IOException {
-        
-        Button button = (Button)event.getSource();
+
+        Button button = (Button) event.getSource();
         String playerSympol = "";
-        if(!button.getText().toString().isEmpty()||isGameEnded){
+        if (!button.getText().toString().isEmpty() || isGameEnded) {
             return;
         }
-        if(counter %2 == 0){
+        if (counter % 2 == 0) {
             playerSympol = "X";
             button.setText(playerSympol);
             button.setTextFill(Colors.X_TEXT);
-            playerTurnBtn.setText(!playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Turn":"O-TURN");
+            playerTurnBtn.setText(!playerTwoUsername.equals("O Player") ? playerTwoUsername.getText() + " Turn" : "O-TURN");
             playerTurnBtn.setStyle("-fx-background-color: #FFA62B");
-        }else{
+        } else {
             playerSympol = "O";
             button.setText(playerSympol);
             button.setTextFill(Colors.O_TEXT);
-            playerTurnBtn.setText(!playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Turn":"X-TURN");
+            playerTurnBtn.setText(!playerOneUsername.equals("X Player") ? playerOneUsername.getText() + " Turn" : "X-TURN");
             playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         }
         counter++;
-        
-        if (counter > 0)  // check if the game is at the beginning
+
+        if (counter > 0) // check if the game is at the beginning
         {
             RecordBtn.setDisable(true);
         }
-        
-        if(isRecording)
-        {
+
+        if (isRecording) {
             tracker.recordMove(button.getId(), playerSympol.charAt(0));
         }
-        
-        writePlayerSymolInArray(button, playerSympol);
-        
-        if(checkWinner("X")){
-            playerXScore+=1;
-            playerXScoreBtn.setText(""+playerXScore);
-            //initializeBoardState();
-            playerTurnBtn.setVisible(false);
-            newGameBtn.setVisible(true);
-            String text = !playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Win":"Player X win";
-            showGameOverToast(text);
-            if(isRecording)
-            {
-                 tracker.saveToFile("src/games/","");  ////add record to file
-                 isRecording = false; ///
-            }
-            allRecordsBtn.setDisable(false);
-            //disableBoard();
-            counter=0;
-            
 
-            showVideo(Strings.winnerVideoPath, !playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Win":"Player X win");
-            //showVideo(Strings.loserVideoPath, "O - loser"); 
-        }else if(checkWinner("O")){
-            playerOScore+=1;
-            playerOScoreBtn.setText(""+playerOScore);
+        writePlayerSymolInArray(button, playerSympol);
+
+        if (checkWinner("X")) {
+            playerXScore += 1;
+            playerXScoreBtn.setText("" + playerXScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
-            String text = !playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Win":"Player O win";
+            String text = !playerOneUsername.equals("X Player") ? playerOneUsername.getText() + " Win" : "Player X win";
             showGameOverToast(text);
-            if(isRecording)
-            {
-                 tracker.saveToFile("src/games/","");  ////add record to file
-                 isRecording = false; ///
+            if (isRecording) {
+                tracker.saveToFile("src/games/", "");  ////add record to file
+                isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);
             //disableBoard();
-            counter=0;
+            counter = 0;
+
+            showVideo(Strings.winnerVideoPath, !playerOneUsername.equals("X Player") ? playerOneUsername.getText() + " Win" : "Player X win");
+            //showVideo(Strings.loserVideoPath, "O - loser"); 
+        } else if (checkWinner("O")) {
+            playerOScore += 1;
+            playerOScoreBtn.setText("" + playerOScore);
+            //initializeBoardState();
+            playerTurnBtn.setVisible(false);
+            newGameBtn.setVisible(true);
+            String text = !playerTwoUsername.equals("O Player") ? playerTwoUsername.getText() + " Win" : "Player O win";
+            showGameOverToast(text);
+            if (isRecording) {
+                tracker.saveToFile("src/games/", "");  ////add record to file
+                isRecording = false; ///
+            }
+            allRecordsBtn.setDisable(false);
+            //disableBoard();
+            counter = 0;
             // check for draw
-            showVideo(Strings.winnerVideoPath, !playerTwoUsername.equals("O Player")?playerTwoUsername.getText()+" Win":"Player O win");
+            showVideo(Strings.winnerVideoPath, !playerTwoUsername.equals("O Player") ? playerTwoUsername.getText() + " Win" : "Player O win");
             //showVideo(Strings.loserVideoPath, "X - loser");
-        }else if(counter == 9){
+        } else if (counter == 9) {
             //playerXScore+=5;
             //playerOScore+=5;
-            drawScore+=1;
-            playerXScoreBtn.setText(""+playerXScore);
-            playerOScoreBtn.setText(""+playerOScore);
-            drawScoreBtn.setText(""+drawScore);
+            drawScore += 1;
+            playerXScoreBtn.setText("" + playerXScore);
+            playerOScoreBtn.setText("" + playerOScore);
+            drawScoreBtn.setText("" + drawScore);
             //initializeBoardState();
             playerTurnBtn.setVisible(false);
             newGameBtn.setVisible(true);
             String text = "It's draw";
             showGameOverToast(text);
-            if(isRecording)
-            {
-                 tracker.saveToFile("src/games/","");  ////add record to file
-                 isRecording = false; ///
+            if (isRecording) {
+                tracker.saveToFile("src/games/", "");  ////add record to file
+                isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);
             //disableBoard();
-            counter=0;
+            counter = 0;
             showVideo(Strings.drawVideoPath, "Draw");
         }
-        
+
     }
-    
-    
-    void showVideo(String vidoeUrl , String symbol) throws IOException{
-        
-        VideoPlayerController.videoUrl=vidoeUrl;
+
+    void showVideo(String vidoeUrl, String symbol) throws IOException {
+
+        VideoPlayerController.videoUrl = vidoeUrl;
         Parent root = FXMLLoader.load(getClass().getResource("VideoPlayer.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(symbol);
         stage.show();
-        
-        stage.setOnCloseRequest((event)->{
-            
+
+        stage.setOnCloseRequest((event) -> {
+
             VideoPlayerController.mediaPlayer.pause();
-            if(!TicTacToeClient.isMuted){
-               TicTacToeClient.mediaPlayer.play();
-            
+            if (!TicTacToeClient.isMuted) {
+                TicTacToeClient.mediaPlayer.play();
+
             }
 
         });
-        
-       VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
+
+        VideoPlayerController.mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                
+
                 stage.close();
-                if(!TicTacToeClient.isMuted){
-                   TicTacToeClient.mediaPlayer.play();
-            
-            }
-                
-                
+                if (!TicTacToeClient.isMuted) {
+                    TicTacToeClient.mediaPlayer.play();
+
+                }
+
             }
         });
-        
-        
-        
 
     }
-    
-    void writePlayerSymolInArray(Button button,String playerSympol){
-        if(button.getId().equals(btn1.getId())){
+
+    void writePlayerSymolInArray(Button button, String playerSympol) {
+        if (button.getId().equals(btn1.getId())) {
             boardState.set(0, playerSympol);
-        }else if(button.getId().equals(btn2.getId())){
+        } else if (button.getId().equals(btn2.getId())) {
             boardState.set(1, playerSympol);
-        }else if(button.getId().equals(btn3.getId())){
+        } else if (button.getId().equals(btn3.getId())) {
             boardState.set(2, playerSympol);
-        }else if(button.getId().equals(btn4.getId())){
+        } else if (button.getId().equals(btn4.getId())) {
             boardState.set(3, playerSympol);
-        }else if(button.getId().equals(btn5.getId())){
+        } else if (button.getId().equals(btn5.getId())) {
             boardState.set(4, playerSympol);
-        }else if(button.getId().equals(btn6.getId())){
+        } else if (button.getId().equals(btn6.getId())) {
             boardState.set(5, playerSympol);
-        }else if(button.getId().equals(btn7.getId())){
+        } else if (button.getId().equals(btn7.getId())) {
             boardState.set(6, playerSympol);
-        }else if(button.getId().equals(btn8.getId())){
+        } else if (button.getId().equals(btn8.getId())) {
             boardState.set(7, playerSympol);
-        }else if(button.getId().equals(btn9.getId())){
+        } else if (button.getId().equals(btn9.getId())) {
             boardState.set(8, playerSympol);
         }
-    }  
-    
-    private void disableBoard(){
+    }
+
+    private void disableBoard() {
         btn1.setMouseTransparent(true);
         btn2.setMouseTransparent(true);
         btn3.setMouseTransparent(true);
@@ -393,7 +383,8 @@ public class GameScreenController implements Initializable {
         btn8.setMouseTransparent(true);
         btn9.setMouseTransparent(true);
     }
-    private void enableBoard(){
+
+    private void enableBoard() {
         btn1.setMouseTransparent(false);
         btn2.setMouseTransparent(false);
         btn3.setMouseTransparent(false);
@@ -404,7 +395,8 @@ public class GameScreenController implements Initializable {
         btn8.setMouseTransparent(false);
         btn9.setMouseTransparent(false);
     }
-    private void stopEditBoard(){
+
+    private void stopEditBoard() {
         btn1.setDisable(false);
         btn2.setDisable(false);
         btn3.setDisable(false);
@@ -415,8 +407,8 @@ public class GameScreenController implements Initializable {
         btn8.setDisable(false);
         btn9.setDisable(false);
     }
-    
-    private void reInitializeBoard(){
+
+    private void reInitializeBoard() {
         btn1.setText("");
         btn1.setStyle("-fx-background-color: #16697A");
         btn2.setText("");
@@ -436,28 +428,28 @@ public class GameScreenController implements Initializable {
         btn9.setText("");
         btn9.setStyle("-fx-background-color: #16697A");
     }
-    
-    private void initializeBoardState(){
-    
+
+    private void initializeBoardState() {
+
         boardState = new ArrayList<>();
-        
-        for(int i=0; i<9; i++){
+
+        for (int i = 0; i < 9; i++) {
             boardState.add("");
         }
         hideGameOverToast();
         reInitializeBoard();
-        
+
     }
-    
-    private void showGameOverToast(String text){
+
+    private void showGameOverToast(String text) {
         leftPolygon.setVisible(true);
         rightPolygon.setVisible(true);
         gameOverRect.setVisible(true);
         gameOverToast.setVisible(true);
-        gameOverToast.setText("Game Over. "+ text);
+        gameOverToast.setText("Game Over. " + text);
     }
-    
-    private void hideGameOverToast(){
+
+    private void hideGameOverToast() {
         leftPolygon.setVisible(false);
         rightPolygon.setVisible(false);
         gameOverRect.setVisible(false);
@@ -468,62 +460,62 @@ public class GameScreenController implements Initializable {
     // "o","X","o",
     // "X","o","X"]
     private boolean checkWinner(String playerSympol) {
-        for(int i=0; i<9; i+=3){
+        for (int i = 0; i < 9; i += 3) {
             // check for rows winner
-            if(boardState.get(i).toString().equals(playerSympol)&&
-               boardState.get(i+1).toString().equals(playerSympol)&&
-               boardState.get(i+2).toString().equals(playerSympol)){
+            if (boardState.get(i).toString().equals(playerSympol)
+                    && boardState.get(i + 1).toString().equals(playerSympol)
+                    && boardState.get(i + 2).toString().equals(playerSympol)) {
                 System.out.println("winner by rows");
-                if(i==0){
+                if (i == 0) {
                     btn1.setStyle("-fx-background-color: #008000");
                     btn2.setStyle("-fx-background-color: #008000");
                     btn3.setStyle("-fx-background-color: #008000");
                 }
-                if(i==3){
+                if (i == 3) {
                     btn4.setStyle("-fx-background-color: #008000");
                     btn5.setStyle("-fx-background-color: #008000");
                     btn6.setStyle("-fx-background-color: #008000");
                 }
-                if(i==6){
+                if (i == 6) {
                     btn7.setStyle("-fx-background-color: #008000");
                     btn8.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
                 isGameEnded = true;
                 return true;
-                
-            }   
+
+            }
         }
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             // check for columns winner
-            if(boardState.get(i).toString().equals(playerSympol)&&
-               boardState.get(i+3).toString().equals(playerSympol)&&
-               boardState.get(i+6).toString().equals(playerSympol)){
-                
+            if (boardState.get(i).toString().equals(playerSympol)
+                    && boardState.get(i + 3).toString().equals(playerSympol)
+                    && boardState.get(i + 6).toString().equals(playerSympol)) {
+
                 System.out.println("winner by columns");
-                if(i==0){
+                if (i == 0) {
                     btn1.setStyle("-fx-background-color: #008000");
                     btn4.setStyle("-fx-background-color: #008000");
                     btn7.setStyle("-fx-background-color: #008000");
                 }
-                if(i==1){
+                if (i == 1) {
                     btn2.setStyle("-fx-background-color: #008000");
                     btn5.setStyle("-fx-background-color: #008000");
                     btn8.setStyle("-fx-background-color: #008000");
                 }
-                if(i==2){
+                if (i == 2) {
                     btn3.setStyle("-fx-background-color: #008000");
                     btn6.setStyle("-fx-background-color: #008000");
                     btn9.setStyle("-fx-background-color: #008000");
                 }
                 isGameEnded = true;
                 return true;
-            }   
+            }
         }
         // check for diagonals winner
-        if(boardState.get(0).toString().equals(playerSympol)&&
-           boardState.get(4).toString().equals(playerSympol)&&
-           boardState.get(8).toString().equals(playerSympol)){
+        if (boardState.get(0).toString().equals(playerSympol)
+                && boardState.get(4).toString().equals(playerSympol)
+                && boardState.get(8).toString().equals(playerSympol)) {
             System.out.println("winner by diagonals");
             btn1.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
@@ -532,9 +524,9 @@ public class GameScreenController implements Initializable {
             return true;
         }
         // check for diagonals winner
-        if(boardState.get(2).toString().equals(playerSympol)&&
-           boardState.get(4).toString().equals(playerSympol)&&
-           boardState.get(6).toString().equals(playerSympol)){
+        if (boardState.get(2).toString().equals(playerSympol)
+                && boardState.get(4).toString().equals(playerSympol)
+                && boardState.get(6).toString().equals(playerSympol)) {
             System.out.println("winner by diagonals");
             btn3.setStyle("-fx-background-color: #008000");
             btn5.setStyle("-fx-background-color: #008000");
@@ -542,7 +534,7 @@ public class GameScreenController implements Initializable {
             isGameEnded = true;
             return true;
         }
-    return false;
+        return false;
     }
 
     @FXML
@@ -552,66 +544,59 @@ public class GameScreenController implements Initializable {
         RecordBtn.setText("Recording");
     }
 
-
     @FXML
-    private void onallRecordsBtnAction(ActionEvent event) {  
+    private void onallRecordsBtnAction(ActionEvent event) {
         recordFilesListBox.getChildren().clear();
         recordFilesListBox.setDisable(false);
         ShowFiles();
-        
+
     }
-    
-    
-    private void ShowFiles ()
-    {
+
+    private void ShowFiles() {
         File directory = new File("src/games");
         File[] files = directory.listFiles();
-        
+
         //files = RecordsList.getRecordsFiles();
-        if(files != null)
-        {
-            
+        if (files != null) {
+
             //file1Lable.setText(files[0].getName());
-            
-            for(File file :files)
-            {
+            for (File file : files) {
                 //int count
                 //System.out.println("File "+count+ " : " +file.getName());
                 Separator separator = new Separator();
-               Label lable = new Label(file.getName());
-               lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
-               lable.setOnMouseEntered((e)->{
-                     lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
-              
-               });
-               lable.setOnMouseExited((e)->{
-                      lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+                Label lable = new Label(file.getName());
+                lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+                lable.setOnMouseEntered((e) -> {
+                    lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
 
-               });
-                lable.setOnMouseClicked((e)->{
+                });
+                lable.setOnMouseExited((e) -> {
+                    lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+
+                });
+                lable.setOnMouseClicked((e) -> {
                     initializeBoardState();
                     disableBoard();
                     RecordBtn.setDisable(false);
                     startReplayGame(file.getName());
                 });
-                Platform.runLater(()->{
-                recordFilesListBox.getChildren().add(lable);
-                recordFilesListBox.getChildren().add(separator);
-                    
+                Platform.runLater(() -> {
+                    recordFilesListBox.getChildren().add(lable);
+                    recordFilesListBox.getChildren().add(separator);
+
                 });
             }
         }
     }
-    
- private void startReplayGame(String fileName)
- {
 
-        ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
-        
-        gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+    private void startReplayGame(String fileName) {
+
+        ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/" + fileName);
+
+        gamereplay.replayGame(moves, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
         RecordBtn.setText("Record");
         RecordBtn.setDisable(true);
-    
- }
+
+    }
 
 }

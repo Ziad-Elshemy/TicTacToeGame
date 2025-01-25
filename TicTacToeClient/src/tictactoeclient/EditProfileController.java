@@ -22,7 +22,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
-import org.w3c.dom.events.Event;
 import utilities.Codes;
 
 /**

@@ -6,10 +6,7 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
-import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,23 +19,21 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
-import utilities.Strings;
+import static tictactoeclient.FXMLWaitingAlertController.alarmMediaPlayer;
 
 /**
  * FXML Controller class
  *
- * @author Ziad-Elshemy
+ * @author esraa.m.mosaad
  */
-public class FXMLWaitingAlertController implements Initializable, Listener {
-
-    Gson gson;
-    PlayerDto recieverPlayer;
+public class OnLoginCompleteController implements Initializable {
+    
     Navigator navigator;
 
     @FXML
     private ProgressIndicator progressIndicator;
+    
     @FXML
     private Label recieverLabel;
 
@@ -52,11 +47,7 @@ public class FXMLWaitingAlertController implements Initializable, Listener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        NetworkAccessLayer.setRef(this);
-        gson = new Gson();
-        recieverPlayer = new PlayerDto();
-        navigator = new Navigator();
+       navigator = new Navigator();
 
         Platform.runLater(() -> {
             stage = (Stage) recieverLabel.getScene().getWindow();
@@ -69,15 +60,10 @@ public class FXMLWaitingAlertController implements Initializable, Listener {
                 }
             });
             startProgressIndicator(stage);
-            initMedia();
         });
-    }
-
-    public void setRecieverLabel(String recieverName) {
-        recieverLabel.setText(recieverName);
-    }
-
-    private void startProgressIndicator(Stage stage) {
+    } 
+    
+        private void startProgressIndicator(Stage stage) {
 
         TicTacToeClient.mediaPlayer.pause();
 
@@ -101,44 +87,5 @@ public class FXMLWaitingAlertController implements Initializable, Listener {
 
         timeline.play();
     }
-
-    private void initMedia() {
-        media = new Media(new File(Strings.alarmMusic).toURI().toString());
-        alarmMediaPlayer = new MediaPlayer(media);
-        alarmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        alarmMediaPlayer.volumeProperty().set(0.25);
-        alarmMediaPlayer.play();
-    }
-
-    public void closeAlert() {
-        timeline.stop();
-        alarmMediaPlayer.pause();
-        if (!TicTacToeClient.isMuted) {
-            TicTacToeClient.mediaPlayer.play();
-        }
-        stage.close();
-    }
-
-    @Override
-    public void onServerResponse(boolean success, ArrayList responseData) {
-        System.out.println("hi from waiting alarm data: " + responseData.toString());
-        if (success) {
-            Object result = responseData.get(2);
-
-            if (result instanceof LinkedTreeMap) {
-                String jsonResult = gson.toJson(result);
-                Platform.runLater(() -> {
-                    navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml", gson.fromJson(jsonResult, PlayerDto.class), "X");
-                    closeAlert();
-                });
-            }
-
-        } else {
-            Platform.runLater(() -> {
-                navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
-                closeAlert();
-            });
-        }
-    }
-
+    
 }
