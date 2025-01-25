@@ -504,7 +504,10 @@ public class VsComputerSceneController implements Initializable {
         stage.setOnCloseRequest((event) -> {
 
             VideoPlayerController.mediaPlayer.pause();
+            
+          if(!TicTacToeClient.isMuted){
             TicTacToeClient.mediaPlayer.play();
+            }
 
         });
 
