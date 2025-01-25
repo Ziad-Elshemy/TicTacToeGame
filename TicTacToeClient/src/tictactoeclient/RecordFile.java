@@ -27,10 +27,11 @@ import tictactoeclient.GameTracker.Move;
  */
 public class RecordFile {
     
-    static String localDate = getDate();
+    
     
     
      public static void addToFile(ArrayList<Move> moves,String path,String AgainestPlayerNae) {
+        String localDate = getDate();
         String fileName = localDate;  // Use current date and time as file name
         File file = new File(path + fileName +AgainestPlayerNae); //src/games/
 
@@ -68,7 +69,7 @@ public class RecordFile {
             private static String getDate()
     {
       Date  myDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         
         return dateFormat.format(myDate);
     }

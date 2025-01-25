@@ -58,6 +58,7 @@ public class GameScreenController implements Initializable {
     
     GameTracker tracker; /// record
     boolean isRecording;   //// record
+    GameReplay gamereplay;
     
 
     
@@ -150,6 +151,7 @@ public class GameScreenController implements Initializable {
         disableBoard();
         counter = 0;
         isRecording = false; //record
+        gamereplay = new GameReplay();
         
                 
         Platform.runLater(()->{
@@ -204,6 +206,7 @@ public class GameScreenController implements Initializable {
         tracker.clearMoves();
         recordFilesListBox.setDisable(true);
         allRecordsBtn.setDisable(true);
+        gamereplay.stopThread();
     }
 
 
@@ -586,7 +589,6 @@ public class GameScreenController implements Initializable {
 
                });
                 lable.setOnMouseClicked((e)->{
-                    //System.out.println("On Clicked"+file.getName());
                     initializeBoardState();
                     disableBoard();
                     RecordBtn.setDisable(false);
@@ -600,14 +602,16 @@ public class GameScreenController implements Initializable {
             }
         }
     }
+    
  private void startReplayGame(String fileName)
  {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
-    GameReplay gamereplay = new GameReplay();
-    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
-    RecordBtn.setText("Record");
-    RecordBtn.setDisable(true);
-    ///////causes Draw Problem
+
+        ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
+        
+        gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+        RecordBtn.setText("Record");
+        RecordBtn.setDisable(true);
+    
  }
 
 }

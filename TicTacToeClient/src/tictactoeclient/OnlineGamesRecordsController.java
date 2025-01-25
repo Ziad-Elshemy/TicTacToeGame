@@ -107,6 +107,7 @@ public class OnlineGamesRecordsController implements Initializable {
                 lable.setOnMouseClicked((e)->{
                    reInitializeBoard();
                     startReplayGame(file.getName());
+                    
                 });
                 Platform.runLater(()->{
                 recordFilesListBox.getChildren().add(lable);
