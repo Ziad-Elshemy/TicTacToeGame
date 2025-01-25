@@ -225,7 +225,7 @@ public class LoginScreenController implements Initializable, Listener {
             });
         } else {
             Platform.runLater(() -> {
-                new Alert(Alert.AlertType.ERROR, "Player Not Found Please Register", ButtonType.OK).showAndWait();
+                new Alert(Alert.AlertType.ERROR, " You Already Logged in Or Player Not Found Please Register", ButtonType.OK).showAndWait();
             });
         }
 

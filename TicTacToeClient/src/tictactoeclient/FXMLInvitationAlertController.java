@@ -143,6 +143,24 @@ public class FXMLInvitationAlertController implements Initializable, Listener {
             double progress = progressIndicator.getProgress() + 0.0066;
             progressIndicator.setProgress(progress);
         }));
+        
+        
+        stage.setOnCloseRequest((ev)->{
+        
+         ArrayList requestArr = new ArrayList();
+        requestArr.add(Codes.INVITATION_REPLY_CODE);
+        requestArr.add(0); // for reject
+        requestArr.add(gson.toJson(senderPlayer));
+        String jsonRegisterationRequest = gson.toJson(requestArr);
+        NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+
+        //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Rejected");
+        System.out.println("you have Rejected Invitation from " + senderPlayer.getUserName());
+        closeAlert();
+        navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
+        
+        
+        });
 
         timeline.setCycleCount(150);
         timeline.setOnFinished(event -> {
@@ -153,6 +171,17 @@ public class FXMLInvitationAlertController implements Initializable, Listener {
             if (!TicTacToeClient.isMuted) {
                 TicTacToeClient.mediaPlayer.play();
             }
+            ArrayList requestArr = new ArrayList();
+            requestArr.add(Codes.INVITATION_REPLY_CODE);
+            requestArr.add(0); // for reject
+            requestArr.add(gson.toJson(senderPlayer));
+            String jsonRegisterationRequest = gson.toJson(requestArr);
+            NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+
+            //System.out.println("Invitation from "+senderPlayer.getUserName()+ " has been Rejected");
+            System.out.println("you have Rejected Invitation from " + senderPlayer.getUserName());
+            closeAlert();
+            navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
             stage.close();
         });
 
