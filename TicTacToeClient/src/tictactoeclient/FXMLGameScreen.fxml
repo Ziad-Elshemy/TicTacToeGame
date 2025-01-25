@@ -49,7 +49,7 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Text>
-            <ImageView fx:id="playerTwoImage" fitHeight="85.0" fitWidth="72.0" layoutX="294.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playerTwoImage" fitHeight="85.0" fitWidth="72.0" layoutX="291.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/pc.png" />
                </image>
@@ -209,9 +209,10 @@
                   <Insets bottom="180.0" />
                </GridPane.margin>
             </Group>
-            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <content>
-                  <VBox fx:id="recordFilesListBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="243.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">
+                        <VBox fx:id="recordFilesListBox" maxHeight="600.0" minWidth="243.0" prefHeight="360.0" 
+                              spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">  
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>

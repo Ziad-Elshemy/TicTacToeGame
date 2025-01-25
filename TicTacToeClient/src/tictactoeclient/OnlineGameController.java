@@ -6,22 +6,14 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import utilities.Colors;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,16 +25,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import onlineplaying.NetworkAccessLayer;
-import static sun.plugin2.os.windows.Windows.ReadFile;
-import tictactoeclient.GameTracker.Move;
 import utilities.Codes;
 import utilities.Strings;
 
@@ -109,12 +103,7 @@ public class OnlineGameController implements Initializable,Listener {
     private StackPane rootPane;
     @FXML
     private Button RecordBtn;
-    @FXML
-    private Button allRecordsBtn;
-    @FXML
     private VBox recordFilesListBox;
-    @FXML
-    private Label file1Lable;
     
     String enemyUserName;
     String mySympol;
@@ -125,18 +114,48 @@ public class OnlineGameController implements Initializable,Listener {
     private Label playerXNameLabel;
     @FXML
     private Label playerONameLabel;
+    
+    @FXML
+    private Text playerOneUsername;
+    
+    @FXML
+    private Text playerTwoUsername;
+
+    @FXML
+    private ImageView playerTwoImage;
+    
+    @FXML
+    private ImageView playerOneImage;
+    
+    @FXML
+    private Text playerOneScore;
+
+    @FXML
+    private Text playerTwoScore;
+    
+    @FXML
+    private ImageView muteImg;
+    
+    String nameOfCurrenyPlayer;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
+        
+        playerOneUsername.setText(NetworkAccessLayer.playerData.getUserName());
+        playerTwoUsername.setText(NetworkAccessLayer.enemyData.getUserName());
+        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerTwoImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerOneScore.setText("Score: "+String.valueOf(NetworkAccessLayer.playerData.getScore()));
+        playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore())); 
+
+
         NetworkAccessLayer.setRef(this);
         gson = new Gson();
         
-        tracker = new GameTracker();  // record
+        tracker = new GameTracker();  
         
         navigator = new Navigator();
         playerXScore = 0;
@@ -156,10 +175,36 @@ public class OnlineGameController implements Initializable,Listener {
         tracker.clearMoves();
         
         initializeBoardState();
-        //disableBoard();
         counter = 0;
         isRecording = false; //record
-    }    
+        
+        if (!TicTacToeClient.isMuted) {
+
+            muteImg.setImage(new Image("file:src/Images/volume.png"));
+
+        } else {
+
+            muteImg.setImage(new Image("file:src/Images/mute.png"));
+
+        }
+    }   
+    
+     @FXML
+    void onMuteBtnClicked(ActionEvent event) {
+
+        if (TicTacToeClient.isMuted) {
+            TicTacToeClient.mediaPlayer.play();
+            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            TicTacToeClient.isMuted = false;
+
+        } else {
+            TicTacToeClient.mediaPlayer.pause();
+            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            TicTacToeClient.isMuted = true;
+
+        }
+
+    }
 
     public void setEnemyUsername(String enemyUsername){
         this.enemyUserName = enemyUsername;
@@ -177,6 +222,9 @@ public class OnlineGameController implements Initializable,Listener {
 
     @FXML
     private void exitBtnAction(ActionEvent event) {
+        
+        
+        if(isGameEnded){
         Platform.runLater(()->{
             
             
@@ -195,6 +243,35 @@ public class OnlineGameController implements Initializable,Listener {
             }
         
         });
+        }else{
+            
+            Platform.runLater(()->{
+            alert= new Alert(Alert.AlertType.CONFIRMATION, "If you leave now, your score will decrease by one", ButtonType.YES,ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                
+                ArrayList requestArr = new ArrayList();
+                requestArr.add(Codes.UPDATE_PLAYER_SCORE);
+                System.out.println("hi "+ NetworkAccessLayer.playerData.getScore());  
+                int newScore = NetworkAccessLayer.playerData.getScore() - 1;
+                requestArr.add(newScore);
+
+                String jsonRegisterationRequest = gson.toJson(requestArr);
+                NetworkAccessLayer.sendRequest(jsonRegisterationRequest);
+                               
+                ArrayList arr=new ArrayList();
+                arr.add(Codes.LEAVE_GAME_CODE);
+                System.out.println(arr);
+                NetworkAccessLayer.toServer.println(gson.toJson(arr)); 
+
+                navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
+
+            }  });
+        
+        
+        
+        
+        }
         
         
     }
@@ -232,8 +309,6 @@ public class OnlineGameController implements Initializable,Listener {
         Button button = (Button)event.getSource();
         String playerSympol = "";
         
-        //enemyUserName = "ziad2";
-        String x = "X";
         
         ArrayList<String> gameData = new ArrayList();
         gameData.add(enemyUserName);
@@ -289,7 +364,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -310,7 +385,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -333,7 +408,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -351,9 +426,21 @@ public class OnlineGameController implements Initializable,Listener {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UTILITY); 
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle(symbol);
         stage.show();
+
+      
+
+
+        stage.setX(TicTacToeClient.primaryX + (TicTacToeClient.primaryWidth - stage.getWidth()) / 2);
+        stage.setY(TicTacToeClient.primaryY + (TicTacToeClient.primaryHeight - stage.getHeight()) / 2);
+        
+        
+        
+        
+        
         
         stage.setOnCloseRequest((event)->{
             
@@ -601,63 +688,73 @@ public class OnlineGameController implements Initializable,Listener {
         RecordBtn.setText("Recording");
     }
 
-    private void playrecordBtnAction(ActionEvent event) {
-        if(!tracker.getMoves().isEmpty())
-        {
-             initializeBoardState();
-             disableBoard();
-            /// startReplayGame();
-             RecordBtn.setDisable(false);
-        }
-        
-    }
+//    private void playrecordBtnAction(ActionEvent event) {
+//        if(!tracker.getMoves().isEmpty())
+//        {
+//             initializeBoardState();
+//             disableBoard();
+//            /// startReplayGame();
+//             RecordBtn.setDisable(false);
+//        }
+//        
+//    }
 
-    @FXML
-    private void onallRecordsBtnAction(ActionEvent event) {  
-        recordFilesListBox.getChildren().clear();
-        ShowFiles();
-        
-    }
+//    private void onallRecordsBtnAction(ActionEvent event) {  
+//        recordFilesListBox.getChildren().clear();
+//        ShowFiles();
+//        
+//    }
     
     
-    private void ShowFiles ()
-    {
-        File directory = new File("src/games");
-        File[] files = directory.listFiles();
-        
-        //files = RecordsList.getRecordsFiles();
-        if(files != null)
-        {
-            
-            //file1Lable.setText(files[0].getName());
-            
-            for(File file :files)
-            {
-                counter++;
-                //System.out.println("File "+counter+ " : " +file.getName());
-                Label lable = new Label(file.getName());
-                lable.setOnMouseClicked((e)->{
-                    //System.out.println("On Clicked"+file.getName());
-                    initializeBoardState();
-                    disableBoard();
-                    RecordBtn.setDisable(false);
-                    startReplayGame(file.getName());
-                });
-                Platform.runLater(()->{
-                recordFilesListBox.getChildren().add(lable);
-                    
-                });
-            }
-        }
-    }
- private void startReplayGame(String fileName)
- {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
-    GameReplay gamereplay = new GameReplay();
-    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
-    RecordBtn.setText("Record");
-    RecordBtn.setDisable(true);
- }
+//    private void ShowFiles ()
+//    {
+//        File directory = new File("src/onlineGames");
+//        File[] files = directory.listFiles();
+//        
+//        //files = RecordsList.getRecordsFiles();
+//        if(files != null)
+//        {
+//            
+//            //file1Lable.setText(files[0].getName());
+//            
+//            for(File file :files)
+//            {
+//
+//                                //int count
+//                //System.out.println("File "+count+ " : " +file.getName());
+//                Separator separator = new Separator();
+//               Label lable = new Label(file.getName());
+//               lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//               lable.setOnMouseEntered((e)->{
+//                     lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//              
+//               });
+//               lable.setOnMouseExited((e)->{
+//                      lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//
+//               });
+//                lable.setOnMouseClicked((e)->{
+//                    initializeBoardState();
+//                    disableBoard();
+//                    RecordBtn.setDisable(false);
+//                    startReplayGame(file.getName());
+//                });
+//                Platform.runLater(()->{
+//                recordFilesListBox.getChildren().add(lable);
+//                recordFilesListBox.getChildren().add(separator);
+//                    
+//                });
+//            }
+//        }
+//    }
+// private void startReplayGame(String fileName)
+// {
+//    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/onlineGames/"+fileName);
+//    GameReplay gamereplay = new GameReplay();
+//    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+//    RecordBtn.setText("Record");
+//    RecordBtn.setDisable(true);
+// }
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
@@ -671,6 +768,10 @@ public class OnlineGameController implements Initializable,Listener {
             String button_id = (String)responseData.get(3);
             System.out.println("the Sympol : " + button_sympol);
             System.out.println("the button_id : " + button_id.toString());
+            if(isRecording)
+            {
+                tracker.recordMove(button_id, button_sympol.charAt(0));
+            }
             GridPane gridPane = (GridPane) rootPane.lookup("#gridPaneId");
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof Button) {
@@ -690,8 +791,11 @@ public class OnlineGameController implements Initializable,Listener {
                             if(checkWinner(button_sympol,"-fx-background-color: #ff6060")){
                                 try {
                                     if(button_sympol.equals("X")){
-                                        playerXScore+=1;
+                                        playerXScore+=1; 
                                         playerXScoreBtn.setText(""+playerXScore);
+                                        NetworkAccessLayer.enemyData.setScore(NetworkAccessLayer.enemyData.getScore()+1);
+                                        playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore())); 
+
                                         //initializeBoardState();
                                         playerTurnBtn.setVisible(false);
                                         newGameBtn.setVisible(true);
@@ -699,8 +803,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
-                                            isRecording = false; ///
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -711,6 +814,8 @@ public class OnlineGameController implements Initializable,Listener {
                                     else{
                                         playerOScore+=1;
                                         playerOScoreBtn.setText(""+playerOScore);
+                                        NetworkAccessLayer.enemyData.setScore(NetworkAccessLayer.enemyData.getScore()+1);
+                                        playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore()));
                                         //initializeBoardState();
                                         playerTurnBtn.setVisible(false);
                                         newGameBtn.setVisible(true);
@@ -718,7 +823,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -770,7 +875,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/");  ////add record to file
+                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();
@@ -810,8 +915,11 @@ public class OnlineGameController implements Initializable,Listener {
         }
         else if((double)responseData.get(0)==(Codes.UPDATE_PLAYER_SCORE)&&success){
             
+            
+            
             System.out.println("The score updated successfully");
-            NetworkAccessLayer.playerData.setScore(NetworkAccessLayer.playerData.getScore()+1);
+            NetworkAccessLayer.playerData.setScore(isGameEnded?NetworkAccessLayer.playerData.getScore()+1:NetworkAccessLayer.playerData.getScore()-1);
+            playerOneScore.setText("Score: "+String.valueOf(NetworkAccessLayer.playerData.getScore()));
         }
         
         else if((double)responseData.get(0)==(Codes.LEAVE_GAME_CODE)&&success){
@@ -838,7 +946,9 @@ public class OnlineGameController implements Initializable,Listener {
     }
     
     public void onClose(){
-        alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Leave?", ButtonType.YES,ButtonType.CANCEL);
+        
+        
+            alert= new Alert(Alert.AlertType.CONFIRMATION, "You Sure You Want Leave?", ButtonType.YES,ButtonType.CANCEL);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                                
@@ -850,6 +960,7 @@ public class OnlineGameController implements Initializable,Listener {
                 navigator.goToPage(TicTacToeClient.mainStage, "HomeScreen.fxml");
 
             }
+        
     }
      @Override
     public void onServerCloseResponse(boolean serverClosed) {
