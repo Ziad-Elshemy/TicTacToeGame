@@ -33,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -109,12 +110,7 @@ public class OnlineGameController implements Initializable,Listener {
     private StackPane rootPane;
     @FXML
     private Button RecordBtn;
-    @FXML
-    private Button allRecordsBtn;
-    @FXML
     private VBox recordFilesListBox;
-    @FXML
-    private Label file1Lable;
     
     String enemyUserName;
     String mySympol;
@@ -289,7 +285,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -310,7 +306,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -333,7 +329,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -601,63 +597,73 @@ public class OnlineGameController implements Initializable,Listener {
         RecordBtn.setText("Recording");
     }
 
-    private void playrecordBtnAction(ActionEvent event) {
-        if(!tracker.getMoves().isEmpty())
-        {
-             initializeBoardState();
-             disableBoard();
-            /// startReplayGame();
-             RecordBtn.setDisable(false);
-        }
-        
-    }
+//    private void playrecordBtnAction(ActionEvent event) {
+//        if(!tracker.getMoves().isEmpty())
+//        {
+//             initializeBoardState();
+//             disableBoard();
+//            /// startReplayGame();
+//             RecordBtn.setDisable(false);
+//        }
+//        
+//    }
 
-    @FXML
-    private void onallRecordsBtnAction(ActionEvent event) {  
-        recordFilesListBox.getChildren().clear();
-        ShowFiles();
-        
-    }
+//    private void onallRecordsBtnAction(ActionEvent event) {  
+//        recordFilesListBox.getChildren().clear();
+//        ShowFiles();
+//        
+//    }
     
     
-    private void ShowFiles ()
-    {
-        File directory = new File("src/games");
-        File[] files = directory.listFiles();
-        
-        //files = RecordsList.getRecordsFiles();
-        if(files != null)
-        {
-            
-            //file1Lable.setText(files[0].getName());
-            
-            for(File file :files)
-            {
-                counter++;
-                //System.out.println("File "+counter+ " : " +file.getName());
-                Label lable = new Label(file.getName());
-                lable.setOnMouseClicked((e)->{
-                    //System.out.println("On Clicked"+file.getName());
-                    initializeBoardState();
-                    disableBoard();
-                    RecordBtn.setDisable(false);
-                    startReplayGame(file.getName());
-                });
-                Platform.runLater(()->{
-                recordFilesListBox.getChildren().add(lable);
-                    
-                });
-            }
-        }
-    }
- private void startReplayGame(String fileName)
- {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
-    GameReplay gamereplay = new GameReplay();
-    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
-    RecordBtn.setText("Record");
-    RecordBtn.setDisable(true);
- }
+//    private void ShowFiles ()
+//    {
+//        File directory = new File("src/onlineGames");
+//        File[] files = directory.listFiles();
+//        
+//        //files = RecordsList.getRecordsFiles();
+//        if(files != null)
+//        {
+//            
+//            //file1Lable.setText(files[0].getName());
+//            
+//            for(File file :files)
+//            {
+//
+//                                //int count
+//                //System.out.println("File "+count+ " : " +file.getName());
+//                Separator separator = new Separator();
+//               Label lable = new Label(file.getName());
+//               lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//               lable.setOnMouseEntered((e)->{
+//                     lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//              
+//               });
+//               lable.setOnMouseExited((e)->{
+//                      lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+//
+//               });
+//                lable.setOnMouseClicked((e)->{
+//                    initializeBoardState();
+//                    disableBoard();
+//                    RecordBtn.setDisable(false);
+//                    startReplayGame(file.getName());
+//                });
+//                Platform.runLater(()->{
+//                recordFilesListBox.getChildren().add(lable);
+//                recordFilesListBox.getChildren().add(separator);
+//                    
+//                });
+//            }
+//        }
+//    }
+// private void startReplayGame(String fileName)
+// {
+//    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/onlineGames/"+fileName);
+//    GameReplay gamereplay = new GameReplay();
+//    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+//    RecordBtn.setText("Record");
+//    RecordBtn.setDisable(true);
+// }
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
@@ -671,6 +677,10 @@ public class OnlineGameController implements Initializable,Listener {
             String button_id = (String)responseData.get(3);
             System.out.println("the Sympol : " + button_sympol);
             System.out.println("the button_id : " + button_id.toString());
+            if(isRecording)
+            {
+                tracker.recordMove(button_id, button_sympol.charAt(0));
+            }
             GridPane gridPane = (GridPane) rootPane.lookup("#gridPaneId");
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof Button) {
@@ -699,8 +709,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
-                                            isRecording = false; ///
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -718,7 +727,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/games/");  ////add record to file
+                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -770,7 +779,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/");  ////add record to file
+                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();

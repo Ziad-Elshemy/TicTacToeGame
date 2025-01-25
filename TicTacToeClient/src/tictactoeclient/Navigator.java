@@ -215,7 +215,7 @@ public class Navigator {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Scene page1Scene = new Scene(loader.load());
             EditProfileController editController = loader.getController();
-            editController.setData(player);
+            //editController.setData(player);
             // Get current stage and set new scene (Page 1) 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(page1Scene);
@@ -254,6 +254,7 @@ public class Navigator {
         }
     }
    
+
     public void luanchInvitation(String targetPage,String pageTitle,PlayerDto sender){
         
         try {

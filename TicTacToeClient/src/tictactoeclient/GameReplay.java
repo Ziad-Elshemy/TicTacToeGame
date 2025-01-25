@@ -6,29 +6,52 @@
 package tictactoeclient;
 
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import tictactoeclient.GameTracker.Move;
+import utilities.Colors;
 
 /**
  *
  * @author TBARAK
  */
 public class GameReplay {
+    private Thread gameReplayThread = null ;
+    
+    public void stopThread()
+    {
+        if(gameReplayThread != null )
+          {
+              gameReplayThread.stop();
+          }
+        
+    }
 
       void replayGame(ArrayList<Move> moves,Button btn1,Button btn2,Button btn3,Button btn4,Button btn5,Button btn6,Button btn7,Button btn8 ,Button btn9)
       {
+          if(gameReplayThread != null )
+          {
+              gameReplayThread.stop();
+          }
       
-      
-    new Thread(() -> {
+           gameReplayThread = new Thread(() -> {
+        
         try {
                  Thread.sleep(700);
                  for (GameTracker.Move move : moves) {
                 String buttonId = move.getButton(); 
                 char player = move.getPlayer(); 
                 Button button = getButtonById(buttonId,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
-                //System.out.println("button= "+button+" Player= "+player);
-                javafx.application.Platform.runLater(() -> {
-                    button.setText(String.valueOf(player));  
+                Platform.runLater(() -> {
+                    button.setText(String.valueOf(player));
+                    if(player=='X')
+                    {
+                        button.setTextFill(Colors.X_TEXT);
+                    }
+                    else
+                    {
+                        button.setTextFill(Colors.O_TEXT);
+                    }
                 });
 
                 Thread.sleep(700);  // 
@@ -36,7 +59,8 @@ public class GameReplay {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }).start();
+    });
+    gameReplayThread.start();
 }
   private Button getButtonById(String buttonId,Button btn1,Button btn2,Button btn3,Button btn4,Button btn5,Button btn6,Button btn7,Button btn8 ,Button btn9) {
     Button button = null;

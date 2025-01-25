@@ -28,10 +28,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -56,6 +60,8 @@ public class GameScreenController implements Initializable {
     
     GameTracker tracker; /// record
     boolean isRecording;   //// record
+    GameReplay gamereplay;
+    
 
     
     
@@ -107,6 +113,8 @@ public class GameScreenController implements Initializable {
     private VBox recordFilesListBox;
     @FXML
     private Label file1Lable;
+    @FXML
+    private ScrollPane scrollPane;
     
     @FXML
     private ImageView playerTwoImage;
@@ -121,6 +129,14 @@ public class GameScreenController implements Initializable {
     private Text playerOneUsername;
     
     static Stage stageOfNames;
+    @FXML
+    private AnchorPane onExitButton;
+    @FXML
+    private Circle avatar;
+    @FXML
+    private Text username1;
+    @FXML
+    private Circle avatar1;
     
 
     /**
@@ -145,6 +161,7 @@ public class GameScreenController implements Initializable {
         disableBoard();
         counter = 0;
         isRecording = false; //record
+        gamereplay = new GameReplay();
         
                 
         Platform.runLater(()->{
@@ -186,6 +203,7 @@ public class GameScreenController implements Initializable {
     }
 
     @FXML
+    ////it must clear draw after Record Shown
     private void newGameBtnAction(ActionEvent event) {
         enableBoard();
         isGameEnded = false;
@@ -194,9 +212,11 @@ public class GameScreenController implements Initializable {
         playerTurnBtn.setText("X-TURN");
         playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         initializeBoardState();
-        
         RecordBtn.setDisable(false);////record
         tracker.clearMoves();
+        recordFilesListBox.setDisable(true);
+        allRecordsBtn.setDisable(true);
+        gamereplay.stopThread();
     }
 
 
@@ -245,11 +265,13 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/games/","");  ////add record to file
                  isRecording = false; ///
             }
+            allRecordsBtn.setDisable(false);
             //disableBoard();
             counter=0;
+            
 
             showVideo(Strings.winnerVideoPath, !playerOneUsername.equals("X Player")?playerOneUsername.getText()+" Win":"Player X win");
             //showVideo(Strings.loserVideoPath, "O - loser"); 
@@ -263,9 +285,10 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/games/","");  ////add record to file
                  isRecording = false; ///
             }
+            allRecordsBtn.setDisable(false);
             //disableBoard();
             counter=0;
             // check for draw
@@ -285,9 +308,10 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/");  ////add record to file
+                 tracker.saveToFile("src/games/","");  ////add record to file
                  isRecording = false; ///
             }
+            allRecordsBtn.setDisable(false);
             //disableBoard();
             counter=0;
             showVideo(Strings.drawVideoPath, "Draw");
@@ -359,26 +383,26 @@ public class GameScreenController implements Initializable {
     }  
     
     private void disableBoard(){
-        btn1.setDisable(true);
-        btn2.setDisable(true);
-        btn3.setDisable(true);
-        btn4.setDisable(true);
-        btn5.setDisable(true);
-        btn6.setDisable(true);
-        btn7.setDisable(true);
-        btn8.setDisable(true);
-        btn9.setDisable(true);
+        btn1.setMouseTransparent(true);
+        btn2.setMouseTransparent(true);
+        btn3.setMouseTransparent(true);
+        btn4.setMouseTransparent(true);
+        btn5.setMouseTransparent(true);
+        btn6.setMouseTransparent(true);
+        btn7.setMouseTransparent(true);
+        btn8.setMouseTransparent(true);
+        btn9.setMouseTransparent(true);
     }
     private void enableBoard(){
-        btn1.setDisable(false);
-        btn2.setDisable(false);
-        btn3.setDisable(false);
-        btn4.setDisable(false);
-        btn5.setDisable(false);
-        btn6.setDisable(false);
-        btn7.setDisable(false);
-        btn8.setDisable(false);
-        btn9.setDisable(false);
+        btn1.setMouseTransparent(false);
+        btn2.setMouseTransparent(false);
+        btn3.setMouseTransparent(false);
+        btn4.setMouseTransparent(false);
+        btn5.setMouseTransparent(false);
+        btn6.setMouseTransparent(false);
+        btn7.setMouseTransparent(false);
+        btn8.setMouseTransparent(false);
+        btn9.setMouseTransparent(false);
     }
     private void stopEditBoard(){
         btn1.setDisable(false);
@@ -528,20 +552,11 @@ public class GameScreenController implements Initializable {
         RecordBtn.setText("Recording");
     }
 
-    private void playrecordBtnAction(ActionEvent event) {
-        if(!tracker.getMoves().isEmpty())
-        {
-             initializeBoardState();
-             disableBoard();
-            /// startReplayGame();
-             RecordBtn.setDisable(false);
-        }
-        
-    }
 
     @FXML
     private void onallRecordsBtnAction(ActionEvent event) {  
         recordFilesListBox.getChildren().clear();
+        recordFilesListBox.setDisable(false);
         ShowFiles();
         
     }
@@ -560,11 +575,20 @@ public class GameScreenController implements Initializable {
             
             for(File file :files)
             {
-                counter++;
-                //System.out.println("File "+counter+ " : " +file.getName());
-                Label lable = new Label(file.getName());
+                //int count
+                //System.out.println("File "+count+ " : " +file.getName());
+                Separator separator = new Separator();
+               Label lable = new Label(file.getName());
+               lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+               lable.setOnMouseEntered((e)->{
+                     lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+              
+               });
+               lable.setOnMouseExited((e)->{
+                      lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+
+               });
                 lable.setOnMouseClicked((e)->{
-                    //System.out.println("On Clicked"+file.getName());
                     initializeBoardState();
                     disableBoard();
                     RecordBtn.setDisable(false);
@@ -572,18 +596,22 @@ public class GameScreenController implements Initializable {
                 });
                 Platform.runLater(()->{
                 recordFilesListBox.getChildren().add(lable);
+                recordFilesListBox.getChildren().add(separator);
                     
                 });
             }
         }
     }
+    
  private void startReplayGame(String fileName)
  {
-    ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
-    GameReplay gamereplay = new GameReplay();
-    gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
-    RecordBtn.setText("Record");
-    RecordBtn.setDisable(true);
+
+        ArrayList<GameTracker.Move> moves = RecordFile.readFromFile("src/games/"+fileName);
+        
+        gamereplay.replayGame(moves,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
+        RecordBtn.setText("Record");
+        RecordBtn.setDisable(true);
+    
  }
 
 }
