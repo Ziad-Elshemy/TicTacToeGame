@@ -265,7 +265,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/","");  ////add record to file
+                 tracker.saveToFile("src/games/","local");  ////add record to file
                  isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);
@@ -285,7 +285,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/","");  ////add record to file
+                 tracker.saveToFile("src/games/","local");  ////add record to file
                  isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);
@@ -308,7 +308,7 @@ public class GameScreenController implements Initializable {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/games/","");  ////add record to file
+                 tracker.saveToFile("src/games/","local");  ////add record to file
                  isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);

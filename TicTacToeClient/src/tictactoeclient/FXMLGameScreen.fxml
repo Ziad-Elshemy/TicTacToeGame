@@ -209,7 +209,7 @@
                   <Insets bottom="180.0" />
                </GridPane.margin>
             </Group>
-            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <content>
                         <VBox fx:id="recordFilesListBox" maxHeight="600.0" minWidth="243.0" prefHeight="360.0" 
                               spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">  
