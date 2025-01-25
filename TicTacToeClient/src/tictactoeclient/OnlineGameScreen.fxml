@@ -5,7 +5,6 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -38,7 +37,7 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Text>
-            <Text fx:id="username1" fill="#ffa62b" layoutX="243.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VS" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+            <Text fx:id="username1" fill="#ffa62b" layoutX="243.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VS" textAlignment="CENTER" wrappingWidth="173.05956482887268">
                <font>
                   <Font name="Arial Bold" size="48.0" />
                </font>
@@ -54,6 +53,16 @@
                   <Image url="@../Images/pc.png" />
                </image>
             </ImageView>
+            <Text fx:id="playerOneScore" fill="#e1d8d8" layoutX="244.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 0" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="playerTwoScore" fill="#e1d8d8" layoutX="243.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 0" textAlignment="CENTER" wrappingWidth="173.05956482887268">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <GridPane fx:id="gridPaneId">
@@ -80,11 +89,6 @@
                </cursor>
                <children>
                   <Button fx:id="RecordBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#RecordBtnAction" prefHeight="69.0" prefWidth="197.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #c9f9ff); -fx-background-radius: 10;" text="Record" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="25.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="allRecordsBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="108.0" mnemonicParsing="false" onAction="#onallRecordsBtnAction" prefHeight="69.0" prefWidth="197.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #c9f9ff); -fx-background-radius: 10;" text=" All Records" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="25.0" />
                      </font>
@@ -209,27 +213,6 @@
                   <Insets bottom="180.0" />
                </GridPane.margin>
             </Group>
-            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
-               <content>
-                  <VBox fx:id="recordFilesListBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="243.0" prefHeight="360.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <children>
-                        <Label fx:id="file1Lable" alignment="TOP_LEFT" textFill="#ffa62b" />
-                     </children>
-                  </VBox>
-               </content>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets left="200.0" top="200.0" />
-               </GridPane.margin>
-            </ScrollPane>
          </children>
       </GridPane>
    </children>

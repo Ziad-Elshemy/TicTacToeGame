@@ -53,7 +53,7 @@ public abstract class NetworkAccessLayer
                             String serverResponse = fromServer.readLine();
                             System.out.println("server respone data is :"+serverResponse);
                             ArrayList responseData = gsonFile.fromJson(serverResponse, ArrayList.class);
-                            double code = (double) responseData.get(0);
+                            int code = ((Double) responseData.get(0)).intValue();
                             if(code == Codes.REGESTER_CODE)
                             {
                                 registerationResponse(responseData);
@@ -62,14 +62,10 @@ public abstract class NetworkAccessLayer
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
-                                System.out.println("the edit response data: "+ responseData);
+                               // System.out.println("the edit response data: "+ responseData);
                                 editProfileRespond(responseData);
                             }
-                            else if(code == Codes.SELECT_DATA_FOR_EDIT_PROFILE_CODE)
-                            {
-                                selectDatatForEditProfileRespond(responseData);
-                            }
-                            
+
                             else if(code == Codes.SEND_INVITATION_CODE)
                             {
                                 System.out.println("the invite response data: "+ responseData);
@@ -93,12 +89,25 @@ public abstract class NetworkAccessLayer
                                 System.out.println("the PLAY_AGAIN_CODE response data: "+ responseData);
                                 recievePlayOnBoardResponse(responseData);
                             }
+                            else if(code == Codes.UPDATE_PLAYER_SCORE)
+                            {                                
+                                System.out.println("the UPDATE_PLAYER_SCORE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
+                            else if(code == Codes.LEAVE_GAME_CODE)
+                            {                                
+                                System.out.println("the LEAVE_GAME_CODE response data: "+ responseData);
+                                recievePlayOnBoardResponse(responseData);
+                            }
                             else if(code == Codes.LOGIN_CODE){
                                     LoginResponse(responseData);
                             
                             } 
                             
-                            
+                            else if(code == Codes.DELETE_ACCOUNT_CODE)
+                            {
+                                deleteAccountResponse(responseData);
+                            }
                             if(code == Codes.GET_ONLINE_PLAYERS){
                                 
                                 
@@ -161,26 +170,7 @@ public abstract class NetworkAccessLayer
              myRef.onServerResponse(false,responseData);
         }
     }
-    public static void selectDatatForEditProfileRespond(ArrayList responseData)
-    {
-        System.out.println("selectDatatForEditProfileRespond: "+responseData.get(1));
-        //to convert from linkedTreeMap to PlayerDto
-        PlayerDto player = gsonFile.fromJson(responseData.get(1).toString(), PlayerDto.class);
-        System.out.println("player : "+responseData);
 
-        if (responseData !=null) 
-        {
-            myRef.onServerResponse(true,responseData);
-            System.out.println("select For Edit True");
-           // System.out.println("OnNetworkAccess SelectForEdit : "+player.getName());
-        }
-        else
-        {
-             myRef.onServerResponse(false,responseData);
-             System.err.println("select For Edit FALSE");
-        }
-    }
-    
     public static void recieveInvitationResponse(ArrayList responseData){
         myRef.onServerResponse(true, responseData);
         
@@ -213,7 +203,7 @@ public abstract class NetworkAccessLayer
     public static void recievePlayOnBoardResponse(ArrayList responseData){
         double isAccepted = (double) responseData.get(0);
         System.out.println("recievePlayOnBoardResponse: "+ responseData.toString());
-        if (isAccepted == Codes.SEND_PLAY_ON_BOARD_CODE || isAccepted == Codes.PLAY_AGAIN_CODE)
+        if (isAccepted == Codes.SEND_PLAY_ON_BOARD_CODE || isAccepted == Codes.PLAY_AGAIN_CODE || isAccepted == Codes.UPDATE_PLAYER_SCORE || isAccepted == Codes.LEAVE_GAME_CODE)
         {
             myRef.onServerResponse(true,responseData);
         }
@@ -223,7 +213,7 @@ public abstract class NetworkAccessLayer
         }
         
     }
-    
+       
     public static void LoginResponse(ArrayList responseData) {
        
             
@@ -288,4 +278,16 @@ public abstract class NetworkAccessLayer
        });
 
 }
+    public static void deleteAccountResponse(ArrayList responseData)
+    {
+        double deleteResult = (double) responseData.get(1);
+        if(deleteResult==1)
+        {
+            System.out.println("Network Access Lyer Delet"+deleteResult);
+            myRef.onServerResponse(true, responseData);
+        }
+        else {
+            myRef.onServerResponse(false, responseData);
+        }
+    }
 }

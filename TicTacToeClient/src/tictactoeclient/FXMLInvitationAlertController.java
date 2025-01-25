@@ -25,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
-import static tictactoeclient.TicTacToeClient.mediaPlayer;
 import utilities.Codes;
 import utilities.Strings;
 
@@ -156,8 +155,8 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
     private void initMedia() {
         media = new Media(new File(Strings.alarmMusic).toURI().toString());
         alarmMediaPlayer =new MediaPlayer(media);
-        alarmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        alarmMediaPlayer.volumeProperty().set(0.25);
+        //alarmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        //alarmMediaPlayer.volumeProperty().set(0.25);
         alarmMediaPlayer.play();
     }
     

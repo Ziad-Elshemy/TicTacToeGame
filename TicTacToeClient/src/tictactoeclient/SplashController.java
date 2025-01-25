@@ -10,15 +10,11 @@ import javafx.util.Duration;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -48,21 +44,21 @@ public class SplashController implements Initializable {
 //        timeline.setCycleCount(100); // 100 steps (10 seconds total)
 
 // Duration of the entire animation
-    double totalDuration = 0.5; // 5 seconds
-    int steps = 100; // Number of steps in the animation
-    
-    // Timeline to gradually fill the progress bar
-    Timeline timeline = new Timeline();
-    
-    // Add keyframes to fill the progress bar over 5 seconds
-    for (int i = 0; i < steps; i++) {
-        double progressIncrement = 1.0 / steps; // Progress increment per step
-        KeyFrame keyFrame = new KeyFrame(
-            Duration.seconds(i * (totalDuration / steps)), 
-            e -> progressBar.setProgress(progressBar.getProgress() + progressIncrement)
-        );
-        timeline.getKeyFrames().add(keyFrame);
-    }
+        double totalDuration = 0.5; // 5 seconds
+        int steps = 100; // Number of steps in the animation
+
+        // Timeline to gradually fill the progress bar
+        Timeline timeline = new Timeline();
+
+        // Add keyframes to fill the progress bar over 5 seconds
+        for (int i = 0; i < steps; i++) {
+            double progressIncrement = 1.0 / steps; // Progress increment per step
+            KeyFrame keyFrame = new KeyFrame(
+                    Duration.seconds(i * (totalDuration / steps)),
+                    e -> progressBar.setProgress(progressBar.getProgress() + progressIncrement)
+            );
+            timeline.getKeyFrames().add(keyFrame);
+        }
 
         // After loading, switch to main page
         timeline.setOnFinished(e -> {
@@ -77,9 +73,7 @@ public class SplashController implements Initializable {
         });
 
         timeline.play();
-    
-    }    
 
+    }
 
-    
 }

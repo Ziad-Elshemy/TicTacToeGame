@@ -33,6 +33,8 @@ public class EditProfileController implements Initializable ,Listener{
     Navigator navigator; 
     Gson gson;
     PlayerDto player;
+    Alert alert;
+    ActionEvent eventForEdit;
 
     @FXML
     private Circle avatar;
@@ -59,7 +61,7 @@ public class EditProfileController implements Initializable ,Listener{
     @FXML
     private Button muteBtn;
     @FXML
-    private Text passwordLable;
+    private Button deletAccountButton;
 
     /**
      * Initializes the controller class.
@@ -72,6 +74,11 @@ public class EditProfileController implements Initializable ,Listener{
         navigator=new Navigator();
         gson = new Gson();
         player = new PlayerDto();
+        
+        String score1 = String.valueOf(NetworkAccessLayer.playerData.getScore()); // primitive int
+        username.setText(NetworkAccessLayer.playerData.getName());
+        score.setText(score1);
+        userNameField.setText(NetworkAccessLayer.playerData.getUserName());
     }    
 
     @FXML
@@ -84,11 +91,12 @@ public class EditProfileController implements Initializable ,Listener{
         requestArrayList.add(gson.toJson(player));
         String jsonEditProfileRequest = gson.toJson(requestArrayList);
         NetworkAccessLayer.sendRequest(jsonEditProfileRequest);
-        System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
+        //System.out.println("Json Sent From EditProfile"+jsonEditProfileRequest);
     }
 
     @FXML
     private void onSeeYourRecordsButtonClicked(ActionEvent event) {
+        navigator.goToPage(event, "OnlineGamesRecords.fxml");
     }
 
     @FXML
@@ -126,34 +134,61 @@ public class EditProfileController implements Initializable ,Listener{
 
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
-        if (success)
+        System.out.println("Responce on Edit Page"+responseData);
+        if ((double)responseData.get(0) ==Codes.CHANGE_PASSWORD_CODE && success)
         {
-            //player = gson.fromJson(raquestData.get(1).toString(), PlayerDto.class);
-            //System.out.println("ON EditPage : "+player.getName());
+            
             System.out.println("Updated");
             Platform.runLater(()->{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
+             alert = new Alert(Alert.AlertType.INFORMATION, "Password Updated");
             alert.showAndWait();
             });
            
         }
-        else
+        else if ((double)responseData.get(0)==Codes.CHANGE_PASSWORD_CODE && !success)
         {
             System.err.println("NotUPdataed");
             Platform.runLater(()->{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
+            alert = new Alert(Alert.AlertType.ERROR, "UserName not Found");
             alert.showAndWait();
             });
         }
-    }
-    public void setData(PlayerDto player)
-    {
+        else if((double)responseData.get(0)==(double)Codes.DELETE_ACCOUNT_CODE && success)
+        {  System.out.println("NAvigate To Login");
+            Platform.runLater(()->{
+            navigator.goToPage(eventForEdit, "LoginScreen.fxml");
+              
+           });
+            
+        }
         
-        String score1 = String.valueOf(player.getScore()); // primitive int
-        username.setText(player.getName());
-        score.setText(score1);
-        userNameField.setText(player.getUserName());
-       System.out.println("Fun to Set Name :"+player.getScore());
+        else if((double)responseData.get(0)==Codes.DELETE_ACCOUNT_CODE && !success)
+        {
+            
+            Platform.runLater(()->{
+                 Alert myAlert = new Alert(Alert.AlertType.INFORMATION);
+                 myAlert.setContentText("Can't Delete Your Account");
+                 myAlert.showAndWait();
+              });
+        }
+        
+        
+    }
+
+    @FXML
+    private void onDeletAccountButtonClicked(ActionEvent event) {
+        
+       // NetworkAccessLayer.setRef(this);
+        eventForEdit = event;
+        player.setUserName(userNameField.getText());
+        ArrayList requestArrayList = new ArrayList();
+        requestArrayList.add(Codes.DELETE_ACCOUNT_CODE);
+        requestArrayList.add(gson.toJson(player));
+        String jsonDeleteAccountRequest = gson.toJson(requestArrayList);
+        NetworkAccessLayer.sendRequest(jsonDeleteAccountRequest);
+        
+       // navigator.goToPage(eventForEdit, "LoginScreen.fxml");
+        
     }
 
     

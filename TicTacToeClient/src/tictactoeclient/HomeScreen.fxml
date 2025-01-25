@@ -48,7 +48,7 @@
                                     <Circle fx:id="onlineCircle" fill="DODGERBLUE" layoutX="220.0" layoutY="111.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #008000;" />
                                     <Text fx:id="username" layoutX="127.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esraa Mosaad" textAlignment="CENTER" wrappingWidth="138.0595703125">
                                        <font>
-                                          <Font name="Arial" size="20.0" />
+                                          <Font name="Arial Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="106.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Players" textAlignment="CENTER" wrappingWidth="173.0595703125">
@@ -58,7 +58,7 @@
                                     </Text>
                                     <Text fx:id="score" fill="#000000a1" layoutX="135.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score : 100" textAlignment="CENTER" wrappingWidth="116.0595703125">
                                        <font>
-                                          <Font name="Arial" size="18.0" />
+                                          <Font name="Arial Bold" size="18.0" />
                                        </font>
                                     </Text>
                                     <AnchorPane fx:id="anchorPane" layoutX="3.0" layoutY="221.0" prefHeight="62.0" prefWidth="386.0" />
