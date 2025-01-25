@@ -6,6 +6,7 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,10 +14,8 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.media.Media;
@@ -25,7 +24,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
-import static tictactoeclient.FXMLInvitationAlertController.alarmMediaPlayer;
 import utilities.Strings;
 
 /**
@@ -122,11 +120,18 @@ public class FXMLWaitingAlertController implements Initializable,Listener {
     @Override
     public void onServerResponse(boolean success, ArrayList responseData) {
         System.out.println("hi from waiting alarm data: " + responseData.toString());
-        if(success){
-            Platform.runLater(()->{
-                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",responseData.get(2).toString(),"X");
+        if(success){           
+        Object result = responseData.get(2);
+
+
+        if (result instanceof LinkedTreeMap) {
+            String jsonResult = gson.toJson(result); 
+              Platform.runLater(()->{
+                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",gson.fromJson(jsonResult, PlayerDto.class),"X");
                 closeAlert();
             });
+        }
+          
             
         }else{
             Platform.runLater(()->{

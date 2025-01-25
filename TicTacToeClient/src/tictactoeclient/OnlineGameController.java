@@ -31,11 +31,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
@@ -122,18 +125,37 @@ public class OnlineGameController implements Initializable,Listener {
     private Label playerXNameLabel;
     @FXML
     private Label playerONameLabel;
+    
+    @FXML
+    private Text playerOneUsername;
+    
+    @FXML
+    private Text playerTwoUsername;
+
+    @FXML
+    private ImageView playerTwoImage;
+    
+    @FXML
+    private ImageView playerOneImage;
+    
+    String nameOfCurrenyPlayer;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //exitBtn.setStyle("-fx-background-color: linear-gradient(from 100% 0% to 0% 0%, #CC8282, #EDF6F9);");
+        
+        playerOneUsername.setText(NetworkAccessLayer.playerData.getUserName());
+        playerTwoUsername.setText(NetworkAccessLayer.enemyData.getUserName());
+        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerTwoImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+
+
         NetworkAccessLayer.setRef(this);
         gson = new Gson();
         
-        tracker = new GameTracker();  // record
+        tracker = new GameTracker();  
         
         navigator = new Navigator();
         playerXScore = 0;
@@ -153,7 +175,6 @@ public class OnlineGameController implements Initializable,Listener {
         tracker.clearMoves();
         
         initializeBoardState();
-        //disableBoard();
         counter = 0;
         isRecording = false; //record
     }    
@@ -210,8 +231,6 @@ public class OnlineGameController implements Initializable,Listener {
         Button button = (Button)event.getSource();
         String playerSympol = "";
         
-        //enemyUserName = "ziad2";
-        String x = "X";
         
         ArrayList<String> gameData = new ArrayList();
         gameData.add(enemyUserName);
@@ -640,6 +659,7 @@ public class OnlineGameController implements Initializable,Listener {
             RecordBtn.setDisable(true);
             enableMouseClick();
             System.out.println("hi from onlineGame response data: " + responseData.toString());
+             playerTurnBtn.setText(responseData.get(1).toString());
             System.out.println("sympol to be added : " + responseData.get(2).toString());
             String button_sympol = (String)responseData.get(2);
             String button_id = (String)responseData.get(3);

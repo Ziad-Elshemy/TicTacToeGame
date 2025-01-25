@@ -107,7 +107,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
         stage.close();
         Platform.runLater(()->{
             System.out.println("naviigate the enemy: "+senderPlayer.getUserName());
-            navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer.getUserName(),"O");
+            navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer,"O");
         });
         
         System.out.println("can't reach here?");
@@ -116,7 +116,6 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
     @FXML
     private void rejectBtnAction(ActionEvent event) {
         
-        senderPlayer.setUserName("ziad1");
         ArrayList requestArr = new ArrayList();
         requestArr.add(Codes.INVITATION_REPLY_CODE);
         requestArr.add(0); // for reject
@@ -144,9 +143,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
 
         timeline.setCycleCount(150); 
         timeline.setOnFinished(event -> {
-            
-            
-            
+
             System.out.println("Time expired, closing stage...");
             alarmMediaPlayer.pause();
             TicTacToeClient.mediaPlayer.play();
@@ -180,7 +177,7 @@ public class FXMLInvitationAlertController implements Initializable,Listener {
             System.out.println("hi from invitation alarm data: " + responseData.toString());
             Platform.runLater(()->{
                 closeAlert();
-                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer.getUserName(),"O");
+                navigator.luanchOnlineGame(TicTacToeClient.mainStage, "OnlineGameScreen.fxml",senderPlayer,"O");
                 
              });
         }else{

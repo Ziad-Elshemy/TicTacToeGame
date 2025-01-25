@@ -361,8 +361,9 @@ public class HomeScreenController implements Initializable ,Listener {
         System.out.println("testttt "+ responseData.toString());
         System.out.println("show the invitation");
         Object result=responseData.get(1);
-        PlayerDto player=null;
         String jsonResult=gson.toJson(result);
+        
+        NetworkAccessLayer.enemyData=gson.fromJson(jsonResult, PlayerDto.class);
             
         Platform.runLater(()->{
           

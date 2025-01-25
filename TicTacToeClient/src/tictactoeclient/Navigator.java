@@ -152,7 +152,7 @@ public class Navigator {
       
     }
     
-    public void luanchOnlineGame(Stage stage, String targetPage, String enemy_username, String Sympol){
+    public void luanchOnlineGame(Stage stage, String targetPage, PlayerDto enemy, String Sympol){
         
         try {
             System.out.println("You clicked me!");
@@ -163,7 +163,7 @@ public class Navigator {
             System.out.println("FXML loaded successfully");
             
             OnlineGameController controller = loader.getController();
-            controller.setEnemyUsername(enemy_username);
+            controller.setEnemyUsername(enemy.getUserName());
             controller.setMySympol(Sympol);
             
             // Get current stage and set new scene (Page 1) 
