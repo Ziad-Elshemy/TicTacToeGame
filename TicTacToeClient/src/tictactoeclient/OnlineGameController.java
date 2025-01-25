@@ -285,7 +285,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -306,7 +306,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -329,7 +329,7 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                  isRecording = false; ///
             }
             //disableBoard();
@@ -709,7 +709,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -727,7 +727,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -779,7 +779,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
+                                        tracker.saveToFile("src/games/",enemyUserName);  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();

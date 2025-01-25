@@ -16,7 +16,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #16697A;">
          <children>
-            <ScrollPane prefHeight="872.0" prefWidth="1459.0" style="-fx-background-color: #16697A;">
+            <ScrollPane prefHeight="872.0" prefWidth="1459.0" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background-color: #16697A;">
                <content>
                   <AnchorPane prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;">
                      <children>
@@ -35,7 +35,7 @@
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <ScrollPane layoutX="825.0" layoutY="70.0" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
+                        <ScrollPane layoutX="825.0" layoutY="70.0" hbarPolicy="NEVER" vbarPolicy="NEVER" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
                            <content>
                               <VBox fx:id="vBox" prefHeight="773.0" prefWidth="386.0" style="-fx-background-color: White; -fx-background-radius: 25;">
                                  <children>

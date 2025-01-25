@@ -27,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import onlineplaying.NetworkAccessLayer;
 import static tictactoeclient.LoginScreenController.stageOfNames;
 import utilities.Strings;
 
@@ -161,8 +162,11 @@ public class VsComputerSceneController implements Initializable {
     @FXML
     void onExitButton(ActionEvent event) {
      
-      
-        navigator.goToPage(event, "LoginScreen.fxml");
+      if(NetworkAccessLayer.mySocket == null){
+            navigator.goToPage(event, "LoginScreen.fxml");
+        }else{
+            navigator.goToPage(event, "HomeScreen.fxml");
+        }
     }
 
     @FXML

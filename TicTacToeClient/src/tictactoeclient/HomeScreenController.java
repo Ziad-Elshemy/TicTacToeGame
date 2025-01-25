@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -76,6 +77,8 @@ public class HomeScreenController implements Initializable ,Listener {
     
     ActionEvent eventforEdit;
     Alert alert;
+    @FXML
+    private VBox vBox;
 
 
     @FXML
