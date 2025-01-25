@@ -46,6 +46,8 @@ public class Navigator {
             stage.setScene(page1Scene);
             stage.show();
             onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
+       
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,6 +65,8 @@ public class Navigator {
             stage.show();
 
             onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
+    
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -85,6 +89,8 @@ public class Navigator {
             stage.show();
 
             onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
+
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,6 +111,8 @@ public class Navigator {
             stage.show();
 
             onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
+   
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,6 +168,17 @@ public class Navigator {
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void setPositionOfTheStage(Stage stage){
+        
+        stage.xProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryX = newVal.doubleValue());
+        stage.yProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryY = newVal.doubleValue());
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryWidth = newVal.doubleValue());
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryHeight = newVal.doubleValue());
+    
+    
+    
     }
 
     public void onPlayerLogout(Stage stage) {

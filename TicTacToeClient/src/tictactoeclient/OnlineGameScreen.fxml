@@ -213,6 +213,18 @@
                   <Insets bottom="180.0" />
                </GridPane.margin>
             </Group>
+            <Button fx:id="muteBtn" mnemonicParsing="false" onAction="#onMuteBtnClicked" prefHeight="122.0" prefWidth="312.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="TRANSPARENT" GridPane.rowIndex="6">
+               <padding>
+                  <Insets bottom="-60.0" left="280.0" />
+               </padding>
+               <graphic>
+                  <ImageView fx:id="muteImg" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/volume.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </GridPane>
    </children>

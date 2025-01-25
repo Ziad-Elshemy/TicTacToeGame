@@ -35,6 +35,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import onlineplaying.NetworkAccessLayer;
 import utilities.Codes;
 import utilities.Strings;
@@ -132,6 +133,9 @@ public class OnlineGameController implements Initializable,Listener {
     @FXML
     private Text playerTwoScore;
     
+    @FXML
+    private ImageView muteImg;
+    
     String nameOfCurrenyPlayer;
 
     /**
@@ -173,7 +177,34 @@ public class OnlineGameController implements Initializable,Listener {
         initializeBoardState();
         counter = 0;
         isRecording = false; //record
-    }    
+        
+        if (!TicTacToeClient.isMuted) {
+
+            muteImg.setImage(new Image("file:src/Images/volume.png"));
+
+        } else {
+
+            muteImg.setImage(new Image("file:src/Images/mute.png"));
+
+        }
+    }   
+    
+     @FXML
+    void onMuteBtnClicked(ActionEvent event) {
+
+        if (TicTacToeClient.isMuted) {
+            TicTacToeClient.mediaPlayer.play();
+            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            TicTacToeClient.isMuted = false;
+
+        } else {
+            TicTacToeClient.mediaPlayer.pause();
+            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            TicTacToeClient.isMuted = true;
+
+        }
+
+    }
 
     public void setEnemyUsername(String enemyUsername){
         this.enemyUserName = enemyUsername;
@@ -395,9 +426,21 @@ public class OnlineGameController implements Initializable,Listener {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UTILITY); 
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle(symbol);
         stage.show();
+
+      
+
+
+        stage.setX(TicTacToeClient.primaryX + (TicTacToeClient.primaryWidth - stage.getWidth()) / 2);
+        stage.setY(TicTacToeClient.primaryY + (TicTacToeClient.primaryHeight - stage.getHeight()) / 2);
+        
+        
+        
+        
+        
         
         stage.setOnCloseRequest((event)->{
             
