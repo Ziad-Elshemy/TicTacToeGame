@@ -292,6 +292,9 @@ public class OnlineGameController implements Initializable,Listener {
         initializeBoardState();
         
         RecordBtn.setDisable(false);////record
+        if(!isRecording){
+            RecordBtn.setText("Record");
+        }
         tracker.clearMoves();
         
         //send to the other player
@@ -364,7 +367,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -385,7 +389,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -408,7 +413,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -803,7 +809,8 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                                            isRecording = false;
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -823,7 +830,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -875,7 +882,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
+                                        tracker.saveToFile("src/games/",enemyUserName);  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();
@@ -894,7 +901,13 @@ public class OnlineGameController implements Initializable,Listener {
             
             
         }else if((double)responseData.get(0)==(Codes.PLAY_AGAIN_CODE)&&success){
+            
             Platform.runLater(()->{
+                
+                RecordBtn.setDisable(false);////record
+                RecordBtn.setText("Record");
+                tracker.clearMoves();
+                
                 if(counter==0 && mySympol.equals("O")){
                 disableMouseClick();
                 }else{

@@ -74,7 +74,7 @@
           <RowConstraints maxHeight="328.0" minHeight="0.0" prefHeight="300.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="300.0" prefHeight="400.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="300.0" prefHeight="400.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -91,7 +91,7 @@
                   </Button>
                </children>
                <GridPane.margin>
-                  <Insets left="200.0" />
+                  <Insets left="180.0" top="70.0" />
                </GridPane.margin>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -209,10 +209,9 @@
                   <Insets bottom="180.0" />
                </GridPane.margin>
             </Group>
-            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="383.0" style="-fx-background-color: #16697A; -fx-background-radius: 20;" vbarPolicy="NEVER" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <content>
-                        <VBox fx:id="recordFilesListBox" maxHeight="600.0" minWidth="243.0" prefHeight="360.0" 
-                              spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">  
+                        <VBox fx:id="recordFilesListBox" maxHeight="600.0" minWidth="243.0" prefHeight="360.0" spacing="10.0" style="-fx-background-color: #16697A; -fx-background-radius: 0;">  
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
@@ -228,7 +227,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
                <GridPane.margin>
-                  <Insets left="200.0" top="200.0" />
+                  <Insets left="140.0" top="200.0" />
                </GridPane.margin>
             </ScrollPane>
          </children>

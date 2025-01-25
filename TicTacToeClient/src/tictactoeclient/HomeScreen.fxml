@@ -16,7 +16,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;">
          <children>
-            <ScrollPane prefHeight="872.0" prefWidth="1459.0" style="-fx-background-color: #16697A;">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="872.0" prefWidth="1459.0" style="-fx-background-color: #16697A;" vbarPolicy="NEVER">
                <content>
                   <AnchorPane prefHeight="860.0" prefWidth="1430.0" style="-fx-background-color: #009EAD;">
                      <children>
@@ -25,17 +25,17 @@
                               <Image url="@../Images/logo.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="405.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Play With PC" textFill="WHITE">
+                        <Button fx:id="singlePlayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="406.0" mnemonicParsing="false" onAction="#onSinglePlayerButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Play With PC" textFill="WHITE">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="488.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Local Two Players" textFill="#fffbfb">
+                        <Button fx:id="localTwoPlayersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="463.0" layoutY="406.0" mnemonicParsing="false" onAction="#onLocalTwoPlayersButtonClicked" prefHeight="48.0" prefWidth="270.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#FAF9F6); -fx-background-radius: 8;" text="Local Two Players" textFill="#fffbfb">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <ScrollPane layoutX="825.0" layoutY="70.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-padding: 10;" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="825.0" layoutY="70.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="54.0">
                            <content>
                               <AnchorPane prefHeight="465.0" prefWidth="401.0">
                                  <children>
@@ -84,12 +84,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="627.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
+                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="533.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="695.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
+                        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="632.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#CC8282, #CC8282,#CC8282,white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>

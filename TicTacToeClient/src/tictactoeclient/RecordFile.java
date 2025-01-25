@@ -33,7 +33,7 @@ public class RecordFile {
      public static void addToFile(ArrayList<Move> moves,String path,String AgainestPlayerNae) {
         String localDate = getDate();
         String fileName = localDate;  // Use current date and time as file name
-        File file = new File(path + fileName +AgainestPlayerNae); //src/games/
+        File file = new File(path + AgainestPlayerNae+ "_" + fileName); //src/games/
 
         try (FileOutputStream fileOutput = new FileOutputStream(file);
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
