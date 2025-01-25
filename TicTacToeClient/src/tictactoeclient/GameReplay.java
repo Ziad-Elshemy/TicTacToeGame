@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import tictactoeclient.GameTracker.Move;
+import utilities.Colors;
 
 /**
  *
@@ -30,7 +31,7 @@ public class GameReplay {
       {
           if(gameReplayThread != null )
           {
-              gameReplayThread.interrupt();
+              gameReplayThread.stop();
           }
       
            gameReplayThread = new Thread(() -> {
@@ -42,7 +43,15 @@ public class GameReplay {
                 char player = move.getPlayer(); 
                 Button button = getButtonById(buttonId,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9);
                 Platform.runLater(() -> {
-                    button.setText(String.valueOf(player));  
+                    button.setText(String.valueOf(player));
+                    if(player=='X')
+                    {
+                        button.setTextFill(Colors.X_TEXT);
+                    }
+                    else
+                    {
+                        button.setTextFill(Colors.O_TEXT);
+                    }
                 });
 
                 Thread.sleep(700);  // 
