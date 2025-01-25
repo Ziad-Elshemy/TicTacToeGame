@@ -38,6 +38,7 @@ public class ServerDisconnectController implements Initializable {
         
         NetworkAccessLayer.isServerOffline=true;
         NetworkAccessLayer.local=true;
+        NetworkAccessLayer.playerData = null ;
         Stage myStage=  (Stage)okayButton.getScene().getWindow();
         myStage.close();
         Platform.runLater(()->{
