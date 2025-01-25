@@ -84,12 +84,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="627.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
+                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="565.0" mnemonicParsing="false" onAction="#onEditProfileButtonClicked" prefHeight="44.0" prefWidth="272.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Edit Profile" textFill="#fffbfb">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Button>
-                        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="695.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#82C0CC, #82C0CC,#82C0CC,white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
+                        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="274.0" layoutY="636.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right,#CC8282, #CC8282,#CC8282,white); -fx-background-radius: 8;" text="Logout" textFill="#fffafa">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>

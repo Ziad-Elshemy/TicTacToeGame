@@ -48,11 +48,11 @@ public class TicTacToeClient extends Application {
         gsonFile = new Gson();
         mainStage = stage;
         isMuted = false;
-        media = new Media(new File(Strings.music).toURI().toString());
+        media = new Media(getClass().getResource(Strings.music).toString());
         mediaPlayer = new MediaPlayer(media);
         music = new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        //mediaPlayer.volumeProperty().set(0.01);
+        mediaPlayer.volumeProperty().set(0.06);
         mediaPlayer.play();
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);

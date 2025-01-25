@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +55,7 @@ public class Navigator {
         }
     }
 
+
     public void goToPage(Stage stage, String targetPage) {
 
         try {
@@ -87,8 +89,46 @@ public class Navigator {
             // Get current stage and set new scene (Page 1) 
             stage.setScene(page1Scene);
             stage.show();
+            
+            
 
-            onPlayerLogout(stage);
+            Platform.runLater(()->{
+                
+              stage.setOnCloseRequest((e) -> {
+                            
+                controller.onClose();
+                if (NetworkAccessLayer.mySocket != null) {
+
+                ArrayList arr = new ArrayList();
+                arr.add(Codes.LOGOUT_CODE);
+
+                System.out.println(arr);
+
+                NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
+
+                Platform.runLater(() -> {
+
+                    try {
+                        NetworkAccessLayer.thread.stop();
+                        NetworkAccessLayer.mySocket.close();
+                        NetworkAccessLayer.playerData=null;
+                    } catch (IOException ex) {
+                        Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                });
+
+            }
+            Platform.exit();
+
+
+
+        });
+            
+            
+            
+            
+            }); 
             setPositionOfTheStage(stage);
 
 

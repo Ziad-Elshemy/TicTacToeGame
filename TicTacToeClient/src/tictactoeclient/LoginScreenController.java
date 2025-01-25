@@ -1,13 +1,19 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
@@ -67,6 +74,8 @@ public class LoginScreenController implements Initializable, Listener {
 
     @FXML
     private Button reconnectButton;
+    
+    static Stage stage;
 
     @FXML
     void onMuteBtnClicked(ActionEvent event) {
@@ -74,13 +83,13 @@ public class LoginScreenController implements Initializable, Listener {
         if (TicTacToeClient.isMuted) {
 
             TicTacToeClient.mediaPlayer.play();
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
             TicTacToeClient.isMuted = false;
 
         } else {
 
             TicTacToeClient.mediaPlayer.pause();
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
             TicTacToeClient.isMuted = true;
 
         }
@@ -89,6 +98,9 @@ public class LoginScreenController implements Initializable, Listener {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
+        
 
         gson = new Gson();
         player = new PlayerDto();
@@ -100,11 +112,11 @@ public class LoginScreenController implements Initializable, Listener {
 
         if (!TicTacToeClient.isMuted) {
 
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
 
         } else {
 
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
 
         }
 
@@ -188,8 +200,27 @@ public class LoginScreenController implements Initializable, Listener {
 
         if (success) {
             Platform.runLater(() -> {
-                new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Login ;)", ButtonType.OK).showAndWait();
+//                new Alert(Alert.AlertType.CONFIRMATION, "You Successfully Login ;)", ButtonType.OK).showAndWait();
+//                navigator.goToPage(myEvent, "HomeScreen.fxml");
+       Platform.runLater(() -> {
+
+            try {
+
+                Parent root = FXMLLoader.load(getClass().getResource("OnLoginComplete.fxml"));
+                stage = new Stage();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+                
                 navigator.goToPage(myEvent, "HomeScreen.fxml");
+           
+
+            } catch (IOException ex) {
+                Logger.getLogger(VsComputerSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
             });
         } else {

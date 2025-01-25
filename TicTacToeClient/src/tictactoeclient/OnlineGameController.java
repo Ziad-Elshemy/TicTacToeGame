@@ -146,8 +146,8 @@ public class OnlineGameController implements Initializable,Listener {
         
         playerOneUsername.setText(NetworkAccessLayer.playerData.getUserName());
         playerTwoUsername.setText(NetworkAccessLayer.enemyData.getUserName());
-        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
-        playerTwoImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
+        playerTwoImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
         playerOneScore.setText("Score: "+String.valueOf(NetworkAccessLayer.playerData.getScore()));
         playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore())); 
 
@@ -180,11 +180,11 @@ public class OnlineGameController implements Initializable,Listener {
         
         if (!TicTacToeClient.isMuted) {
 
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
 
         } else {
 
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
 
         }
     }   
@@ -194,12 +194,12 @@ public class OnlineGameController implements Initializable,Listener {
 
         if (TicTacToeClient.isMuted) {
             TicTacToeClient.mediaPlayer.play();
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
             TicTacToeClient.isMuted = false;
 
         } else {
             TicTacToeClient.mediaPlayer.pause();
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
             TicTacToeClient.isMuted = true;
 
         }
@@ -224,7 +224,7 @@ public class OnlineGameController implements Initializable,Listener {
     private void exitBtnAction(ActionEvent event) {
         
         
-        if(isGameEnded){
+      if(isGameEnded){
         Platform.runLater(()->{
             
             
@@ -961,6 +961,7 @@ public class OnlineGameController implements Initializable,Listener {
 
             }
         
+            
     }
 
 }
