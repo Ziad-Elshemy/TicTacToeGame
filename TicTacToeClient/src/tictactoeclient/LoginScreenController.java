@@ -239,7 +239,7 @@ public class LoginScreenController implements Initializable , Listener{
     @FXML
     private void onReconnectButon(ActionEvent event) {
         navigator.popUpStage("ConnectToServerScreen.fxml");
-    }
+    }  
 
    
 

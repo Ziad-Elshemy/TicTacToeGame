@@ -56,8 +56,6 @@ public abstract class NetworkAccessLayer
                             if(code == Codes.REGESTER_CODE)
                             {
                                 registerationResponse(responseData);
-
-                                
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
@@ -143,7 +141,7 @@ public abstract class NetworkAccessLayer
         }
     }
     
-    public static void setRef(Listener ref){
+     public static void setRef(Listener ref){
         myRef = ref;
     }
     
