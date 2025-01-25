@@ -16,10 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 /**
  * FXML Controller class
@@ -68,8 +67,12 @@ public class OnlineGamesRecordsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         navigator  = new Navigator();
-        // TODO
-    }    
+        
+    
+    }  
+    
+    
+
 
 
     @FXML

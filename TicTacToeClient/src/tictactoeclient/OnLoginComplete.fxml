@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="559.0" style="-fx-background-color: #16697A; -fx-border-color: #008000; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeclient.OnLoginCompleteController">
+   <children>
+      <Label layoutX="18.0" layoutY="52.0" style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" text="Hang tight, we're getting you logged in!" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="236.0" layoutY="127.0" prefHeight="101.0" prefWidth="89.0" progress="0.0" />
+   </children>
+</AnchorPane>

@@ -26,6 +26,7 @@ public abstract class NetworkAccessLayer
     public static DataInputStream fromServer;
     public static PrintStream toServer;
     public static PlayerDto playerData ; 
+    public static PlayerDto enemyData ; 
     private static Gson gsonFile = new Gson();
     private static Listener myRef;
     public static Listener ref;
@@ -56,8 +57,6 @@ public abstract class NetworkAccessLayer
                             if(code == Codes.REGESTER_CODE)
                             {
                                 registerationResponse(responseData);
-
-                                
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
@@ -67,21 +66,17 @@ public abstract class NetworkAccessLayer
 
                             else if(code == Codes.SEND_INVITATION_CODE)
                             {
-                               // String playerData = (String) responseData.get(1);
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveInvitationResponse(responseData);
                             }
                             else if(code == Codes.INVITATION_REPLY_CODE)
                             {
-                                double isAccepted = (double) responseData.get(1);
-                                //String playerData = (String) responseData.get(2);
                                 System.out.println("the invite response data: "+ responseData);
                                 recieveReplyOnInvitationResponse(responseData);
                             }
                             else if(code == Codes.SEND_PLAY_ON_BOARD_CODE)
                             {
                                 
-                                //PlayerDto player = gsonFile.fromJson(playerData, PlayerDto.class);
                                 System.out.println("the SEND_PLAY_ON_BOARD_CODE response data: "+ responseData);
                                 recievePlayOnBoardResponse(responseData);
                             }
@@ -106,6 +101,10 @@ public abstract class NetworkAccessLayer
                                     LoginResponse(responseData);
                             
                             } 
+                            else if (code == Codes.SERVER_CLOSE_CODE)
+                            {
+                                 serverCloseResponse();
+                            }
                             
                             else if(code == Codes.DELETE_ACCOUNT_CODE)
                             {
@@ -138,7 +137,7 @@ public abstract class NetworkAccessLayer
         }
     }
     
-    public static void setRef(Listener ref){
+     public static void setRef(Listener ref){
         myRef = ref;
     }
     
@@ -181,9 +180,20 @@ public abstract class NetworkAccessLayer
     
     public static void recieveReplyOnInvitationResponse(ArrayList responseData){
         double isAccepted = (double) responseData.get(1);
+        
+        Object result = responseData.get(2);
+        enemyData=null;
+
+
+       
         if (isAccepted == 1.0) 
         {
             myRef.onServerResponse(true,responseData);
+            if (result instanceof LinkedTreeMap) {
+            String jsonResult = gsonFile.toJson(result); 
+            enemyData = gsonFile.fromJson(jsonResult, PlayerDto.class); 
+            System.out.println(enemyData.getUserName()+"llklklklklllllllllllllllllllllllllllllllllllllllllllll");
+        } 
         }
         else
         {
@@ -270,6 +280,12 @@ public abstract class NetworkAccessLayer
        });
 
 }
+
+    public static void serverCloseResponse()
+    {
+        myRef.onServerCloseResponse(true);
+    }
+
     public static void deleteAccountResponse(ArrayList responseData)
     {
         double deleteResult = (double) responseData.get(1);
@@ -281,5 +297,6 @@ public abstract class NetworkAccessLayer
         else {
             myRef.onServerResponse(false, responseData);
         }
+
     }
 }

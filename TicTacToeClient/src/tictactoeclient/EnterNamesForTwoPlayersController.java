@@ -91,6 +91,12 @@ public class EnterNamesForTwoPlayersController implements Initializable {
         genderError1.setText(""); 
         genderError2.setText("");
         
+        genderOne="";
+        genderTwo="";
+        nameOne="X Player";
+        nameTwo="O Player";
+                
+        
         
         
     } 

@@ -11,9 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import onlineplaying.NetworkAccessLayer;
 
 public class EnterNamesScreenController implements Initializable{
 
@@ -71,6 +69,7 @@ public class EnterNamesScreenController implements Initializable{
         if(gender==null){
             
             
+            
            genderError.setText("Please Choose Gender ");
         
         
@@ -97,13 +96,15 @@ public class EnterNamesScreenController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-        ArrayList gender=new ArrayList();
-        gender.add("Male");
-        gender.add("Female");
-        genderDropDownList.setItems(FXCollections.observableArrayList(gender));
+        ArrayList genderList=new ArrayList();
+        genderList.add("Male");
+        genderList.add("Female");
+        genderDropDownList.setItems(FXCollections.observableArrayList(genderList));
         
         nameError.setText("");
         genderError.setText(""); 
+        username="Human";
+        gender="";
     }
 
 }

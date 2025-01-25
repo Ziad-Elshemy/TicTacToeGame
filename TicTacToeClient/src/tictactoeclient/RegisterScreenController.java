@@ -15,10 +15,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,8 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
 import onlineplaying.NetworkAccessLayer;
@@ -215,15 +210,29 @@ public class RegisterScreenController implements Initializable,Listener {
 
     }
 
-   
-
-    
     @FXML
     void onDropDownListChecked(ActionEvent event) {
         
         gender=genderDropDownList.getValue().toString();
         System.out.println(gender);
 
+    }
+
+    @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+              
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+              
+           });
+       }
     }
 
 }
