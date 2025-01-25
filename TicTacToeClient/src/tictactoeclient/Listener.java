@@ -20,5 +20,6 @@ public interface Listener {
     
     
     }
+    void onServerCloseResponse(boolean serverClosed);
             
 }

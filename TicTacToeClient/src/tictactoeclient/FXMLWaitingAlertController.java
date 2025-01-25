@@ -8,9 +8,12 @@ package tictactoeclient;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -139,6 +142,23 @@ public class FXMLWaitingAlertController implements Initializable, Listener {
                 closeAlert();
             });
         }
+    }
+
+     @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+             
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(FXMLWaitingAlertController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+               
+           });
+       }
     }
 
 }

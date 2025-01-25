@@ -47,7 +47,6 @@ public class Navigator {
             stage.show();
             onPlayerLogout(stage);
             setPositionOfTheStage(stage);
-       
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +65,7 @@ public class Navigator {
 
             onPlayerLogout(stage);
             setPositionOfTheStage(stage);
-    
+
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -87,10 +86,35 @@ public class Navigator {
             // Get current stage and set new scene (Page 1) 
             stage.setScene(page1Scene);
             stage.show();
+            stage.setOnCloseRequest((e) -> {
+                controller.onClose();
+                if (NetworkAccessLayer.mySocket != null) {
 
-            onPlayerLogout(stage);
+                    ArrayList arr = new ArrayList();
+                    arr.add(Codes.LOGOUT_CODE);
+
+                    System.out.println(arr);
+
+                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
+
+                    Platform.runLater(() -> {
+
+                        try {
+                            NetworkAccessLayer.thread.stop();
+                            NetworkAccessLayer.mySocket.close();
+                            NetworkAccessLayer.playerData = null;
+                        } catch (IOException ex) {
+                            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    });
+
+                }
+                Platform.exit();
+
+            });
+
             setPositionOfTheStage(stage);
-
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,7 +136,6 @@ public class Navigator {
 
             onPlayerLogout(stage);
             setPositionOfTheStage(stage);
-   
 
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,16 +192,14 @@ public class Navigator {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setPositionOfTheStage(Stage stage){
-        
+
+    public void setPositionOfTheStage(Stage stage) {
+
         stage.xProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryX = newVal.doubleValue());
         stage.yProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryY = newVal.doubleValue());
         stage.widthProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryWidth = newVal.doubleValue());
         stage.heightProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryHeight = newVal.doubleValue());
-    
-    
-    
+
     }
 
     public void onPlayerLogout(Stage stage) {
@@ -199,7 +220,7 @@ public class Navigator {
                     try {
                         NetworkAccessLayer.thread.stop();
                         NetworkAccessLayer.mySocket.close();
-                        NetworkAccessLayer.playerData=null;
+                        NetworkAccessLayer.playerData = null;
                     } catch (IOException ex) {
                         Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
                     }
