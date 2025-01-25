@@ -31,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -575,16 +576,16 @@ public class OnlineGameController implements Initializable,Listener {
         RecordBtn.setText("Recording");
     }
 
-    private void playrecordBtnAction(ActionEvent event) {
-        if(!tracker.getMoves().isEmpty())
-        {
-             initializeBoardState();
-             disableBoard();
-            /// startReplayGame();
-             RecordBtn.setDisable(false);
-        }
-        
-    }
+//    private void playrecordBtnAction(ActionEvent event) {
+//        if(!tracker.getMoves().isEmpty())
+//        {
+//             initializeBoardState();
+//             disableBoard();
+//            /// startReplayGame();
+//             RecordBtn.setDisable(false);
+//        }
+//        
+//    }
 
     @FXML
     private void onallRecordsBtnAction(ActionEvent event) {  
@@ -607,11 +608,21 @@ public class OnlineGameController implements Initializable,Listener {
             
             for(File file :files)
             {
-                counter++;
-                //System.out.println("File "+counter+ " : " +file.getName());
-                Label lable = new Label(file.getName());
+
+                                //int count
+                //System.out.println("File "+count+ " : " +file.getName());
+                Separator separator = new Separator();
+               Label lable = new Label(file.getName());
+               lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+               lable.setOnMouseEntered((e)->{
+                     lable.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+              
+               });
+               lable.setOnMouseExited((e)->{
+                      lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
+
+               });
                 lable.setOnMouseClicked((e)->{
-                    //System.out.println("On Clicked"+file.getName());
                     initializeBoardState();
                     disableBoard();
                     RecordBtn.setDisable(false);
@@ -619,6 +630,7 @@ public class OnlineGameController implements Initializable,Listener {
                 });
                 Platform.runLater(()->{
                 recordFilesListBox.getChildren().add(lable);
+                recordFilesListBox.getChildren().add(separator);
                     
                 });
             }

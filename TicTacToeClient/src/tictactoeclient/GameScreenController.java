@@ -32,8 +32,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -127,6 +129,14 @@ public class GameScreenController implements Initializable {
     private Text playerOneUsername;
     
     static Stage stageOfNames;
+    @FXML
+    private AnchorPane onExitButton;
+    @FXML
+    private Circle avatar;
+    @FXML
+    private Text username1;
+    @FXML
+    private Circle avatar1;
     
 
     /**
@@ -542,16 +552,6 @@ public class GameScreenController implements Initializable {
         RecordBtn.setText("Recording");
     }
 
-    private void playrecordBtnAction(ActionEvent event) {
-        if(!tracker.getMoves().isEmpty())
-        {
-             initializeBoardState();
-             disableBoard();
-            /// startReplayGame();
-             RecordBtn.setDisable(false);
-        }
-        
-    }
 
     @FXML
     private void onallRecordsBtnAction(ActionEvent event) {  
