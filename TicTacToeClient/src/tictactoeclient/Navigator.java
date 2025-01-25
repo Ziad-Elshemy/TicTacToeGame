@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -53,6 +54,7 @@ public class Navigator {
         }
     }
 
+
     public void goToPage(Stage stage, String targetPage) {
 
         try {
@@ -86,6 +88,7 @@ public class Navigator {
             // Get current stage and set new scene (Page 1) 
             stage.setScene(page1Scene);
             stage.show();
+
             stage.setOnCloseRequest((e) -> {
                 controller.onClose();
                 if (NetworkAccessLayer.mySocket != null) {

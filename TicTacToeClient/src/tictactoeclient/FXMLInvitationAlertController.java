@@ -160,7 +160,7 @@ public class FXMLInvitationAlertController implements Initializable, Listener {
     }
 
     private void initMedia() {
-        media = new Media(new File(Strings.alarmMusic).toURI().toString());
+        media = new Media(getClass().getResource(Strings.alarmMusic).toString());
         alarmMediaPlayer = new MediaPlayer(media);
         alarmMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         //alarmMediaPlayer.volumeProperty().set(0.25);

@@ -180,11 +180,11 @@ public class OnlineGameController implements Initializable,Listener {
         
         if (!TicTacToeClient.isMuted) {
 
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
 
         } else {
 
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
 
         }
     }   
@@ -194,12 +194,12 @@ public class OnlineGameController implements Initializable,Listener {
 
         if (TicTacToeClient.isMuted) {
             TicTacToeClient.mediaPlayer.play();
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
             TicTacToeClient.isMuted = false;
 
         } else {
             TicTacToeClient.mediaPlayer.pause();
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
             TicTacToeClient.isMuted = true;
 
         }
@@ -224,7 +224,7 @@ public class OnlineGameController implements Initializable,Listener {
     private void exitBtnAction(ActionEvent event) {
         
         
-        if(isGameEnded){
+      if(isGameEnded){
         Platform.runLater(()->{
             
             
@@ -974,6 +974,7 @@ public class OnlineGameController implements Initializable,Listener {
 
             }
         
+            
     }
      @Override
     public void onServerCloseResponse(boolean serverClosed) {

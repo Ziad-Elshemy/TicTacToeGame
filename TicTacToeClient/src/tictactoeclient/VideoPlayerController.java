@@ -36,13 +36,13 @@ public class VideoPlayerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        media = new Media(new File(videoUrl).toURI().toString());
+        media = new Media(getClass().getResource(videoUrl).toString());
         mediaPlayer =new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         video.setFitHeight(400);
         video.setFitWidth(700);
         video.setMediaPlayer(mediaPlayer); 
-        //mediaPlayer.volumeProperty().set(0.2);
+        mediaPlayer.volumeProperty().set(0.5);
         mediaPlayer.play();
         TicTacToeClient.mediaPlayer.pause();
         

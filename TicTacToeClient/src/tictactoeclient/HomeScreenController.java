@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import onlineplaying.NetworkAccessLayer;
 import onlineplaying.PlayerDto;
 import utilities.Codes;
+import utilities.Strings;
 
 /**
  * FXML Controller class
@@ -79,8 +80,6 @@ public class HomeScreenController implements Initializable, Listener {
 
     ActionEvent eventforEdit;
     Alert alert;
-    @FXML
-    private VBox vBox;
 
     @FXML
 
@@ -114,7 +113,20 @@ public class HomeScreenController implements Initializable, Listener {
                 NetworkAccessLayer.toServer.println(gson.toJson(arr));
 
                 navigator.goToPage(event, "LoginScreen.fxml");
-                NetworkAccessLayer.playerData = null;
+                if (NetworkAccessLayer.mySocket != null) {
+                Platform.runLater(() -> {
+
+                    try {
+                        NetworkAccessLayer.thread.stop();
+                        NetworkAccessLayer.mySocket.close();
+                        NetworkAccessLayer.playerData=null;
+                    } catch (IOException ex) {
+                        Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                });
+
+            }
 
             }
 
@@ -138,15 +150,15 @@ public class HomeScreenController implements Initializable, Listener {
 
         username.setText(NetworkAccessLayer.playerData.getUserName());
         score.setText("Score : " + NetworkAccessLayer.playerData.getScore());
-        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male") ? new Image("file:src/Images/boy.png") : new Image("file:src/Images/girl.png"));
+        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male") ? new Image(getClass().getResource("/Images/boy.png").toString()) : new Image(getClass().getResource("/Images/girl.png").toString()));
         addUserCard(NetworkAccessLayer.onlinePlayers);
         if (!TicTacToeClient.isMuted) {
 
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
 
         } else {
 
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
 
         }
 
@@ -157,12 +169,12 @@ public class HomeScreenController implements Initializable, Listener {
 
         if (TicTacToeClient.isMuted) {
             TicTacToeClient.mediaPlayer.play();
-            muteImg.setImage(new Image("file:src/Images/volume.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString()));
             TicTacToeClient.isMuted = false;
 
         } else {
             TicTacToeClient.mediaPlayer.pause();
-            muteImg.setImage(new Image("file:src/Images/mute.png"));
+            muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
             TicTacToeClient.isMuted = true;
 
         }

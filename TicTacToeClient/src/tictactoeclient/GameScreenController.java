@@ -162,20 +162,20 @@ public class GameScreenController implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("EnterNamesForTwoPlayers.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("EnterNamesForTwoPlayers.fxml"));      
                 stageOfNames = new Stage();
                 Scene scene = new Scene(root);
                 stageOfNames.setScene(scene);
                 stageOfNames.initModality(Modality.WINDOW_MODAL);
                 stageOfNames.showAndWait();
                 if (EnterNamesForTwoPlayersController.genderOne != null && EnterNamesForTwoPlayersController.nameOne != null) {
-                    playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male") ? new Image("file:src/Images/boy.png") : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image("file:src/Images/x.png") : new Image("file:src/Images/girl.png"));
+                    playerOneImage.setImage(EnterNamesForTwoPlayersController.genderOne.equals("Male") ? new Image(getClass().getResource("/Images/boy.png").toString()) : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image(getClass().getResource("/Images/x.png").toString()) : new Image(getClass().getResource("/Images/girl.png").toString()));
                     playerOneUsername.setText(EnterNamesForTwoPlayersController.nameOne);
 
                 }
 
                 if (EnterNamesForTwoPlayersController.genderTwo != null && EnterNamesForTwoPlayersController.nameTwo != null) {
-                    playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male") ? new Image("file:src/Images/boy.png") : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image("file:src/Images/O.png") : new Image("file:src/Images/girl.png"));
+                    playerTwoImage.setImage(EnterNamesForTwoPlayersController.genderTwo.equals("Male") ? new Image(getClass().getResource("/Images/boy.png").toString()) : EnterNamesForTwoPlayersController.genderOne.isEmpty() ? new Image(getClass().getResource("/Images/o.png").toString()) : new Image(getClass().getResource("/Images/girl.png").toString()));
                     playerTwoUsername.setText(EnterNamesForTwoPlayersController.nameTwo);
 
                 }

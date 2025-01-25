@@ -72,7 +72,7 @@ public class EditProfileController implements Initializable ,Listener{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):new Image("file:src/Images/girl.png"));
+        userImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
         NetworkAccessLayer.setRef(this);
         navigator=new Navigator();
         gson = new Gson();
@@ -121,13 +121,13 @@ public class EditProfileController implements Initializable ,Listener{
         
        if(TicTacToeClient.isMuted){
         TicTacToeClient.mediaPlayer.play();
-        muteImg.setImage(new Image("file:src/Images/volume.png")); 
+        muteImg.setImage(new Image(getClass().getResource("/Images/volume.png").toString())); 
         TicTacToeClient.isMuted=false;
         
         }
        else {
         TicTacToeClient.mediaPlayer.pause();
-        muteImg.setImage(new Image("file:src/Images/mute.png"));
+        muteImg.setImage(new Image(getClass().getResource("/Images/mute.png").toString()));
         TicTacToeClient.isMuted=true;
        
        }

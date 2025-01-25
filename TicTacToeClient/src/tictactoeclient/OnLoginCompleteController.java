@@ -6,13 +6,18 @@
 package tictactoeclient;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.media.Media;
@@ -34,13 +39,11 @@ public class OnLoginCompleteController implements Initializable {
     @FXML
     private ProgressIndicator progressIndicator;
     
-    @FXML
-    private Label recieverLabel;
+
 
     Timeline timeline;
     private Media media;
     static MediaPlayer alarmMediaPlayer;
-    Stage stage;
 
     /**
      * Initializes the controller class.
@@ -50,39 +53,24 @@ public class OnLoginCompleteController implements Initializable {
        navigator = new Navigator();
 
         Platform.runLater(() -> {
-            stage = (Stage) recieverLabel.getScene().getWindow();
-            stage.setOnCloseRequest(event -> {
-                System.out.println("Invitation Rejected by X icon");
-                timeline.stop();
-                alarmMediaPlayer.pause();
-                if (!TicTacToeClient.isMuted) {
-                    TicTacToeClient.mediaPlayer.play();
-                }
-            });
-            startProgressIndicator(stage);
+            startProgressIndicator();
         });
     } 
+ 
     
-        private void startProgressIndicator(Stage stage) {
+        private void startProgressIndicator() {
 
-        TicTacToeClient.mediaPlayer.pause();
 
         progressIndicator.setProgress(0);
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            double progress = progressIndicator.getProgress() + 0.0066;
+        timeline = new Timeline(new KeyFrame(Duration.millis(45), e -> {
+            double progress = progressIndicator.getProgress() + 0.05;
             progressIndicator.setProgress(progress);
         }));
 
-        timeline.setCycleCount(150);
+        timeline.setCycleCount(50);
         timeline.setOnFinished(event -> {
-
-            System.out.println("Time expired, closing stage...");
-            alarmMediaPlayer.pause();
-            if (!TicTacToeClient.isMuted) {
-                TicTacToeClient.mediaPlayer.play();
-            }
-            stage.close();
+                 LoginScreenController.stage.close();
         });
 
         timeline.play();
