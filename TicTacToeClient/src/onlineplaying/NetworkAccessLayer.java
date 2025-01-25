@@ -57,8 +57,6 @@ public abstract class NetworkAccessLayer
                             if(code == Codes.REGESTER_CODE)
                             {
                                 registerationResponse(responseData);
-
-                                
                             }
                             else if(code == Codes.CHANGE_PASSWORD_CODE)
                             {
@@ -103,6 +101,10 @@ public abstract class NetworkAccessLayer
                                     LoginResponse(responseData);
                             
                             } 
+                            else if (code == Codes.SERVER_CLOSE_CODE)
+                            {
+                                 serverCloseResponse();
+                            }
                             
                             else if(code == Codes.DELETE_ACCOUNT_CODE)
                             {
@@ -135,7 +137,7 @@ public abstract class NetworkAccessLayer
         }
     }
     
-    public static void setRef(Listener ref){
+     public static void setRef(Listener ref){
         myRef = ref;
     }
     
@@ -278,6 +280,12 @@ public abstract class NetworkAccessLayer
        });
 
 }
+
+    public static void serverCloseResponse()
+    {
+        myRef.onServerCloseResponse(true);
+    }
+
     public static void deleteAccountResponse(ArrayList responseData)
     {
         double deleteResult = (double) responseData.get(1);
@@ -289,5 +297,6 @@ public abstract class NetworkAccessLayer
         else {
             myRef.onServerResponse(false, responseData);
         }
+
     }
 }

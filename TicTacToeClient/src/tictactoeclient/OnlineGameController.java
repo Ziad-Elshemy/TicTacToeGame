@@ -146,8 +146,8 @@ public class OnlineGameController implements Initializable,Listener {
         
         playerOneUsername.setText(NetworkAccessLayer.playerData.getUserName());
         playerTwoUsername.setText(NetworkAccessLayer.enemyData.getUserName());
-        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
-        playerTwoImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
+        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerTwoImage.setImage(NetworkAccessLayer.enemyData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
         playerOneScore.setText("Score: "+String.valueOf(NetworkAccessLayer.playerData.getScore()));
         playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore())); 
 
@@ -292,6 +292,9 @@ public class OnlineGameController implements Initializable,Listener {
         initializeBoardState();
         
         RecordBtn.setDisable(false);////record
+        if(!isRecording){
+            RecordBtn.setText("Record");
+        }
         tracker.clearMoves();
         
         //send to the other player
@@ -364,7 +367,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -385,7 +389,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -408,7 +413,8 @@ public class OnlineGameController implements Initializable,Listener {
             showGameOverToast(text);
             if(isRecording)
             {
-                 tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                 tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                 System.out.println("enemyUserName: "+enemyUserName);
                  isRecording = false; ///
             }
             //disableBoard();
@@ -803,7 +809,8 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
+                                            isRecording = false;
                                         }
                                         //disableBoard();
                                         counter=0;
@@ -823,7 +830,7 @@ public class OnlineGameController implements Initializable,Listener {
                                         showGameOverToast(text);
                                         if(isRecording)
                                         {
-                                            tracker.saveToFile("src/onlineGames/","");  ////add record to file ///???????????
+                                            tracker.saveToFile("src/onlineGames/",enemyUserName);  ////add record to file ///???????????
                                             isRecording = false; ///
                                         }
                                         //disableBoard();
@@ -875,7 +882,7 @@ public class OnlineGameController implements Initializable,Listener {
                                     showGameOverToast(text);
                                     if(isRecording)
                                     {
-                                        tracker.saveToFile("src/games/","");  ////add record to file ///???????????
+                                        tracker.saveToFile("src/games/",enemyUserName);  ////add record to file ///???????????
                                         isRecording = false; ///
                                     }
                                     //disableBoard();
@@ -894,7 +901,13 @@ public class OnlineGameController implements Initializable,Listener {
             
             
         }else if((double)responseData.get(0)==(Codes.PLAY_AGAIN_CODE)&&success){
+            
             Platform.runLater(()->{
+                
+                RecordBtn.setDisable(false);////record
+                RecordBtn.setText("Record");
+                tracker.clearMoves();
+                
                 if(counter==0 && mySympol.equals("O")){
                 disableMouseClick();
                 }else{
@@ -963,5 +976,18 @@ public class OnlineGameController implements Initializable,Listener {
         
             
     }
-
+     @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           });
+       }
+    }
 }

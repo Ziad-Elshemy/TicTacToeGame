@@ -234,6 +234,29 @@ public class LoginScreenController implements Initializable, Listener {
     @FXML
     private void onReconnectButon(ActionEvent event) {
         navigator.popUpStage("ConnectToServerScreen.fxml");
-    }
+    }  
 
+
+   
+
+   @Override
+    public void onServerCloseResponse(boolean serverClosed) {
+       if(serverClosed)
+       {
+           Platform.runLater(()->{
+               navigator.popUpStage("ServerDisconnect.fxml");
+              
+               try {
+                   NetworkAccessLayer.mySocket.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+              
+           });
+       }
+    }
+    
 }
+
+
+

@@ -69,6 +69,7 @@ public class EnterNamesScreenController implements Initializable{
         if(gender==null){
             
             
+            
            genderError.setText("Please Choose Gender ");
         
         
