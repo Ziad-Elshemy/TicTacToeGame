@@ -214,6 +214,9 @@ public class GameScreenController implements Initializable {
         playerTurnBtn.setStyle("-fx-background-color: #83C5BE");
         initializeBoardState();
         RecordBtn.setDisable(false);////record
+        if(!isRecording){
+            RecordBtn.setText("Record");
+        }
         tracker.clearMoves();
         recordFilesListBox.setDisable(true);
         allRecordsBtn.setDisable(true);
@@ -282,7 +285,7 @@ public class GameScreenController implements Initializable {
             String text = !playerTwoUsername.equals("O Player") ? playerTwoUsername.getText() + " Win" : "Player O win";
             showGameOverToast(text);
             if (isRecording) {
-                tracker.saveToFile("src/games/", "");  ////add record to file
+                tracker.saveToFile("src/games/", "local");  ////add record to file
                 isRecording = false; ///
             }
             allRecordsBtn.setDisable(false);

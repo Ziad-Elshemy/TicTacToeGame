@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -99,6 +100,7 @@ public class OnlineGamesRecordsController implements Initializable {
             for(File file :files)
             {
                 //System.out.println("file :::"+file.getName());
+                Separator separator = new Separator();
                 Label lable = new Label(file.getName());
                 lable.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 5px; -fx-font-weight: bold;");
                lable.setOnMouseEntered((e)->{
@@ -117,6 +119,7 @@ public class OnlineGamesRecordsController implements Initializable {
                 });
                 Platform.runLater(()->{
                 recordFilesListBox.getChildren().add(lable);
+                recordFilesListBox.getChildren().add(separator);
                     
                 });
             }
