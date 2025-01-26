@@ -146,8 +146,8 @@ public class OnlineGameController implements Initializable,Listener {
         
         playerOneUsername.setText(NetworkAccessLayer.playerData.getUserName());
         playerTwoUsername.setText(NetworkAccessLayer.enemyData.getUserName());
-        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
-        playerTwoImage.setImage(NetworkAccessLayer.enemyData.getGender().equals("Male")?new Image("file:src/Images/boy.png"):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image("file:src/Images/x.png"):new Image("file:src/Images/girl.png"));
+        playerOneImage.setImage(NetworkAccessLayer.playerData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
+        playerTwoImage.setImage(NetworkAccessLayer.enemyData.getGender().equals("Male")?new Image(getClass().getResource("/Images/boy.png").toString()):NetworkAccessLayer.playerData.getGender().isEmpty()?new Image(getClass().getResource("/Images/x.png").toString()):new Image(getClass().getResource("/Images/girl.png").toString()));
         playerOneScore.setText("Score: "+String.valueOf(NetworkAccessLayer.playerData.getScore()));
         playerTwoScore.setText("Score: "+String.valueOf(NetworkAccessLayer.enemyData.getScore())); 
 

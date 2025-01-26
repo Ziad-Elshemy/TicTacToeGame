@@ -113,20 +113,7 @@ public class HomeScreenController implements Initializable, Listener {
                 NetworkAccessLayer.toServer.println(gson.toJson(arr));
 
                 navigator.goToPage(event, "LoginScreen.fxml");
-                if (NetworkAccessLayer.mySocket != null) {
-                Platform.runLater(() -> {
-
-                    try {
-                        NetworkAccessLayer.thread.stop();
-                        NetworkAccessLayer.mySocket.close();
-                        NetworkAccessLayer.playerData=null;
-                    } catch (IOException ex) {
-                        Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                });
-
-            }
+                NetworkAccessLayer.playerData = null;
 
             }
 
