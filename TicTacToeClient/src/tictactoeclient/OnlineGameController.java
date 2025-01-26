@@ -380,6 +380,7 @@ public class OnlineGameController implements Initializable,Listener {
             updatePlayerScore();
             
         }else if(checkWinner("O","-fx-background-color: #008000")){
+            
             playerOScore+=1;
             playerOScoreBtn.setText(""+playerOScore);
             //initializeBoardState();
