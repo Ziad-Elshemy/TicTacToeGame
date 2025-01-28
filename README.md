@@ -27,3 +27,6 @@ https://github.com/user-attachments/assets/a6f9c9d3-8c71-447e-a6bf-8201c456a828
 
 # ✖️⭕✖️ Online Game Demo:
 https://github.com/user-attachments/assets/11f9917e-05e8-4dda-8580-966b91a567d0
+
+## Additional Links
+- [LinkedIn Post](https://www.linkedin.com/posts/ziadelshemy_iti-javadevelopment-javase-activity-7289688667479023616-T7Mf?utm_source=share&utm_medium=member_desktop)
