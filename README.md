@@ -1,6 +1,6 @@
 # ✖️⭕✖️ TicTacToeGame
 
-## Team Members Name :
+## Team Members:
 
   1) Ziad Mohamed Abdulhamid EL-Shemy (TeamLeader)
   2) Esraa Mohammed Mosaad
