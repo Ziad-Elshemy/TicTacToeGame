@@ -25,64 +25,70 @@ import onlineplaying.NetworkAccessLayer;
 import utilities.Codes;
 import utilities.Strings;
 
-
 /**
  *
  * @author Ziad-Elshemy
  */
 public class TicTacToeClient extends Application {
-    
+
     public static Stage mainStage;
-    private  Media media;
-    static  MediaPlayer mediaPlayer;
-    private  MediaView music;
+    private Media media;
+    static MediaPlayer mediaPlayer;
+    private MediaView music;
     static boolean isMuted;
     Gson gsonFile;
-
+    static double primaryX;
+    static double primaryY;
+    static double primaryWidth;
+    static double primaryHeight;
 
     @Override
     public void start(Stage stage) throws Exception {
+
         gsonFile = new Gson();
         mainStage = stage;
-        isMuted=false;
-        media = new Media(new File(Strings.music).toURI().toString());
-        mediaPlayer =new MediaPlayer(media);
-        music=new MediaView(mediaPlayer);
+        isMuted = false;
+        media = new Media(getClass().getResource(Strings.music).toString());
+        mediaPlayer = new MediaPlayer(media);
+        music = new MediaView(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.volumeProperty().set(0.01);
+        mediaPlayer.volumeProperty().set(0.06);
         mediaPlayer.play();
         Parent root = FXMLLoader.load(getClass().getResource("Splash.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        stage.xProperty().addListener((obs, oldVal, newVal) -> primaryX = newVal.doubleValue());
+        stage.yProperty().addListener((obs, oldVal, newVal) -> primaryY = newVal.doubleValue());
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> primaryWidth = newVal.doubleValue());
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> primaryHeight = newVal.doubleValue());
+        
 
-        stage.setOnCloseRequest((e)->{
+        stage.setOnCloseRequest((e) -> {
 
-             try {
-                 
-                if(NetworkAccessLayer.mySocket!=null){
-                    
-                    ArrayList arr=new ArrayList();
+            try {
+
+                if (NetworkAccessLayer.mySocket != null) {
+
+                    ArrayList arr = new ArrayList();
                     arr.add(Codes.LOGOUT_CODE);
 
                     System.out.println(arr);
 
-                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
-                    
-                    
-                   NetworkAccessLayer.thread.stop();
-              
-                   NetworkAccessLayer.mySocket.close();
-                   
-                 
-                 }
-                 Platform.exit();
-             } catch (IOException ex) {
-                 ex.printStackTrace();
-             }
-         });
-        
+                    NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
+
+                    NetworkAccessLayer.thread.stop();
+
+                    NetworkAccessLayer.mySocket.close();
+
+                }
+                Platform.exit();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
     }
 
     /**
@@ -90,7 +96,7 @@ public class TicTacToeClient extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-      
+
     }
-    
+
 }

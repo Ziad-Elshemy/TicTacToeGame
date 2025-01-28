@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utilities;
 
 /**
@@ -10,19 +5,10 @@ package utilities;
  * @author esraa.m.mosaad
  */
 public class Strings {
-    public static String winnerVideoPath="src/videos/w.mp4";
-
-    public static String loserVideoPath="src/videos/loser.mp4";
-    public static String drawVideoPath="src/videos/d.mp4";
-    public static String music="src/videos/m.mp3";
-    public static String alarmMusic="src/videos/alarm.mp3";
-
-
-    
-
-    
-    
-
-    
-    
+    // Use getClass().getResource() for resources in the JAR file
+    public static String winnerVideoPath = "/videos/w.mp4";
+    public static String loserVideoPath = "/videos/loser.mp4";
+    public static String drawVideoPath = "/videos/d.mp4";
+    public static String music = "/videos/m.mp3";
+    public static String alarmMusic = "/videos/alarm.mp3";
 }

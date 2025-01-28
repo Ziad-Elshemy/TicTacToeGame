@@ -26,20 +26,17 @@ import tictactoeclient.GameTracker.Move;
  * @author HANY
  */
 public class RecordFile {
-    File file;
-    FileOutputStream fileOutput;
-    ObjectOutputStream objectOutput;
-    static String localDate = getDate();
     
     
-     public static void addToFile(ArrayList<Move> moves,String path) {
+    
+    
+     public static void addToFile(ArrayList<Move> moves,String path,String AgainestPlayerNae) {
+        String localDate = getDate();
         String fileName = localDate;  // Use current date and time as file name
-        File file = new File(path + fileName); //src/games/
+        File file = new File(path + AgainestPlayerNae+ "_" + fileName); //src/games/
 
         try (FileOutputStream fileOutput = new FileOutputStream(file);
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
-
-           // System.out.println("MOVES in RecordFile class: " + moves.toString());
             objectOutput.writeObject(moves);  // Write the list of moves to the file
 
         } catch (FileNotFoundException ex) {

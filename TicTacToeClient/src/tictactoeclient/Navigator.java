@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -27,273 +28,212 @@ import utilities.Codes;
  * @author Ziad-Elshemy
  */
 public class Navigator {
+
     Gson gsonFile;
 
     public Navigator() {
-        
-       gsonFile=new Gson();
+
+        gsonFile = new Gson();
     }
-    
-    
-    
-    
-    public void goToPage(ActionEvent event,String targetPage){
-        
-        
-        
-        
+
+    public void goToPage(ActionEvent event, String targetPage) {
+
         try {
-            System.out.println("You clicked me!");
-            //label.setText("Hello World!");
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Scene page1Scene = new Scene(loader.load());
             // Get current stage and set new scene (Page 1) 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(page1Scene);
             stage.show();
-            stage.setOnCloseRequest((e)->{
-            
-             
-                 
-                if(NetworkAccessLayer.mySocket!=null){
-                    
-                   ArrayList arr=new ArrayList();
-                   arr.add(Codes.LOGOUT_CODE);
+            onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
 
-                   System.out.println(arr);
-
-                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
-                   
-                   
-                   Platform.runLater(()->{
-                       
-                       try {
-                           NetworkAccessLayer.thread.stop();
-                           
-                           NetworkAccessLayer.mySocket.close();
-                       } catch (IOException ex) {
-                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-                       }
-                   
-                   
-                   
-                   }); 
-                    
-                    
-           
-                   
-                 
-                 }
-                 Platform.exit();
-             
-         });
-            
-
-            
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void goToPage(Stage stage, String targetPage){
-        
-    
+
+
+    public void goToPage(Stage stage, String targetPage) {
+
         try {
-            System.out.println("You clicked me!");
-            //label.setText("Hello World!");
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Scene page1Scene = new Scene(loader.load());
             // Get current stage and set new scene (Page 1) 
             stage.setScene(page1Scene);
             stage.show();
-            
-            
-            stage.setOnCloseRequest((e)->{
-                
-                
-                
-                if(NetworkAccessLayer.mySocket!=null){
-                    
-                    ArrayList arr=new ArrayList();
-                    arr.add(Codes.LOGOUT_CODE); 
-                    
+
+            onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void luanchOnlineGame(Stage stage, String targetPage, PlayerDto enemy, String Sympol) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
+            Scene page1Scene = new Scene(loader.load());
+
+            OnlineGameController controller = loader.getController();
+            controller.setEnemyUsername(enemy.getUserName());
+            controller.setMySympol(Sympol);
+
+            // Get current stage and set new scene (Page 1) 
+            stage.setScene(page1Scene);
+            stage.show();
+
+            stage.setOnCloseRequest((e) -> {
+                controller.onClose();
+                if (NetworkAccessLayer.mySocket != null) {
+
+                    ArrayList arr = new ArrayList();
+                    arr.add(Codes.LOGOUT_CODE);
+
                     System.out.println(arr);
-                    
+
                     NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
-                    
-                    
-                    Platform.runLater(()->{
-                        
+
+                    Platform.runLater(() -> {
+
                         try {
                             NetworkAccessLayer.thread.stop();
-                            
                             NetworkAccessLayer.mySocket.close();
+                            NetworkAccessLayer.playerData = null;
                         } catch (IOException ex) {
                             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                        
-                        
+
                     });
-                    
-                    
-                    
-                    
-                    
+
                 }
                 Platform.exit();
-                
+
             });
-        } catch (IOException ex) {
-            Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-      
-    }
-    
-    public void luanchOnlineGame(Stage stage, String targetPage, String enemy_username, String Sympol){
-        
-        try {
-            System.out.println("You clicked me!");
-            //label.setText("Hello World!");
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
-            Scene page1Scene = new Scene(loader.load());
-            System.out.println("FXML loaded successfully");
-            
-            OnlineGameController controller = loader.getController();
-            controller.setEnemyUsername(enemy_username);
-            controller.setMySympol(Sympol);
-            
-            // Get current stage and set new scene (Page 1) 
-            stage.setScene(page1Scene);
-            stage.show();
-            
+
+            setPositionOfTheStage(stage);
+
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    public void goToPage(ActionEvent event,String targetPage,PlayerDto player){
-        
+
+    public void goToPage(ActionEvent event, String targetPage, PlayerDto player) {
+
         try {
-            System.out.println("You clicked me!");
-            //label.setText("Hello World!");
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Scene page1Scene = new Scene(loader.load());
             EditProfileController editController = loader.getController();
-            editController.setData(player);
+            //editController.setData(player);
             // Get current stage and set new scene (Page 1) 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(page1Scene);
             stage.show();
-            
-            stage.setOnCloseRequest((e)->{
-            
-             
-                 
-                if(NetworkAccessLayer.mySocket!=null){
-                    
-                   ArrayList arr=new ArrayList();
-                   arr.add(Codes.LOGOUT_CODE);
 
-                   System.out.println(arr);
+            onPlayerLogout(stage);
+            setPositionOfTheStage(stage);
 
-                   NetworkAccessLayer.toServer.println(gsonFile.toJson(arr)); 
-                   
-                   
-                   Platform.runLater(()->{
-                       
-                       try {
-                           NetworkAccessLayer.thread.stop();
-                           
-                           NetworkAccessLayer.mySocket.close();
-                       } catch (IOException ex) {
-                           Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
-                       }
-                   
-                   
-                   
-                   }); 
-                    
-                    
-           
-                   
-                 
-                 }
-                 Platform.exit();
-             
-         });
-            
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
-    public void luanchInvitation(String targetPage,String pageTitle,PlayerDto sender){
-        
+
+    public void luanchInvitation(String targetPage, String pageTitle, PlayerDto sender) {
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Parent root = loader.load();
-            
+
             FXMLInvitationAlertController controller = loader.getController();
             controller.setSenderLabel(sender);
 
             Stage popupStage = new Stage();
             popupStage.setTitle(pageTitle);
             popupStage.setScene(new Scene(root));
-
-            //to prevent the user to interact with the background stage
             popupStage.initModality(Modality.APPLICATION_MODAL);
-
-    //        popupStage.setOnCloseRequest(event->{
-    //            System.out.println("Invitation Rejected by X icon");
-    //        });
-
-            //showAndWait to prevent the user to interact with the background stage
-            popupStage.showAndWait(); 
+            popupStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public void luanchWaiting(String targetPage,String pageTitle,String reciever){
-        
+
+    public void luanchWaiting(String targetPage, String pageTitle, String reciever) {
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(targetPage));
             Parent root = loader.load();
-            
+
             FXMLWaitingAlertController controller = loader.getController();
             controller.setRecieverLabel(reciever);
 
             Stage popupStage = new Stage();
             popupStage.setTitle(pageTitle);
             popupStage.setScene(new Scene(root));
-
-            //to prevent the user to interact with the background stage
             popupStage.initModality(Modality.APPLICATION_MODAL);
-
-            //showAndWait to prevent the user to interact with the background stage
-            popupStage.showAndWait(); 
+            popupStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void popUpStage(String sceneName)
-    {
+
+    public void popUpStage(String sceneName) {
         try {
-                Stage newStage = new Stage();
-                newStage.initModality(Modality.APPLICATION_MODAL);
-                Parent root = FXMLLoader.load(getClass().getResource(sceneName));
-                Scene scene = new Scene(root);
-                newStage.setScene(scene);
-                newStage.show();
+            Stage newStage = new Stage();
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            Parent root = FXMLLoader.load(getClass().getResource(sceneName));
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setPositionOfTheStage(Stage stage) {
+
+        stage.xProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryX = newVal.doubleValue());
+        stage.yProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryY = newVal.doubleValue());
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryWidth = newVal.doubleValue());
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> TicTacToeClient.primaryHeight = newVal.doubleValue());
+
+    }
+
+    public void onPlayerLogout(Stage stage) {
+
+        stage.setOnCloseRequest((e) -> {
+
+            if (NetworkAccessLayer.mySocket != null) {
+
+                ArrayList arr = new ArrayList();
+                arr.add(Codes.LOGOUT_CODE);
+
+                System.out.println(arr);
+
+                NetworkAccessLayer.toServer.println(gsonFile.toJson(arr));
+
+                Platform.runLater(() -> {
+
+                    try {
+                        NetworkAccessLayer.thread.stop();
+                        NetworkAccessLayer.mySocket.close();
+                        NetworkAccessLayer.playerData = null;
+                    } catch (IOException ex) {
+                        Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                });
+
             }
-            catch (IOException ex){
-                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Platform.exit();
+
+        });
+
     }
 }

@@ -3,4 +3,5 @@
 /TicTacToeClient/nbproject/private/*
 /TicTacToeClient/build.xml
 /TicTacToeClient/manifest.mf
-/TicTacToeClient/src/games
+/TicTacToeClient/src/games/*
+/TicTacToeClient/src/onlineGames/*
